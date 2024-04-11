@@ -1,0 +1,287 @@
+::-webkit-scrollbar {
+    width: 4px !important;
+    height: 8px !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #e6e6e6;
+    border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #8c8c8c;
+}
+
+::-webkit-scrollbar-track {
+    background: #fbfbfb;
+}
+
+[type='text']:focus,
+input:where(:not([type])):focus,
+[type='email']:focus,
+[type='url']:focus,
+[type='password']:focus,
+[type='number']:focus,
+[type='date']:focus,
+[type='datetime-local']:focus,
+[type='month']:focus,
+[type='search']:focus,
+[type='tel']:focus,
+[type='time']:focus,
+[type='week']:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
+    box-shadow: none;
+}
+
+/* ==================== Custom style element plus ==================== */
+/* Style chung cho dialog, form */
+.el-dialog {
+    border-radius: 0.55rem !important;
+}
+
+.el-dialog__header {
+    width: 100%;
+    background: var(--tw-white);
+    padding: 18px !important;
+    border-radius: 0.5rem 0.5rem 0 0;
+    color: #000;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    padding-top: 20px !important;
+}
+
+.el-dialog__headerbtn {
+    top: 0 !important;
+    height: 48px !important;
+    margin-top: 8px;
+    margin-right: 8px;
+}
+
+.el-dialog__headerbtn .el-dialog__close {
+    color: #b0b0b0 !important;
+    background-color: #f5f5f5 !important;
+    border-radius: 50%;
+    padding: 4px;
+    font-size: 1.2rem !important;
+    width: 30px;
+    height: 30px;
+}
+
+.el-form-item__label {
+    /* line-height: 1.25rem; */
+    color: var(--tw-black28) !important;
+    /* font-size: 13px; */
+    font-weight: bold !important;
+}
+
+.el-form--label-top .el-form-item__label {
+    padding: 0;
+}
+
+.el-select .el-select__tags-text {
+    display: block !important;
+}
+
+.el-main {
+    width: 100%;
+}
+
+.el-form-item {
+    margin-bottom: 12px !important;
+}
+
+.el-form-item__error {
+    margin-top: 2px;
+}
+
+.el-form-item__error {
+    margin-left: 0 !important;
+}
+
+/* .el-form-item.is-error {
+    margin-bottom: 22px !important;
+} */
+
+.el-form-item__content {
+    margin-bottom: 12px !important;
+}
+
+.el-form--default.el-form--label-top .el-form-item .el-form-item__label {
+    line-height: 10px !important;
+}
+
+.el-dialog__title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+
+    color: #222222 !important;
+}
+
+.el-input {
+    height: 40px;
+}
+
+.el-select__wrapper.is-focused,
+.el-input__wrapper.is-focus {
+    box-shadow: 0 0 0 1px var(--tw-primary) inset !important;
+}
+.el-textarea__inner:focus {
+    box-shadow: 0 0 0 1px var(--tw-primary) inset !important;
+}
+.el-select-dropdown__item.is-selected {
+    color: var(--tw-primary) !important;
+}
+
+.is-required .el-form-item__label::before {
+    content: '' !important;
+    margin-right: 0px !important;
+}
+
+.is-required .el-form-item__label::after {
+    content: '*';
+    color: var(--el-color-danger);
+    margin-left: 4px;
+}
+
+@media (max-width: 1024px) {
+    .createRequestExpertForm.el-dialog {
+        --el-dialog-width: 100% !important;
+    }
+}
+
+@media (max-width: 1280px) {
+    .createRequestExpertForm.el-dialog {
+        --el-dialog-width: 80% !important;
+    }
+}
+
+/* Style chung cho Breadcrumb */
+.el-breadcrumb .el-breadcrumb__item .el-breadcrumb__inner a,
+.el-breadcrumb__inner.is-link {
+    color: #606266;
+    font-weight: normal;
+}
+
+.el-breadcrumb .el-breadcrumb__item:last-child .el-breadcrumb__inner,
+.el-breadcrumb .el-breadcrumb__item:last-child .el-breadcrumb__inner a,
+.el-breadcrumb .el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover,
+.el-breadcrumb .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover {
+    font-weight: 700;
+    color: black;
+}
+
+.el-breadcrumb .el-breadcrumb__item .el-breadcrumb__inner a:hover {
+    color: #2078ce;
+    font-weight: 700;
+}
+
+.common-el-select .el-input__wrapper {
+    width: 146px !important;
+    padding: 10px 8px !important;
+}
+
+.common-el-select--long .el-input__wrapper {
+    width: 168px;
+    padding: 10px 8px !important;
+}
+
+/* style chung cho menu */
+.el-menu-item .menu-item-text {
+    color: var(--tw-gray8A);
+}
+.el-menu-item.is-active .menu-item-text {
+    color: var(--tw-primary);
+}
+
+/* style chung cho drawer*/
+.el-drawer__close-btn {
+    border-radius: 50%;
+    padding: 4px;
+    font-size: 1.2rem !important;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ACACAC !important;
+}
+
+/* ==================== End custom style element plus ==================== */
+
+.line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.line-clamp-4 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+}
+
+.line-clamp-5 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+button.el-button--primary {
+    background-color: var(--tw-primary);
+    border-color: var(--tw-primary);
+}
+
+button.el-button--primary:focus,
+button.el-button--primary:hover {
+    opacity: 0.8;
+    background-color: var(--tw-primary);
+    border-color: var(--tw-primary);
+}
+
+button.el-button--info {
+    color: white;
+    background-color: #8a8a8a;
+}
+
+button.el-button--info:hover {
+    opacity: 0.8;
+    background-color: #8a8a8a;
+}
+
+button.el-button--danger {
+    color: white;
+    background-color: #e21124;
+}
+
+button.el-button--danger:hover {
+    opacity: 0.8;
+    background-color: #e21124;
+}
+
+.el-form .el-date-editor--date,
+.el-form .el-select,
+.el-form .el-input {
+    width: 100% !important;
+}

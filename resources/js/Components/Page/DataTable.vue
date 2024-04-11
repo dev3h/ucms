@@ -44,7 +44,7 @@
                 <div class="table-pagination flex justify-end items-end">
                     <div v-if="!disableTableInfo && paging.from && paging.to" class="table-showing mr-4 w-[200px]">
                         <span class="text-[#646464] text-sm">
-                            {{ `${paging.from}-${paging.to}件/${paging.total} 件` }}
+                            {{ `${paging.from}-${paging.to} of ${paging.total} items` }}
                         </span>
                     </div>
                     <div class="flex justify-end items-center w-[100%]">
@@ -54,7 +54,7 @@
                             :class="{ 'cursor-not-allowed opacity-50': paging.current_page == 1 }"
                             @click="handleCurrentChange(1)"
                         >
-                            先頭
+                            First
                         </button>
                         <div>
                             <el-pagination
@@ -77,7 +77,7 @@
                             :class="{ 'cursor-not-allowed opacity-50': paging.current_page == paging.last_page }"
                             @click="handleCurrentChange(paging.last_page)"
                         >
-                            最終
+                            Last
                         </button>
                     </div>
                 </div>

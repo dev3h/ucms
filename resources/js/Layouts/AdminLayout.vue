@@ -51,8 +51,6 @@ export default {
 }
 </script>
 <style>
-@import '../../css/admin/index.css';
-
 .admin-layout {
     font-family: 'Noto Sans Japanese', 'Yu Gothic', YuGothic, sans-serif;
     font-style: normal;

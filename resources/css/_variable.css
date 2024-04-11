@@ -1,8 +1,8 @@
 :root {
-    --tw-primary: #1E1E1E;
+    --tw-primary: #002147;
 
     --tw-white: #ffffff;
-    --tw-header-table: #272727;
+    --tw-header-table: #002147d5;
 
     --tw-yellowFF: #FFD700;
     --tw-redD1: #D12030;
@@ -12,4 +12,57 @@
     /* font */
 
     --tw-input-height: 48px;
+
+    /* gray */
+    --tw-gray-50: #fafafa;
+    --tw-gray-100: #fafbff;
+    --tw-gray-200: #f0f2f5;
+    --tw-gray-300: #f4f4f5;
+    --tw-gray-400: #cdd8df;
+    --tw-gray-500: #6e7a7d;
+    --tw-grayF4: #f4f4f4;
+    --tw-gray8A: #55595c;
+    --tw-grayB8: #b8b8b8;
+    --tw-grayE2: #e2e2e2;
+    --tw-grayF0F2: #f0f2f5;
+    --tw-grayF0: #f0f0f0;
+    --tw-gray59: #595a5c;
+
+    /* blue */
+    --tw-blue-200: #d3f5ff;
+    --tw-blue-300: #e4f4fc;
+    --tw-blue-400: #2078ce;
+    --tw-blue-500: #0082be;
+
+    /* black */
+    --tw-black-300: #22313f;
+    --tw-black-400: #222222;
+    --tw-black54: #545454;
+    --tw-blackBD: #bdbdbd;
+    --tw-black27: #272727;
+    --tw-black22: #222222;
+    --tw-black28: #282828;
+    --tw-black64: #646464;
+    --tw-black30: #303133;
+
+    /* red */
+    --tw-redE2: #e21124;
+    --tw-redF3: #f35b5b;
+    --tw-redD1: #D12030;
+
+    /* green */
+    --tw-green19: #19ac28;
+    --tw-green34: #34c759;
+    --tw-green2D: #2dc87e;
+    --tw-greenE5: #e5f6e6;
+    --tw-green14: #149E53;
+
+    /* orange */
+    --tw-orangeFF: #ff9900;
+
+    --tw-yellowFF: #FFD700;
+
+     /* font */
+     --tw-fontSecondary: 'Meiryo', sans-serif;
+     --tw-fontPrimary: 'Noto Sans JP', sans-serif;
 }

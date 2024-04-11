@@ -6,7 +6,7 @@ use App\Models\Admin;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class IdentificationAgeFilter implements Filters
+class SystemFilter implements Filters
 {
     protected $request;
     public function __construct(Request $request)

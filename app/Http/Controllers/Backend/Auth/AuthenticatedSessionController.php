@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Admin\Auth;
+namespace App\Http\Controllers\Backend\Auth;
 
 use App\Enums\PassFirstChangeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangePasswordFirstRequest;
 use App\Http\Requests\LoginRequest;
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -19,7 +20,7 @@ class AuthenticatedSessionController extends Controller
     {
         $email = $request->email;
         $password = $request->password;
-        $user = Admin::where('email', $email)->first();
+        $user = User::where('email', $email)->first();
 
         if ($user === null) {
             throw ValidationException::withMessages(['email' => __('auth.failed')]);
@@ -28,8 +29,8 @@ class AuthenticatedSessionController extends Controller
         if (!Hash::check($password, $user->password)) {
             throw ValidationException::withMessages(['password' => __('auth.password')]);
         }
-        $routeRedirect = route('admin.account.index');
-        Auth::guard('admin')->loginUsingId($user->id, (bool)$request->remember);
+        $routeRedirect = route('admin.system.index');
+        Auth::loginUsingId($user->id, (bool)$request->remember);
 
         if ($user->is_change_password == PassFirstChangeEnum::NOT_CHANGE->value) {
             $str = Str::random(32);
@@ -45,7 +46,7 @@ class AuthenticatedSessionController extends Controller
     {
         $data = $request->validated();
         $token = $request->token;
-        $user = Admin::where('email', $data['email'])->where('token_first_change', $token)->first();
+        $user = User::where('email', $data['email'])->where('token_first_change', $token)->first();
         if ($user === null) {
             throw ValidationException::withMessages(['token' => __('Token is invalid')]);
         }

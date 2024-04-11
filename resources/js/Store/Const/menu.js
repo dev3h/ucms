@@ -1,17 +1,38 @@
 export const MASTER_MENUS = [
     {
-        label: '管理者アカウント管理',
-        icon: 'account-icon.svg',
-        route: 'admin.account.index',
-        pathActive: 'account',
+        label: "System Management",
+        icon: "account-icon.svg",
+        route: "admin.system.index",
+        pathActive: "system",
     },
     {
-        label: 'user'
+        label: "SubSystem Management",
+        icon: "account-icon.svg",
+        route: "admin.subsystem.index",
+        pathActive: "subsystem",
     },
     {
-        label: '確認を管理する',
-        icon: 'identification.svg',
-        route: 'admin.identification.index',
-        pathActive: 'identification',
-    }
-]
+        label: "Module Management",
+        icon: "account-icon.svg",
+        route: "admin.module.index",
+        pathActive: "module",
+    },
+    {
+        label: "Action Management",
+        icon: "account-icon.svg",
+        route: "admin.action.index",
+        pathActive: "action",
+    },
+    {
+        label: "Role Management",
+        icon: "account-icon.svg",
+        route: "admin.role.index",
+        pathActive: "role",
+    },
+    {
+        label: "Permission Management",
+        icon: "account-icon.svg",
+        route: "admin.permission.index",
+        pathActive: "permission",
+    },
+];

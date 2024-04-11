@@ -21,26 +21,20 @@
                     <div class="el-dropdown-link flex items-center justify-center text-white">
                         <span class="mr-2 text-lg">{{ user?.full_name }}</span>
                         <el-avatar :size="32" :src="user?.icon_url" />
-                        <img :src="'/images/down.svg'" class="ml-2" />
+                        <img :src="'/images/svg/down.svg'" class="ml-2" />
                     </div>
                     <template #dropdown>
                         <el-dropdown-menu class="w-48 !p-4">
                             <el-dropdown-item command="changeProfile">
-                                <div class="flex items-center">
-                                    <img src="/images/svg/admin-my-profile-icon.svg" class="mr-2" />
-                                    <span class="whitespace-nowrap">プロフィール</span>
-                                </div>
-                            </el-dropdown-item>
-                            <el-dropdown-item command="changePassword">
-                                <div class="flex items-center">
-                                    <img src="/images/svg/change-password-icon.svg" class="mr-2" />
-                                    <span class="whitespace-nowrap">パスワード変更</span>
+                                <div class="flex items-center" @click="openProfileForm">
+                                    <img src="/images/svg/profile-icon.svg" class="mr-2" />
+                                    <span class="whitespace-nowrap">Profile</span>
                                 </div>
                             </el-dropdown-item>
                             <el-dropdown-item command="logout">
                                 <div class="flex items-center" @click="dialogVisible = true">
                                     <img src="/images/svg/log-out-icon.svg" class="mr-2" />
-                                    <span class="whitespace-nowrap mt-1">ログアウト</span>
+                                    <span class="whitespace-nowrap mt-1">Logout</span>
                                 </div>
                             </el-dropdown-item>
                         </el-dropdown-menu>
@@ -93,7 +87,7 @@ export default {
             this.notifications_unread = value
         },
         openProfileForm() {
-            this.$inertia.visit(this.appRoute('admin.profile.index'))
+            this.$inertia.visit(this.appRoute('admin.profile'))
         },
         openPasswordForm() {
             this.$inertia.visit(this.appRoute('admin.form-change-password'))
