@@ -5,12 +5,12 @@
         <div
             class="text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase leading-[28.80px] text-center"
         >
-            登録したアカウントのメールアドレスをご入力ください。
+            Please enter the email address of your registered account. 
         </div>
         <div
             class="text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase leading-[28.80px] text-center"
         >
-            パスワード再設定用のURLを送信します。
+            We will send you a URL to reset your password.
         </div>
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 overflow-hidden">
             <el-form
@@ -21,7 +21,7 @@
                 @keypress.enter="doSubmit"
             >
                 <el-form-item
-                    label="メールアドレス"
+                    label="Email"
                     prop="email"
                     :inline-message="hasError('email')"
                     :error="getError('email')"
@@ -42,7 +42,7 @@
                     size="large"
                     @click.prevent="doSubmit"
                 >
-                    送信
+                    Send
                 </el-button>
             </div>
         </div>
@@ -51,7 +51,7 @@
                 class="text-center text-zinc-800 text-sm font-bold font-['Meiryo'] leading-[21px] cursor-pointer underline"
                 :href="this.appRoute('admin.login.form')"
             >
-                ログイン画面に戻る
+                Return to login screen
             </Link>
         </div>
     </div>
@@ -78,8 +78,8 @@ export default {
                 email: [
                     {
                         required: true,
-                        message: "この項目は必須です。",
-                        trigger: "blur",
+                        message: "This field is required",
+                        trigger: ["blur","change"],
                     },
                 ],
             },

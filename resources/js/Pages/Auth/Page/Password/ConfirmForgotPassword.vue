@@ -3,32 +3,17 @@
         class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-grayF5"
     >
         <div
-            class="text-center text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase"
-            style="margin-bottom: 32px !important"
+            class="text-center text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase mb-8"
         >
-            確認メールを送信しました
+            A confirmation email has been sent
         </div>
         <div
             class="text-center text-neutral-600 text-sm font-normal font-['Meiryo'] leading-[21px]"
             style="margin-bottom: 56px !important"
         >
-            {{
-                formData.email
-            }}から<br />パスワード変更用のリンクが送信されます。<br />新しいパスワードを設定してください。
-        </div>
-        <div
-            class="bg-[#F0F2F5] w-[710px] h-[114px] bg-gray-100 flex-col justify-center items-center gap-2.5 inline-flex mb-4"
-        >
-            <div
-                class="w-[292px] h-[22px] text-center text-neutral-800 text-sm font-bold font-['Meiryo'] leading-[16.80px]"
-            >
-                メールが届かない場合
-            </div>
-            <div
-                class="w-[876px] text-center text-neutral-600 text-sm font-normal font-['Meiryo'] leading-[21px]"
-            >
-                ※当社からのメールをp受信できるようにドメイン指定受信で「cxcx.jp」を許可してください。<br />※メールドメインの「許可が完了したら「確認メールを再送信」ボタンからメールを再送信してください。
-            </div>
+            Sent to {{formData.email }}
+            <p>Click the link in the email to complete your password change.</p>
+            <p>If you do not receive the confirmation email or have lost it, please resend it using the link below.</p>
         </div>
         <div
             class="w-full sm:max-w-md mt-10 px-6 pb-4 overflow-hidden"
@@ -40,15 +25,15 @@
                 size="large"
                 @click.prevent="submit"
             >
-                確認メールを再送信
+                Resend confirmation email
             </el-button>
         </div>
         <div class="h-[21px] justify-start items-center inline-flex mt-[21px]">
             <Link
                 class="text-center text-zinc-800 text-sm font-bold font-['Meiryo'] leading-[21px] cursor-pointer underline"
-                :href="this.appRoute('admin.login.form')"
+                :href="this.appRoute('admin.forgot-password.form')"
             >
-                メールアドレスを再度入力
+                Enter email address again
             </Link>
         </div>
     </div>
@@ -69,7 +54,7 @@ export default {
                 email: [
                     {
                         required: true,
-                        message: "この項目は必須です。",
+                        message: "This field is required",
                         trigger: "blur",
                     },
                 ],

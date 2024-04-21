@@ -21,9 +21,14 @@ return Application::configure(basePath: dirname(__DIR__))
             // \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         ]);
+        $middleware->alias([
+            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+        ]);
         $middleware->redirectTo(
-            guests: '',
-            users: '',
+            guests: '/admin/login',
+            users: '/admin/system',
         );
     })
     ->withExceptions(function (Exceptions $exceptions) {

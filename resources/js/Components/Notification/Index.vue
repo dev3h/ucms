@@ -51,24 +51,24 @@ export default {
     created() {
         let userId = this.$page?.props?.auth?.user?.id
         this.fetchDataNotifications()
-        Echo.private(`App.Models.Admin.${userId}`).notification((notification) => {
-            ElNotification({
-                title: '通知',
-                message: `${notification?.content}`,
-                duration: 1500
-            })
+        // Echo.private(`App.Models.Admin.${userId}`).notification((notification) => {
+        //     ElNotification({
+        //         title: '通知',
+        //         message: `${notification?.content}`,
+        //         duration: 1500
+        //     })
 
-            // if (type === 'App\\Notifications\\RegisterBusinessNotification') {
-            //     this.notifications.unshift(notice)
-            //     this.notifications_unread++
-            //     this.$emit('update-unread', this.notifications_unread)
-            //     ElNotification({
-            //         title: '通知',
-            //         message: `${notice?.data?.content}`,
-            //         duration: 1500
-            //     })
-            // }
-        })
+        //     // if (type === 'App\\Notifications\\RegisterBusinessNotification') {
+        //     //     this.notifications.unshift(notice)
+        //     //     this.notifications_unread++
+        //     //     this.$emit('update-unread', this.notifications_unread)
+        //     //     ElNotification({
+        //     //         title: '通知',
+        //     //         message: `${notice?.data?.content}`,
+        //     //         duration: 1500
+        //     //     })
+        //     // }
+        // })
     },
     methods: {
         toggle() {

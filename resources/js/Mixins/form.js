@@ -94,6 +94,7 @@ export default {
                     "エラーが発生しました。もう一度お試しください。";
 
                 if (error.response?.status === 422) {
+
                     this.setErrors(error.response?.data?.errors ?? {});
                     message = "入力値をもう一度チェックしてください。";
                 } else {

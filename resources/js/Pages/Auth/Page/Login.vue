@@ -1,20 +1,19 @@
 <template>
-    <div class="flex h-screen bg-grayF5">
-        <div class="w-full flex justify-center items-center flex-col">
+    <div class="flex mt-9 bg-grayF5">
+        <div class="w-full flex flex-col">
             <div
-                class="text-blueDark rounded-lg w-[400px] h-[500px] m-auto"
+                class="text-blueDark rounded-lg w-[400px] h-[500px] m-auto mb-20"
             >
                 <div class="relative">
-                    <div class="logo text-center mb-6 px-5">
-                        <!--                        <img src="/images/logo.png" alt="logo" />-->
-                        <h1>LOGO</h1>
+                    <div class="logo flex justify-center mb-6 px-5">
+                        <img src="/images/logo.svg" alt="logo" />
                     </div>
                 </div>
                 <div class="px-5 form-login">
                     <div
                         class="text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase leading-[28.80px] text-center mb-[17px]"
                     >
-                        ログイン
+                        Login
                     </div>
                     <el-form
                         ref="form"
@@ -24,7 +23,7 @@
                         @keypress.enter.prevent="doSubmit"
                     >
                         <el-form-item
-                            label="ユーザー名"
+                            label="Email"
                             prop="email"
                             :inline-message="hasError('email')"
                             :error="getError('email')"
@@ -32,12 +31,11 @@
                             <el-input
                                 v-model="formData.email"
                                 size="large"
-                                placeholder="メールアドレスを入力"
                                 clearable
                             />
                         </el-form-item>
                         <el-form-item
-                            label="パスワード"
+                            label="Password"
                             prop="password"
                             :inline-message="hasError('password')"
                             :error="getError('password')"
@@ -47,7 +45,6 @@
                                 size="large"
                                 type="password"
                                 show-password
-                                placeholder="パスワードを入力"
                                 clearable
                             />
                         </el-form-item>
@@ -61,17 +58,27 @@
                             size="large"
                             @click.prevent="doSubmit"
                         >
-                            ログイン
+                            login
                         </el-button>
                         <div class="mt-4">
                             <div
                                 class="text-sm underline cursor-pointer"
                                 @click="openForgotPasswordForm"
                             >
-                                パスワードをお忘れの場合はこちら
+                                Click here if you have forgotten your password
                             </div>
                         </div>
                     </div>
+                </div>
+
+            </div>
+            <div class="w-[500px] mx-auto">
+                <h2 class="uppercase text-center font-bold text-3xl">Login with SNS</h2>
+                <div class="flex justify-center mt-4 h-10" >
+                    <a :href="route('admin.socialite.redirect', 'google')" class="!w-[200px] flex h-full shadow-md items-center gap-2 px-4 py-3 hover:bg-gray-50">
+                            <img src="/images/logo_google.png" alt="" class="h-full object-cover">
+                        Google
+                    </a>
                 </div>
             </div>
         </div>
@@ -95,20 +102,31 @@ export default {
                 email: [
                     {
                         required: true,
-                        message: "この項目は必須です。",
-                        trigger: "blur",
+                        message: "This field is required",
+                        trigger: ['blur', 'change'],
                     },
                 ],
                 password: [
                     {
                         required: true,
-                        message: "この項目は必須です。",
-                        trigger: "blur",
+                        message: "This field is required",
+                        trigger: ['blur', 'change'],
                     },
                 ],
             },
             loadingForm: false,
+            errors: null
         };
+    },
+    watch: {
+        '$page.props.errors': {
+            immediate: true,
+            handler(value) {
+                if (value && Object.keys(value).length > 0) {
+                    this.$message.error(Object.values(value).join(', '));
+                }
+            }
+        }
     },
     methods: {
         async submit() {
