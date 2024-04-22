@@ -35,4 +35,9 @@ class AuthenticatedSessionController extends Controller
         request()->session()->regenerateToken();
         return redirect($routeRedirect);
     }
+
+    public function formTwoFactorChallenge()
+    {
+        return Inertia::render('Auth/Page/TwoFactorChallenge');
+    }
 }

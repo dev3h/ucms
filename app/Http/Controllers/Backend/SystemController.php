@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Consts\PerPage;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SystemRequest;
 use App\Http\Resources\SystemResource;
 use App\Models\Filters\SystemFilter;
 use App\Models\System;
@@ -30,7 +31,7 @@ class SystemController extends Controller
             $data = $request->validated();
             System::create($data);
             return $this->sendSuccessResponse(null, __('Created successfully'));
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());
         }
     }
@@ -45,7 +46,7 @@ class SystemController extends Controller
             }
             $system->update($data);
             return $this->sendSuccessResponse(null, __('Updated successfully'));
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());
         }
     }
@@ -54,6 +55,9 @@ class SystemController extends Controller
     {
         try {
             $system = System::find($id);
+            if(!$system) {
+                return $this->sendErrorResponse(__('Data not found'), 404);
+            }
             return $this->sendSuccessResponse(SystemResource::make($system));
         } catch (Throwable $e) {
             return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());
@@ -64,9 +68,12 @@ class SystemController extends Controller
     {
         try {
             $system = System::find($id);
+            if(!$system) {
+                return $this->sendErrorResponse(__('Data not found'), 404);
+            }
             $system->delete();
             return $this->sendSuccessResponse(null, __('Deleted successfully'));
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());
         }
     }

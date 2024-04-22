@@ -1,0 +1,25 @@
+{
+  "preset": "psr12",
+  "rules": {
+    "array_syntax": {
+      "syntax": "short"
+    },
+    "binary_operator_spaces": {
+      "default": "single_space"
+    },
+    "cast_spaces": {
+      "space": "single"
+    },
+    "concat_space": {
+      "spacing": "one"
+    },
+    "not_operator_with_successor_space": false,
+    "unary_operator_spaces": true
+  },
+  "exclude": [
+    "bootstrap/cache",
+    "public",
+    "storage",
+    "vendor"
+  ]
+}

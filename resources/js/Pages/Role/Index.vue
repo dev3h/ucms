@@ -35,7 +35,7 @@
                 </DataTable>
             </div>
         </div>
-        <DeleteForm ref="deleteForm" @delete-action="deleteAccount" />
+        <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
     </AdminLayout>
 </template>
 <script>
@@ -104,18 +104,14 @@ export default {
         filterData: debounce(function () {
             this.fetchData()
         }, 500),
-        showRole(value) {
-            let role = findRole(value)
-            return role?.label
-        },
         openCreate() {
             this.$inertia.visit(this.appRoute('admin.role.create'))
         },
         openDeleteForm(id) {
             this.$refs.deleteForm.open(id)
         },
-        async deleteAccount(id) {
-            await axios.delete(this.appRoute("admin.api.system.delete", id)).then(response => {
+        async deleteItem(id) {
+            await axios.delete(this.appRoute("admin.api.role.delete", id)).then(response => {
                 this.$message.success(response?.data?.message);
                 this.fetchData()
             }).catch(error => {

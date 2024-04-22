@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\RoleController;
 use App\Http\Controllers\Frontend\SubSystemController;
 use App\Http\Controllers\Frontend\SystemController;
+use App\Http\Controllers\Frontend\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -49,9 +50,12 @@ Route::prefix("admin/")->as("admin.")->group(function () {
         Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirectSocial'])->name('socialite.redirect');
         Route::get('/callback/{provider}', [SocialiteController::class, 'callbackSocial'])->name('socialite.callback');
 
+        Route::get('two-factor-challenge', [AuthenticatedSessionController::class, 'formTwoFactorChallenge'])->name('two-factor-challenge.form');
 
     });
+
     Route::middleware(['auth'])->group(function () {
+
         Route::get('/change-password-first', [AuthenticatedSessionController::class, 'formChangePasswordFirst'])->name('password-first.form');
         Route::post('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
 
@@ -61,6 +65,7 @@ Route::prefix("admin/")->as("admin.")->group(function () {
         Route::resource('action', ActionController::class);
         Route::resource('role', RoleController::class);
         Route::resource('permission', PermissionController::class);
+        Route::resource('user', UserController::class);
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
@@ -72,6 +77,8 @@ Route::prefix("admin/")->as("admin.")->group(function () {
 });
 Route::get('admin/reset-password/{token}', [ResetPasswordController::class, 'passwordReset'])->name('password.reset')
     ->middleware(['guest', 'signed', 'throttle:6,1']);
+
+require_once __DIR__ . '/fortify.php';
 
 
 

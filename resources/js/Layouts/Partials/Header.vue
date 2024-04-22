@@ -1,10 +1,9 @@
 <template>
     <el-header class="bg-primary text-[white] fixed top-0 left-0 right-0 z-[10]">
         <div class="h-full flex items-center">
-            <!-- <Link :href="getRouteRedirect" class="inline-block w-fit">
-            <img src="/images/logo.png" alt="logo" class="!h-8 object-cover" />
-            </Link> -->
-            <h1 class="text-white">LOGO</h1>
+            <Link :href="getRouteRedirect" class="inline-block w-fit">
+                <img src="/images/logo-white.svg" alt="logo" class="!h-12 object-cover" />
+            </Link>
         </div>
         <slot name="page-header" />
         <div class="header-custom w-1/2 flex justify-end gap-6">
@@ -19,7 +18,7 @@
             <div class="mr-5">
                 <el-dropdown trigger="click" class="h-full" @command="handleCommand">
                     <div class="el-dropdown-link flex items-center justify-center text-white">
-                        <span class="mr-2 text-lg">{{ user?.full_name }}</span>
+                        <span class="mr-2 text-lg">{{ user?.name }}</span>
                         <el-avatar :size="32" :src="user?.icon_url" />
                         <img :src="'/images/svg/down.svg'" class="ml-2" />
                     </div>
@@ -76,7 +75,7 @@ export default {
             return this.$page?.props?.auth?.user ?? {}
         },
         getRouteRedirect() {
-            return this.appRoute('admin.account.index')
+            return this.appRoute('admin.system.index')
         },
     },
     methods: {

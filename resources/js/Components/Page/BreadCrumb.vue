@@ -9,7 +9,8 @@
                             'is-show': key == 2 || item.name == '新規追加' || (key == 1 && breadCrumb.length == 2)
                         }"
                     >
-                        {{ truncateString(item.name, 15) }}
+<!--                        {{ truncateString(item.name, 15) }}-->
+                        {{ item.name }}
                     </span>
                     <a
                         v-else
@@ -17,7 +18,8 @@
                         class="!cursor-pointer"
                         @click="changePath(item.route)"
                     >
-                        {{ truncateString(item.name, 15) }}
+<!--                        {{ truncateString(item.name, 15) }}-->
+                        {{ item.name }}
                     </a>
                 </el-breadcrumb-item>
             </el-breadcrumb>

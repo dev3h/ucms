@@ -23,6 +23,7 @@ export default {
     props: {
         action: {
             type: String,
+            default: null,
         },
         redirectRoute: {
             type: String,
@@ -32,7 +33,7 @@ export default {
             type: String,
         },
     },
-    emits: ['delete-success', 'delete-action', 'add-action', 'update-action'],
+    emits: ['delete-success', 'delete-action'],
     data() {
         return {
             isShowDeleteForm: false,
@@ -51,6 +52,7 @@ export default {
             this.current_id = null
         },
         async deleteItem() {
+            console.log(this.action)
             if (!this.action) {
                 this.$emit('delete-action', this.current_id)
                 this.isShowDeleteForm = false

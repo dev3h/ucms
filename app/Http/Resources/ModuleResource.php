@@ -18,6 +18,10 @@ class ModuleResource extends JsonResource
             "id" => $this?->id,
             "name" => $this?->name,
             "code" => $this?->code,
+            'subsystem' => [
+                'id' => $this?->subsystem?->id,
+                'name' => $this?->subsystem?->name,
+            ],
             "created_at" => format_datetime($this?->created_at),
         ];
     }

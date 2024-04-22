@@ -24,6 +24,12 @@ export const MASTER_MENUS = [
         pathActive: "action",
     },
     {
+        label: "User Management",
+        icon: "account-icon.svg",
+        route: "admin.user.index",
+        pathActive: "user",
+    },
+    {
         label: "Role Management",
         icon: "account-icon.svg",
         route: "admin.role.index",

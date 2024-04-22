@@ -1,9 +1,50 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white px-4">
-
-            <div>
+        <div class="w-full h-full bg-white px-16 py-8">
+            <el-card class="mb-8">
+                <div class="w-full flex justify-center">
+                    <div class="px-4 w-full">
+                        <div class="text-[24px] font-bold mb-8">Change Password</div>
+                        <div>
+                            <el-form ref="form" :model="formData" :rules="rules" label-position="top">
+                                <el-form-item
+                                    label="Current Password" prop="current_password"
+                                    :error="getError('current_password')"
+                                    :inline-message="hasError('current_password')">
+                                    <el-input
+                                        v-model="formData.current_password" autocomplete="new-password"
+                                        :size="'large'" show-password placeholder="" clearable/>
+                                </el-form-item>
+                                <el-form-item
+                                    class="mt-8"
+                                    label="New Password" prop="password" :error="getError('password')"
+                                    :inline-message="hasError('password')">
+                                    <el-input
+                                        v-model="formData.password" autocomplete="new-password" :size="'large'"
+                                        show-password placeholder="" clearable/>
+                                </el-form-item>
+                                <el-form-item
+                                    class="mt-8"
+                                    label="New password (confirmation)" prop="password_confirmation"
+                                    :error="getError('password_confirmation')"
+                                    :inline-message="hasError('password_confirmation')">
+                                    <el-input
+                                        v-model="formData.password_confirmation" autocomplete="new-password"
+                                        :size="'large'" show-password placeholder="" clearable/>
+                                </el-form-item>
+                            </el-form>
+                            <div class="flex justify-center mt-8">
+                                <el-button
+                                    type='primary' :loading="loadingForm" class="!w-40" size="large"
+                                    @click="doSubmit">Update</el-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </el-card>
+            <el-card>
                 <h2 class="uppercase font-bold mb-4">Linked Accounts</h2>
+
                 <div>
                     <div>
                         <h3 class="text-lg mb-2">Google</h3>
@@ -29,7 +70,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </el-card>
+
+            <el-card class="my-8">
+                <h2 class="uppercase font-bold mb-4">Two Factor Authentication</h2>
+<!--                <a href="">-->
+<!--                    <el-button type="info">-->
+<!--                        Enable-->
+<!--                    </el-button>-->
+<!--                </a>-->
+                <TwoFactorAuthenticationForm />
+            </el-card>
         </div>
     </AdminLayout>
 </template>
@@ -37,12 +88,32 @@
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import axios from '@/Plugins/axios.js';
+import form from "@/Mixins/form.js";
+import TwoFactorAuthenticationForm from "./TwoFactorAuthenticationForm.vue";
 
 export default {
-    components: { AdminLayout},
+    components: {TwoFactorAuthenticationForm, AdminLayout},
+    mixins: [form],
     data() {
         return {
-            linkedAccounts: []
+            linkedAccounts: [],
+            loadingForm: false,
+            formData: {
+                current_password: '',
+                password: '',
+                password_confirmation: '',
+            },
+            rules: {
+                current_password: [
+                    { required: true, message: 'This field is required', trigger: ['blur', 'change'] },
+                ],
+                password: [
+                    { required: true, message: 'This field is required', trigger: ['blur', 'change'] },
+                ],
+                password_confirmation: [
+                    { required: true, message: 'This field is required', trigger: ['blur', 'change'] },
+                ],
+            },
         }
     },
     watch: {
@@ -86,6 +157,20 @@ export default {
             } catch (err) {
                 console.log(err);
                 this.$message.error(err?.response?.data?.message);
+            }
+        },
+        async submit() {
+            try {
+                this.loadingForm = true;
+                const response = await axios.post(this.appRoute('admin.api.change-password'), this.formData);
+                if (response) {
+                    this.$message.success(response?.data?.message);
+                    this.$refs.form.resetFields();
+                }
+            } catch (err) {
+                this.$message.error(err?.response?.data?.message);
+            } finally {
+                this.loadingForm = false;
             }
         }
     }

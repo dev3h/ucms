@@ -67,4 +67,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Social::class);
     }
+
+    public function generate2faSecretKey()
+    {
+        $this->two_factor_secret = TwoFact;
+        $this->save();
+        return $this->two_factor_secret;
+    }
+
+    public function generate2faQrCode($email, $secret)
+    {
+        return $this->generateTwoFactorQrCode($email, $secret);
+    }
 }

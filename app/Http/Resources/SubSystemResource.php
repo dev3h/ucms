@@ -18,6 +18,10 @@ class SubSystemResource extends JsonResource
             "id" => $this?->id,
             "name" => $this?->name,
             "code" => $this?->code,
+            'system' => [
+                'id' => $this?->system?->id,
+                'name' => $this?->system?->name,
+            ],
             "created_at" => format_date($this?->created_at),
         ];
     }

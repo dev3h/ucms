@@ -30,6 +30,11 @@ class AuthenticatedSessionController extends Controller
             throw ValidationException::withMessages(['password' => __('auth.password')]);
         }
         $routeRedirect = route('admin.system.index');
+        if($user->two_factor_enabled === 0) {
+            $request->session()->put('login.id', $user->id);
+            return $this->sendSuccessResponse(route('admin.two-factor.login'));
+        }
+
         Auth::loginUsingId($user->id, (bool)$request->remember);
 
         if ($user->is_change_password == PassFirstChangeEnum::NOT_CHANGE->value) {
@@ -38,6 +43,7 @@ class AuthenticatedSessionController extends Controller
             $user->save();
             return $this->sendSuccessResponse(route('admin.password-first.form', ['token' => $str]));
         }
+
 
         return $this->sendSuccessResponse($routeRedirect);
     }
@@ -56,5 +62,16 @@ class AuthenticatedSessionController extends Controller
         $user->save();
 
         return $this->sendSuccessResponse(true, __('Update Password Success'));
+    }
+
+    public function twoFactorChallenge(Request $request)
+    {
+        $user = User::find($request->session()->get('login.id'));
+        if ($user === null) {
+            return redirect()->route('admin.login.form')->with('error', __('Token is invalid'));
+        }
+        $user->two_factor_enabled = 1;
+        $user->save();
+        return $this->sendSuccessResponse(route('admin.system.index'));
     }
 }
