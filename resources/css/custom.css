@@ -56,6 +56,7 @@ select:focus {
     height: 48px !important;
     margin-top: 8px;
     margin-right: 8px;
+    display: none;
 }
 
 .el-dialog__headerbtn .el-dialog__close {

@@ -75,10 +75,10 @@ Route::prefix("admin/")->as("admin.")->group(function () {
     });
 
 });
-Route::get('admin/reset-password/{token}', [ResetPasswordController::class, 'passwordReset'])->name('password.reset')
-    ->middleware(['guest', 'signed', 'throttle:6,1']);
 
 require_once __DIR__ . '/fortify.php';
+Route::get('admin/reset-password/{token}', [ResetPasswordController::class, 'passwordReset'])->name('password.reset')
+    ->middleware(['guest', 'signed', 'throttle:6,1']);
 
 
 

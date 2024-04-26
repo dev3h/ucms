@@ -27,14 +27,14 @@ class ActionRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('systems', 'name')->ignore($this->id)->whereNull('deleted_at'),
+                Rule::unique('actions', 'name')->ignore($this->id)->whereNull('deleted_at'),
             ],
             'code' => [
                 'required',
                 'string',
                 'email',
                 'max:255',
-                Rule::unique('systems', 'code')->ignore($this->id)->whereNull('deleted_at'),
+                Rule::unique('actions', 'code')->ignore($this->id)->whereNull('deleted_at'),
             ],
             'module_id' => 'required|exists:modules,id',
         ];

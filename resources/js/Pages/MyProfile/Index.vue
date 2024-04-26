@@ -2,6 +2,24 @@
     <AdminLayout>
         <div class="w-full h-full bg-white px-16 py-8">
             <el-card class="mb-8">
+                <div class="px-4 w-full">
+                    <div class="grid grid-cols-3">
+                        <div class="flex flex-col gap-2">
+                            <span>Name</span>
+                            <span>{{user?.name}}</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <span>Email</span>
+                            <span>{{user?.email}}</span>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <span>Role</span>
+                            <span>{{$page.props.auth.role}}</span>
+                        </div>
+                    </div>
+                </div>
+            </el-card>
+            <el-card class="mb-8">
                 <div class="w-full flex justify-center">
                     <div class="px-4 w-full">
                         <div class="text-[24px] font-bold mb-8">Change Password</div>
@@ -52,17 +70,16 @@
                             <img src="/images/logo_google.png" alt="" width="30" height="30" class="object-cover">
                            <div>
                                 <span v-if="isLinked('google')">
-                                    Linked
-                                    Email link: {{ emailLink('google') }}
+                                    Linked Email: {{ emailLink('google') }}
                                 </span>
                                <span v-else>
                                 Not Link
                                 </span>
                            </div>
                             <div>
-                                <el-button type="primary" v-if="isLinked('google')" @click="handleUnlinkIntegrationSocialite('google')">Unlink</el-button>
+                                <el-button type="danger" v-if="isLinked('google')" @click="handleUnlinkIntegrationSocialite('google')">Unlink</el-button>
                                 <a :href="route('admin.integration.socialite.redirect', 'google')" v-else>
-                                    <el-button type="info">
+                                    <el-button type="primary">
                                         Link
                                     </el-button>
                                 </a>
@@ -74,11 +91,6 @@
 
             <el-card class="my-8">
                 <h2 class="uppercase font-bold mb-4">Two Factor Authentication</h2>
-<!--                <a href="">-->
-<!--                    <el-button type="info">-->
-<!--                        Enable-->
-<!--                    </el-button>-->
-<!--                </a>-->
                 <TwoFactorAuthenticationForm />
             </el-card>
         </div>
@@ -128,6 +140,11 @@ export default {
     },
     created() {
         this.getAllLinkedAccounts();
+    },
+    computed: {
+        user() {
+            return this.$page.props.auth.user;
+        }
     },
     methods: {
         async getAllLinkedAccounts() {

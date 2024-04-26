@@ -5,7 +5,7 @@
         <div
             class="text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase leading-[28.80px] text-center"
         >
-            Please enter the email address of your registered account. 
+            Please enter the email address of your registered account.
         </div>
         <div
             class="text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase leading-[28.80px] text-center"
@@ -102,6 +102,7 @@ export default {
                 this.appRoute("admin.api.send-mail-reset-password"),
                 this.formData
             );
+            console.log(data);
             this.$message({ message: data?.message, type: "success" });
             this.loadingForm = false;
             this.$inertia.visit(

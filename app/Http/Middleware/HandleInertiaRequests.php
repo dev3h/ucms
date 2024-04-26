@@ -39,10 +39,10 @@ class HandleInertiaRequests extends Middleware
         $user = null;
         if (Auth::check()) {
             $user =  Auth::user();
-            $user->two_factor_enabled = $user?->two_factor_enabled === 1 ? false : true;
+            $user->two_factor_enabled = $user?->two_factor_secret ? true : false;
         }
         if ($user) {
-            $role = ($user->roles()->first())?->name;
+            $role = $user->getRoleNames()->first();
             $permissions = $user->getAllPermissions()?->pluck('name');
         }
 

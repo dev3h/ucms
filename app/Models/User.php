@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -68,15 +69,10 @@ class User extends Authenticatable
         return $this->hasMany(Social::class);
     }
 
-    public function generate2faSecretKey()
+    public function sendPasswordResetNotification($token): void
     {
-        $this->two_factor_secret = TwoFact;
-        $this->save();
-        return $this->two_factor_secret;
-    }
-
-    public function generate2faQrCode($email, $secret)
-    {
-        return $this->generateTwoFactorQrCode($email, $secret);
+        $name = $this->name;
+        $email = $this->email;
+        $this->notify(new ResetPasswordNotification($token, $name, $email));
     }
 }

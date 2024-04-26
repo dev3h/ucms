@@ -19,7 +19,7 @@
                 <el-dropdown trigger="click" class="h-full" @command="handleCommand">
                     <div class="el-dropdown-link flex items-center justify-center text-white">
                         <span class="mr-2 text-lg">{{ user?.name }}</span>
-                        <el-avatar :size="32" :src="user?.icon_url" />
+<!--                        <el-avatar :size="32" :src="user?.icon_url" />-->
                         <img :src="'/images/svg/down.svg'" class="ml-2" />
                     </div>
                     <template #dropdown>

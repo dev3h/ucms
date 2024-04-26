@@ -33,7 +33,7 @@
                                 placeholder="Select"
                                 size="large"
                                 clearable
-                                @change="fetchUserTemplate"
+                                @change="handleChangeRole"
                             >
                                 <el-option
                                     v-for="role in roles"
@@ -187,7 +187,7 @@ export default {
        async submit() {
             this.loadingForm = true;
             const response = await axios.put(
-                this.appRoute("admin.api.role.update", this.id),
+                this.appRoute("admin.api.user.update", this.id),
                 {
                     ...this.formData,
                     actions: this.actions
@@ -203,6 +203,10 @@ export default {
             } else {
                 this.actions = this.actions.filter((item) => item !== action);
             }
+        },
+        handleChangeRole() {
+            this.actions = [];
+            this.fetchUserTemplate();
         },
     },
 };

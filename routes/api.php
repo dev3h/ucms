@@ -29,7 +29,6 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
     });
 
     Route::middleware(['auth'])->group(function () {
-        Route::post('/two-factor-challenge', [AuthenticatedSessionController::class, 'twoFactorChallenge'])->name('two-factor-challenge');
         Route::post('/change-password-first', [AuthenticatedSessionController::class, 'changePasswordFirst'])->name('password-first.change');
 
         Route::apiResource('/system', SystemController::class);
@@ -44,7 +43,7 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
         Route::post('/role/store', [RoleController::class, 'store'])->name('role.store');
         Route::get('/user/{id}/template-permission', [PermissionController::class, 'templatePermissionUser'])->name('user.template-permission');
 
-
+        Route::get('/code-for-permission', [PermissionController::class, 'getCodeForPermission'])->name('permission.code-for-permission');
         // integration with socialite
         Route::get('/integration-socialites', [IntegrationSocialiteController::class, 'getAllIntegrationSocial'])->name('get-all-integration-socialite');
         Route::delete('/unlink-socialite/{provider_id}', [IntegrationSocialiteController::class, 'unlinkIntegrationSocial'])->name('unlink-integration-socialite');
@@ -52,7 +51,6 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
         // change password
         Route::post('/change-password', [ChangePasswordController::class, 'changePassword'])->name('change-password');
 
-        Route::post('/generate-2fa-secret', [TwoFactorAuthController::class, 'generate2faSecret'])->name('generate-2fa-secret');
     });
 
 });

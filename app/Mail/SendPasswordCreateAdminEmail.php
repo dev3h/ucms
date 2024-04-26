@@ -49,13 +49,13 @@ class SendPasswordCreateAdminEmail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         $view  = 'emails.send-mail-password-create-admin';
-        if ($this->user['is_change_password'] == 1) {
-            $view  = 'emails.send-mail-change-email-admin';
-        }
+//        if ($this->user['is_change_password'] == 1) {
+//            $view  = 'emails.send-mail-change-email-admin';
+//        }
         return new Content(
-            view: $view,
+            view: 'emails.send-mail-password-create-admin',
             with: [
-                'admin_name' => $this->admin['full_name'],
+                'admin_name' => $this->admin['name'],
                 'name' => $this->user['name'],
                 'email' => $this->user['email'],
                 'created_at' => Carbon::parse($this->user['created_at'])->format('Y/m/d H:i:s'),

@@ -27,13 +27,13 @@ class PermissionRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('permissions', 'name')->ignore($this->id)->whereNull('deleted_at'),
+                Rule::unique('permissions', 'name')->ignore($this->id),
             ],
             'code' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('permissions', 'code')->ignore($this->id)->whereNull('deleted_at'),
+                Rule::unique('permissions', 'code')->ignore($this->id),
             ],
         ];
     }

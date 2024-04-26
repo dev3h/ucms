@@ -5,7 +5,7 @@
             ref="table"
             :data="items"
             :default-sort="defaultSort || {}"
-            empty-text="データはありません。"
+            empty-text="No data"
             @sort-change="sortChange"
             @selection-change="handleSelectionChange"
             @row-click="rowClick"
@@ -36,7 +36,7 @@
             <!-- Pass on all named slots -->
             <slot v-for="slot in Object.keys($slots)" :slot-scope="slot" :name="slot" />
             <template #empty>
-                <el-empty description="データはありません。" />
+                <el-empty description="No data" />
             </template>
         </el-table>
         <slot v-if="paginate && items.length" name="after">
@@ -294,7 +294,7 @@ export default {
 }
 
 .DataTable .el-table__header th.el-table__cell {
-    background-color: var(--tw-header-table);
+    background-color: var(--tw-gray59);
     color: var(--tw-white);
 }
 .DataTable .el-table__row td.el-table__cell {

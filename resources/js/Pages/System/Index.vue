@@ -9,7 +9,7 @@
                 <div class="w-full flex justify-between gap-2 my-[15px]">
                     <div class="flex gap-2">
                         <div class="col-span-1">
-                            <el-input v-model="filters.search" class="!max-w-[300px] w-full" size="large" placeholder="Search"
+                            <el-input v-model="filters.search" class="!w-80" size="large" placeholder="Search"
                                       clearable @input="filterData">
                                 <template #prefix>
                                     <img src="/images/svg/search-icon.svg" alt=""/>

@@ -9,7 +9,7 @@
                 <div class="w-full flex justify-between gap-2 my-[15px]">
                     <div class="flex gap-2">
                         <div class="col-span-1">
-                            <el-input v-model="filters.search" class="!max-w-[300px] w-full" size="large" placeholder="Search"
+                            <el-input v-model="filters.search" class="!w-[320px]" size="large" placeholder="Search"
                                       clearable @input="filterData">
                                 <template #prefix>
                                     <img src="/images/svg/search-icon.svg" alt=""/>
@@ -106,6 +106,7 @@ export default {
     methods: {
         async fetchData(page = 1) {
             this.loadForm = true
+            this.filters.page = page
             let params = { ...this.filters }
             await axios.get(this.appRoute("admin.api.subsystem.index", params)).then(response => {
                 this.items = response?.data?.data

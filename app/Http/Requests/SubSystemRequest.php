@@ -27,13 +27,13 @@ class SubSystemRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('systems', 'name')->ignore($this->id)->whereNull('deleted_at'),
+                Rule::unique('sub_systems', 'name')->ignore($this->id)->whereNull('deleted_at'),
             ],
             'code' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('systems', 'code')->ignore($this->id)->whereNull('deleted_at'),
+                Rule::unique('sub_systems', 'code')->ignore($this->id)->whereNull('deleted_at'),
             ],
             'system_id' => 'required|exists:systems,id',
         ];

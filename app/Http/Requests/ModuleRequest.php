@@ -27,13 +27,13 @@ class ModuleRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('systems', 'name')->ignore($this->id)->whereNull('deleted_at'),
+                Rule::unique('modules', 'name')->ignore($this->id)->whereNull('deleted_at'),
             ],
             'code' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('systems', 'code')->ignore($this->id)->whereNull('deleted_at'),
+                Rule::unique('modules', 'code')->ignore($this->id)->whereNull('deleted_at'),
             ],
             'sub_system_id' => 'required|exists:sub_systems,id',
         ];

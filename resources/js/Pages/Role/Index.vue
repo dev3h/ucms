@@ -7,8 +7,8 @@
 
             <div class="w-full py-4">
                 <div class="w-full flex justify-between items-center my-[15px]">
-                    <div>
-                        <el-input v-model="filters.name" class="w-full" size="large" placeholder="Search">
+                    <div class="w-80">
+                        <el-input v-model="filters.name" class="w-full" size="large" placeholder="Search" clearable>
                             <template #prefix>
                                 <img src="/images/svg/search-icon.svg" alt="" />
                             </template>
@@ -86,8 +86,9 @@ export default {
         await this.fetchData()
     },
     methods: {
-        async fetchData() {
+        async fetchData(page = 1) {
             this.loadForm = true
+            this.filters.page = page
             let params = { ...this.filters }
             await axios.get(this.appRoute("admin.api.role.index", params)).then(response => {
                 this.items = response?.data?.data

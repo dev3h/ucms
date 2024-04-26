@@ -3,12 +3,12 @@ import {ref, computed, watch, watchEffect, onBeforeMount} from 'vue';
 import { router, useForm, usePage } from '@inertiajs/vue3';
 import ActionSection from '@/Components/Page/ActionSection.vue';
 import ConfirmsPassword from '@/Components/Page/ConfirmsPassword.vue';
-import DangerButton from '@/Components/DangerButton.vue';
-import InputError from '@/Components/InputError.vue';
+import DangerButton from '@/Components/Page/DangerButton.vue';
+import InputError from '@/Components/Page/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import PrimaryButton from '@/Components/Page/PrimaryButton.vue';
+import SecondaryButton from '@/Components/Page/SecondaryButton.vue';
+import TextInput from '@/Components/Page/TextInput.vue';
 
 const props = defineProps({
     requiresConfirmation: Boolean,
@@ -152,7 +152,7 @@ const regenerateRecoveryCodes = () => {
                     </div>
 
                     <div v-if="confirming" class="mt-4">
-                        <InputLabel for="code" value="Code" />
+                        <InputLabel for="code" value="Code" isRequired="true"  />
 
                         <TextInput
                             id="code"
@@ -217,12 +217,12 @@ const regenerateRecoveryCodes = () => {
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="showRecoveryCodes">
-                        <SecondaryButton
+                        <PrimaryButton
                             v-if="recoveryCodes.length === 0 && ! confirming"
                             class="me-3"
                         >
                             Show Recovery Codes
-                        </SecondaryButton>
+                        </PrimaryButton>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="disableTwoFactorAuthentication">

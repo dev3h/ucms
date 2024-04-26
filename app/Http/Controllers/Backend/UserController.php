@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
 use App\Mail\SendPasswordCreateAdminEmail;
+use App\Models\Action;
 use App\Models\Filters\UserFilter;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -87,14 +89,37 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         try {
-            $data = $request->all();
+            $data = $request->validated();
+
             $user = User::find($id);
             if (!$user) {
                 return $this->sendErrorResponse(__('Data not found'), 404);
             }
             DB::beginTransaction();
-            $user->update($data);
+            $user->update(Arr::except($data, ['role_id']));
             $user->syncRoles($data['role_id']);
+
+            $actionSelects = $request->input('actions');
+            if (count($actionSelects) === 0) {
+                DB::commit();
+                return $this->sendSuccessResponse(null,__('Update successfully'));
+            }
+
+            foreach ($actionSelects as $actionSelect) {
+                $action = Action::find($actionSelect['id']);
+                $system = $action->module->subsystem->system;
+                $subsystem = $action->module->subsystem;
+                $module = $action->module;
+                $permissionCode = $system->code . '-' . $subsystem->code . '-' . $module->code . '-' . $action->code;
+                $permission = Permission::where('code', $permissionCode)->first();
+                if ($permission) {
+                    if($actionSelect['checked']) {
+                        $user->givePermissionTo($permission);
+                    } else {
+                        $user->revokePermissionTo($permission);
+                    }
+                }
+            }
             DB::commit();
             return $this->sendSuccessResponse(UserResource::make($user), __('Updated successfully'));
         } catch (\Throwable $e) {

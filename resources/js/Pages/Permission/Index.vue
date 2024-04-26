@@ -9,7 +9,7 @@
                 <div class="w-full flex justify-between gap-2 my-[15px]">
                     <div class="flex gap-2">
                         <div class="col-span-1">
-                            <el-input v-model="filters.search" class="!max-w-[300px] w-full" size="large" placeholder="Search"
+                            <el-input v-model="filters.search" class="!w-[320px]" size="large" placeholder="Search"
                                       clearable @input="filterData">
                                 <template #prefix>
                                     <img src="/images/svg/search-icon.svg" alt=""/>
@@ -32,9 +32,9 @@
                     paginate-background @page-change="changePage">
                     <template #action="{ row }">
                         <div class="flex justify-center items-center gap-x-[12px]">
-                            <div class="cursor-pointer" @click="openShow(row?.id)">
-                                <img src="/images/svg/eye-icon.svg" />
-                            </div>
+<!--                            <div class="cursor-pointer" @click="openShow(row?.id)">-->
+<!--                                <img src="/images/svg/eye-icon.svg" />-->
+<!--                            </div>-->
                             <div class="cursor-pointer" @click="openEdit(row?.id)">
                                 <img src="/images/svg/pen-icon.svg" />
                             </div>
@@ -100,8 +100,9 @@ export default {
         await this.fetchData()
     },
     methods: {
-        async fetchData() {
+        async fetchData(page = 1) {
             this.loadForm = true
+            this.filters.page = page
             let params = { ...this.filters }
             await axios.get(this.appRoute("admin.api.permission.index", params)).then(response => {
                 this.items = response?.data?.data
@@ -127,7 +128,7 @@ export default {
             this.$refs.deleteForm.open(id)
         },
         async deleteAccount(id) {
-            await axios.delete(this.appRoute("admin.api.permission.delete", id)).then(response => {
+            await axios.delete(this.appRoute("admin.api.permission.destroy", id)).then(response => {
                 this.$message.success(response?.data?.message);
                 this.fetchData()
             }).catch(error => {

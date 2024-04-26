@@ -25,9 +25,13 @@ class SocialiteController extends Controller
                 ->where('provider_type', $provider)
                 ->first();
             if (!$social) {
-                return redirect(route('admin.login.form'))->withErrors(__('User not found'));
+                return redirect(route('admin.login.form'))->withErrors(__('User not link this social account'));
             }
             $user = User::find($social->user_id);
+            if($user->two_factor_confirmed_at) {
+                request()->session()->put('login.id', $user->id);
+                return redirect(route('two-factor.login'));
+            }
             Auth::login($user);
 
             return redirect()->route('my-page.index');
