@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
         if (!Hash::check($password, $user->password)) {
             throw ValidationException::withMessages(['password' => __('auth.password')]);
         }
-        $routeRedirect = route('admin.system.index');
+        $routeRedirect = route('admin.profile');
         if($user->two_factor_confirmed_at) {
             $request->session()->put('login.id', $user->id);
             return $this->sendSuccessResponse(route('two-factor.login'));
@@ -43,7 +43,6 @@ class AuthenticatedSessionController extends Controller
             $user->save();
             return $this->sendSuccessResponse(route('admin.password-first.form', ['token' => $str]));
         }
-
 
         return $this->sendSuccessResponse($routeRedirect);
     }

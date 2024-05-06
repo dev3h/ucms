@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\PermissionCodeRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -34,6 +35,7 @@ class PermissionRequest extends FormRequest
                 'string',
                 'max:255',
                 Rule::unique('permissions', 'code')->ignore($this->id),
+                new PermissionCodeRule
             ],
         ];
     }

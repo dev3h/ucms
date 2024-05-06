@@ -22,7 +22,7 @@ class AuthenticatedSessionController extends Controller
         if ($user === null) {
             return to_route('admin.login.form')->with('error', __('Token is invalid'));
         }
-        return Inertia::render('Auth/Password/ChangePasswordFirst', [
+        return Inertia::render('Auth/Page/Password/ChangePasswordFirst', [
             'user' => $user,
         ]);
     }

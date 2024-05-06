@@ -133,7 +133,7 @@ export default {
             this.$refs.deleteForm.open(id)
         },
         async deleteItem(id) {
-            await axios.delete(this.appRoute("admin.api.module.delete", id)).then(response => {
+            await axios.delete(this.appRoute("admin.api.module.destroy", id)).then(response => {
                 this.$message.success(response?.data?.message);
                 this.fetchData()
             }).catch(error => {

@@ -29,7 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->redirectTo(
             guests: '/admin/login',
-            users: '/admin/system',
+            users: '/admin/profile',
         );
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -95,6 +95,9 @@ class UserController extends Controller
             if (!$user) {
                 return $this->sendErrorResponse(__('Data not found'), 404);
             }
+            if ($this->getCurrentUser()->id === $user->id) {
+                return $this->sendErrorResponse(__('You can not update yourself'), 403);
+            }
             DB::beginTransaction();
             $user->update(Arr::except($data, ['role_id']));
             $user->syncRoles($data['role_id']);
@@ -133,6 +136,9 @@ class UserController extends Controller
             $user = User::find($id);
             if (!$user) {
                 return $this->sendErrorResponse(__('Data not found'), 404);
+            }
+            if($this->getCurrentUser()->id === $user->id) {
+                return $this->sendErrorResponse(__('You can not delete yourself'), 403);
             }
             $user->delete();
             return $this->sendSuccessResponse(null, __('Deleted successfully'));

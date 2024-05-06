@@ -131,7 +131,7 @@ export default {
             this.$refs.deleteForm.open(id)
         },
         async deleteAccount(id) {
-            await axios.delete(this.appRoute("admin.api.system.delete", id)).then(response => {
+            await axios.delete(this.appRoute("admin.api.user.destroy", id)).then(response => {
                 this.$message.success(response?.data?.message);
                 this.fetchData()
             }).catch(error => {

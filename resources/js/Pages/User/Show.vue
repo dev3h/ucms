@@ -5,7 +5,7 @@
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
             <div class="w-full my-[15px] flex justify-start items-center">
-                <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">Update</el-button>
+                <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm" :disabled="user.id === id">Update</el-button>
                 <el-button type="info" size="large" @click="goBack()">Back</el-button>
             </div>
             <div class="w-full">
@@ -151,6 +151,9 @@ export default {
                 },
             ];
         },
+        user() {
+            return this.$page.props.auth.user;
+        }
     },
     created() {
         Promise.all([this.fetchUserTemplate(), this.fetchData()]);

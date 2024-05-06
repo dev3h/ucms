@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TemplatePermissionResource;
 use App\Models\System;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
@@ -14,6 +15,7 @@ class UserController extends Controller
 {
     public function index()
     {
+        $this->authorize('view', User::class);
         $roles = Role::all();
         return Inertia::render('User/Index', [
             'roles' => $roles,
@@ -21,6 +23,7 @@ class UserController extends Controller
     }
     public function show($id)
     {
+        $this->authorize('view', User::class);
         $roles = Role::all();
         return Inertia::render('User/Show', [
             'id' => +$id,
@@ -29,13 +32,13 @@ class UserController extends Controller
     }
     public function create(Request $request)
     {
+        $this->authorize('view', User::class);
         $roles = Role::all();
         if($request->input('role_id')) {
             $role = Role::find($request->input('role_id'));
             $permissionOfRole = $role->permissions;
             dd($permissionOfRole);
         }
-//        dd($permissionOfRole);
         $systems = System::all();
         foreach($systems as $system) {
             $subsystems = $system->subsystems;

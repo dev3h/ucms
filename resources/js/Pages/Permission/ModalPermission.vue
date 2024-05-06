@@ -14,30 +14,38 @@
                             <el-input size="large" v-model="formData.name" clearable />
                         </el-form-item>
                     </div>
-                    <div class="flex-1">
-                        <el-form-item label="Code" class="title--bold" prop="name" :error="getError('code')"
+                    <div class="flex-1 w-full">
+                        <el-form-item label="Code" class="title--bold code" prop="code" :error="getError('code')"
                                       :inline-message="hasError('code')">
-                        <div>
+                        <div class="flex-1">
                             <h3 class="font-bold">System</h3>
                             <div>
                                 <div v-for="system in codeTemplate" :key="system.id">
-                                    <input type="radio" :value="system.code" v-model="systemCode" @change="handleChangeSystem(system.code)" />
-                                    <label>{{ system.name }}</label>
+                                    <div class="flex items-center gap-1">
+                                        <input type="radio" :value="system.code" v-model="systemCode" @change="handleChangeSystem(system.code)" />
+                                        <label>{{ system.name }}</label>
+                                    </div>
                                     <div v-if="systemCode && systemCode === system.code" class="ml-5">
                                         <h3 class="font-bold">Sub System</h3>
                                         <div v-for="subsystem in system.subsystems" :key="subsystem.id">
-                                            <input type="radio" :value="subsystem.code" v-model="subsytemCode" @change="handleChangeSubSystem(subsystem.code)" />
-                                            <label>{{ subsystem.name }}</label>
+                                            <div class="flex items-center gap-1">
+                                                <input type="radio" :value="subsystem.code" v-model="subsytemCode" @change="handleChangeSubSystem(subsystem.code)" />
+                                                <label>{{ subsystem.name }}</label>
+                                            </div>
                                             <div v-if="subsytemCode && subsytemCode === subsystem.code" class="ml-5">
                                                 <h3 class="font-bold">Module</h3>
                                                 <div v-for="module in subsystem.modules" :key="module.id">
-                                                    <input type="radio" :value="module.code" v-model="moduleCode" @change="handleChangeModule(module.code)" />
-                                                    <label>{{ module.name }}</label>
+                                                    <div class="flex items-center gap-1">
+                                                        <input type="radio" :value="module.code" v-model="moduleCode" @change="handleChangeModule(module.code)" />
+                                                        <label>{{ module.name }}</label>
+                                                    </div>
                                                     <div v-if="moduleCode && moduleCode === module.code" class="ml-5">
                                                         <h3 class="font-bold">Action</h3>
                                                         <div v-for="action in module.actions" :key="action.id">
-                                                            <input type="radio" :value="action.code" v-model="actionCode" @change="handleChangeAction(action.code)"  />
-                                                            <label>{{ action.name }}</label>
+                                                            <div class="flex items-center gap-1">
+                                                                <input type="radio" :value="action.code" v-model="actionCode" @change="handleChangeAction(action.code)"  />
+                                                                <label>{{ action.name }}</label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -89,6 +97,7 @@ export default {
             codeTemplate: [],
             rules: {
                 name: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
+                code: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
             },
             loadingForm: false
         }
@@ -153,27 +162,35 @@ export default {
             this.codeTemplate = data?.data
             this.loadingForm = false
         },
+        handleCodePermission(systemCode, subsytemCode, moduleCode, actionCode)
+        {
+            this.formData.code = `${systemCode}-${subsytemCode}-${moduleCode}-${actionCode}`
+        },
         handleChangeSystem(code)
         {
             this.subsytemCode = null
             this.moduleCode = null
             this.actionCode = null
             this.systemCode = code
+            this.handleCodePermission(this.systemCode, this.subsytemCode, this.moduleCode, this.actionCode)
         },
         handleChangeSubSystem(code)
         {
             this.moduleCode = null
             this.actionCode = null
             this.subsytemCode = code
+            this.handleCodePermission(this.systemCode, this.subsytemCode, this.moduleCode, this.actionCode)
         },
         handleChangeModule(code)
         {
             this.actionCode = null
             this.moduleCode = code
+            this.handleCodePermission(this.systemCode, this.subsytemCode, this.moduleCode, this.actionCode)
         },
         handleChangeAction(code)
         {
             this.actionCode = code
+            this.handleCodePermission(this.systemCode, this.subsytemCode, this.moduleCode, this.actionCode)
         },
         prepareSubmit() {
           let action = null;
@@ -190,7 +207,9 @@ export default {
 }
 </script>
 <style scoped>
-:deep(.el-radio-group) {
-    display: block;
+:deep(.code .el-form-item__content) {
+    flex-direction: column-reverse;
+    align-items: start;
+    padding-left: 20px;
 }
 </style>
