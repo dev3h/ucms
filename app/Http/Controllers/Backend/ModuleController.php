@@ -8,12 +8,14 @@ use App\Http\Requests\ModuleRequest;
 use App\Http\Resources\ModuleResource;
 use App\Models\Filters\ModuleFilter;
 use App\Models\Module;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('view', User::class);
         try {
             $data = Module::filters(new ModuleFilter($request))
                 ->orderBy('created_at', 'desc')
@@ -27,6 +29,7 @@ class ModuleController extends Controller
 
     public function store(ModuleRequest $request)
     {
+        $this->authorize('create', User::class);
         try {
             $data = $request->validated();
             Module::create($data);
@@ -38,6 +41,7 @@ class ModuleController extends Controller
 
     public function update($id, ModuleRequest $request)
     {
+        $this->authorize('update', User::class);
         $data = $request->validated();
         try {
             $module = Module::find($id);
@@ -53,6 +57,7 @@ class ModuleController extends Controller
 
     public function show($id)
     {
+        $this->authorize('view', User::class);
         try {
             $module = Module::find($id);
             if(!$module) {
@@ -66,6 +71,7 @@ class ModuleController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('delete', User::class);
         try {
             $module = Module::find($id);
             if(!$module) {

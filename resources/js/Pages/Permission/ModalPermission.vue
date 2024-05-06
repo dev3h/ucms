@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-dialog v-model="isShowModal" :close-on-click-modal="false">
+        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
             <template #header>
                 <h2 class="text-2xl font-bold">{{ formType === 'add' ? 'Add' : 'Edit' }}</h2>
             </template>
@@ -116,6 +116,8 @@ export default {
             this.actionCode = null
             this.isShowModal = false
             this.current_id = null
+            this.$refs.form.resetFields()
+            this.formType = 'add'
         },
         async submit() {
             this.loadingForm = true

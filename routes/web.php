@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\IntegrationSocialiteController;
 use App\Http\Controllers\Backend\SocialiteController;
 use App\Http\Controllers\Frontend\ActionController;
+use App\Http\Controllers\Frontend\ApplicationUserController;
 use App\Http\Controllers\Frontend\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Frontend\Auth\ResetPasswordController;
 use App\Http\Controllers\Frontend\ModuleController;
@@ -72,6 +73,9 @@ Route::prefix("admin/")->as("admin.")->group(function () {
         // integration
         Route::get('/integration/redirect/{provider}', [IntegrationSocialiteController::class, 'redirectIntegrationSocial'])->name('integration.socialite.redirect');
         Route::get('/integration/callback/{provider}', [IntegrationSocialiteController::class, 'callbackIntegrationSocial'])->name('integration.socialite.callback');
+
+       // application user
+        Route::get('/application', [ApplicationUserController::class, 'index'])->name('application');
     });
 
 });

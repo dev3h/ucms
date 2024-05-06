@@ -25,9 +25,15 @@
                     <template #dropdown>
                         <el-dropdown-menu class="w-48 !p-4">
                             <el-dropdown-item command="changeProfile">
-                                <div class="flex items-center" @click="openProfileForm">
+                                <div class="flex items-center">
                                     <img src="/images/svg/profile-icon.svg" class="mr-2" />
                                     <span class="whitespace-nowrap">Profile</span>
+                                </div>
+                            </el-dropdown-item>
+                            <el-dropdown-item command="changeApplication">
+                                <div class="flex items-center">
+                                    <img src="/images/svg/application-icon.svg" class="mr-2" />
+                                    <span class="whitespace-nowrap">Application</span>
                                 </div>
                             </el-dropdown-item>
                             <el-dropdown-item command="logout">
@@ -88,6 +94,9 @@ export default {
         openProfileForm() {
             this.$inertia.visit(this.appRoute('admin.profile'))
         },
+        openApplicationForm() {
+            this.$inertia.visit(this.appRoute('admin.application'))
+        },
         openPasswordForm() {
             this.$inertia.visit(this.appRoute('admin.form-change-password'))
         },
@@ -104,6 +113,9 @@ export default {
                     break
                 case 'changePassword':
                     this.openPasswordForm()
+                    break
+                case 'changeApplication':
+                    this.openApplicationForm()
                     break
                 default:
                     break

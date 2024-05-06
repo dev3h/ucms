@@ -8,12 +8,14 @@ use App\Http\Requests\ActionRequest;
 use App\Http\Resources\ActionResource;
 use App\Models\Action;
 use App\Models\Filters\ActionFilter;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ActionController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('view', User::class);
         try {
             $data = Action::filters(new ActionFilter($request))
                 ->orderBy('created_at', 'desc')
@@ -27,6 +29,7 @@ class ActionController extends Controller
 
     public function store(ActionRequest $request)
     {
+        $this->authorize('create', User::class);
         try {
             $data = $request->all();
             Action::create($data);
@@ -38,6 +41,7 @@ class ActionController extends Controller
 
     public function update($id, ActionRequest $request)
     {
+        $this->authorize('update', User::class);
         $data = $request->all();
         try {
             $action = Action::find($id);
@@ -53,6 +57,7 @@ class ActionController extends Controller
 
     public function show($id)
     {
+        $this->authorize('view', User::class);
         try {
             $action = Action::find($id);
             if(!$action) {
@@ -66,6 +71,7 @@ class ActionController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('delete', User::class);
         try {
             $action = Action::find($id);
             if(!$action) {

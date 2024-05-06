@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-dialog v-model="isShowModal" :close-on-click-modal="false">
+        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
             <template #header>
                 <h2 class="text-2xl font-bold">{{ formType === 'add' ? 'Add' : 'Edit' }}</h2>
             </template>
@@ -74,6 +74,7 @@ export default {
                 name: null,
                 code: null,
             }
+            this.$refs.form.resetFields()
             this.isShowModal = false
             this.current_id = null
             this.formType = 'add'
