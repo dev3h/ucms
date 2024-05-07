@@ -13,11 +13,8 @@ class SystemSeeder extends Seeder
     {
         $systems = [
             ['name' => 'Quản lý Học vụ', 'code' => 'ACM'],
-            ['name' => 'Quản lý Sinh viên', 'code' => 'STA'],
-            ['name' => 'Quản lý Thư viện', 'code' => 'LIB'],
-            ['name' => 'Quản lý Tài chính', 'code' => 'FIN'],
-            ['name' => 'Quản lý Nhân sự', 'code' => 'HRM'],
-            ['name' => 'Quản lý Đào tạo', 'code' => 'TRM'],
+            ['name' => 'Quản lý Nghiên cứu Khoa học', 'code' => 'RES'],
+            ['name' => 'Quản lý Hành chính', 'code' => 'ADM'],
         ];
 
         foreach ($systems as $system) {

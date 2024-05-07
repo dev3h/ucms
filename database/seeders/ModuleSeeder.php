@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\SubSystem;
 use Illuminate\Database\Seeder;
 
 class ModuleSeeder extends Seeder
@@ -11,24 +12,60 @@ class ModuleSeeder extends Seeder
      */
     public function run(): void
     {
-        $modules = [
-            ['name' => 'Tạo Khóa học', 'code' => 'CRC', 'sub_system_id' => 1],
-            ['name' => 'Chỉnh sửa Khóa học', 'code' => 'EDC', 'sub_system_id' => 1],
-            ['name' => 'Ghi nhận Điểm số', 'code' => 'RDG', 'sub_system_id' => 2],
-            ['name' => 'Xem Điểm số', 'code' => 'VWG', 'sub_system_id' => 2],
-            ['name' => 'Đăng ký Học phần', 'code' => 'CEN', 'sub_system_id' => 3],
-            ['name' => 'Xem Thời khóa biểu', 'code' => 'VSC', 'sub_system_id' => 3],
-            ['name' => 'Thêm Sách', 'code' => 'ADB', 'sub_system_id' => 4],
-            ['name' => 'Chỉnh sửa Sách', 'code' => 'EBK', 'sub_system_id' => 4],
-            ['name' => 'Quản lý Ngân sách', 'code' => 'MAN', 'sub_system_id' => 5],
-            ['name' => 'Thêm Nhân viên', 'code' => 'EMP', 'sub_system_id' => 6],
-            ['name' => 'Chỉnh sửa Thông tin Nhân viên', 'code' => 'INF', 'sub_system_id' => 6],
-            ['name' => 'Tạo Khóa học đào tạo', 'code' => 'TRC', 'sub_system_id' => 7],
-            ['name' => 'Xem Kế hoạch đào tạo', 'code' => 'TPL', 'sub_system_id' => 7],
+        // Module liên quan đến sinh viên
+        $studentModules = [
+            ['name' => 'Quản lý sinh viên', 'code' => 'STU'],
+            ['name' => 'Xem danh sách sinh viên', 'code' => 'LST'],
+            ['name' => 'Thêm mới sinh viên', 'code' => 'ADD'],
+            ['name' => 'Chỉnh sửa thông tin sinh viên', 'code' => 'EDI'],
+            ['name' => 'Xóa sinh viên', 'code' => 'DEL'],
+            ['name' => 'Xem điểm số sinh viên', 'code' => 'VGR'],
+            ['name' => 'Quản lý học bổng sinh viên', 'code' => 'SCH'],
+            ['name' => 'Quản lý kỷ luật sinh viên', 'code' => 'DIS'],
         ];
 
-        foreach ($modules as $module) {
+        foreach ($studentModules as $module) {
             \App\Models\Module::create($module);
+        }
+
+        // Module liên quan đến giảng viên
+        $teacherModules = [
+            ['name' => 'Quản lý giảng viên', 'code' => 'TEA'],
+            ['name' => 'Xem danh sách giảng viên', 'code' => 'LST'],
+            ['name' => 'Thêm mới giảng viên', 'code' => 'ADD'],
+            ['name' => 'Chỉnh sửa thông tin giảng viên', 'code' => 'EDI'],
+            ['name' => 'Xóa giảng viên', 'code' => 'DEL'],
+            ['name' => 'Phân công giảng dạy', 'code' => 'ASS'],
+            ['name' => 'Quản lý đánh giá giảng viên', 'code' => 'EVA'],
+            ['name' => 'Quản lý lương thưởng giảng viên', 'code' => 'SAL'],
+        ];
+
+        foreach ($teacherModules as $module) {
+            \App\Models\Module::create($module);
+        }
+
+        // Module liên quan đến trường đại học
+            $universityModules = [
+                ['name' => 'Quản lý khoa/viện', 'code' => 'DEP'],
+                ['name' => 'Quản lý ngành học', 'code' => 'MAJ'],
+                ['name' => 'Quản lý chuyên ngành', 'code' => 'SPE'],
+                ['name' => 'Quản lý học phần', 'code' => 'COU'],
+                ['name' => 'Quản lý lịch học', 'code' => 'SCH'],
+                ['name' => 'Quản lý điểm thi', 'code' => 'EXA'],
+                ['name' => 'Quản lý văn phòng', 'code' => 'OFF'],
+                ['name' => 'Quản lý tài chính', 'code' => 'FIN'],
+                ['name' => 'Quản lý cơ sở vật chất', 'code' => 'INF'],
+            ];
+
+        foreach ($universityModules as $module) {
+            \App\Models\Module::create($module);
+        }
+
+        $subsystems = SubSystem::all();
+
+        foreach ($subsystems as $subsystem) {
+            $modules = \App\Models\Module::all();
+            $subsystem->modules()->attach($modules);
         }
     }
 }

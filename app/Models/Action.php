@@ -13,8 +13,8 @@ class Action extends Model
 
     protected $guarded = [];
 
-    public function module()
+    public function modules()
     {
-        return $this->belongsTo(Module::class);
+        return $this->belongsToMany(Module::class, 'module_actions');
     }
 }
