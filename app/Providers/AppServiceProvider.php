@@ -2,7 +2,17 @@
 
 namespace App\Providers;
 
+use App\Models\Action;
+use App\Models\Module;
+use App\Models\SubSystem;
+use App\Models\System;
+use App\Observers\ActionObserver;
+use App\Observers\ModuleObserver;
+use App\Observers\PermissionObserver;
+use App\Observers\SubSystemObserver;
+use App\Observers\SystemObserver;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Permission\Models\Permission;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +36,12 @@ class AppServiceProvider extends ServiceProvider
         foreach ($filesPath as $filePath) {
             require_once $filePath;
         }
+
+        // observer
+        System::observe(SystemObserver::class);
+        SubSystem::observe(SubSystemObserver::class);
+        Module::observe(ModuleObserver::class);
+        Action::observe(ActionObserver::class);
+        Permission::observe(PermissionObserver::class);
     }
 }

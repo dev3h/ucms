@@ -28,7 +28,7 @@ class UpdateResetPasswordRequest extends FormRequest
         ];
         return [
             'email' => [
-                'required', 'string', 'email', Rule::exists('admins', 'email')->whereNull('deleted_at'),
+                'required', 'string', 'email', Rule::exists('users', 'email')->whereNull('deleted_at'),
                 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}+$/',
             ],
             'token' => 'required',

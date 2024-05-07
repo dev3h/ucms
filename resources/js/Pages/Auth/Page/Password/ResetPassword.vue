@@ -5,7 +5,7 @@
         <div
             class="text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase leading-[28.80px] text-center mb-[17px]"
         >
-            新しいパスワードを変更する
+            Change new password
         </div>
         <div class="w-full sm:max-w-md px-6 py-4 overflow-hidden">
             <div class="mt-4 form-change-password">
@@ -17,7 +17,7 @@
                     @keypress.enter="doSubmit"
                 >
                     <el-form-item
-                        label="新しいパスワード"
+                        label="New Password"
                         prop="password"
                         :inline-message="hasError('password')"
                         :error="getError('password')"
@@ -31,7 +31,7 @@
                         />
                     </el-form-item>
                     <el-form-item
-                        label="新しいパスワード (再入力)"
+                        label="New password (re-enter)"
                         prop="password_confirmation"
                         :inline-message="hasError('password_confirmation')"
                         :error="getError('password_confirmation')"
@@ -53,7 +53,7 @@
                         size="large"
                         @click.prevent="doSubmit"
                     >
-                        申請する
+                        Update
                     </el-button>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                 class="text-center text-zinc-800 text-sm font-bold font-['Meiryo'] leading-[21px] cursor-pointer underline"
                 :href="this.appRoute('admin.login.form')"
             >
-                ログイン画面に戻る
+                Return to login screen
             </Link>
         </div>
     </div>
@@ -90,24 +90,17 @@ export default {
                 token: this.token,
             },
             rules: {
-                email: [
-                    {
-                        required: true,
-                        message: "この項目は必須です。",
-                        trigger: ["change", "blur"],
-                    },
-                ],
                 password: [
                     {
                         required: true,
-                        message: "この項目は必須です。",
+                        message: "This field is required",
                         trigger: ["change", "blur"],
                     },
                 ],
                 password_confirmation: [
                     {
                         required: true,
-                        message: "この項目は必須です。",
+                        message: "This field is required",
                         trigger: ["change", "blur"],
                     },
                 ],

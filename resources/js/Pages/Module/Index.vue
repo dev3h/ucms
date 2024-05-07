@@ -1,25 +1,40 @@
 <template>
     <AdminLayout>
         <div class="w-full h-full bg-white px-4">
-            <!-- <div class="w-full pt-3 pb-2 border-b-[1px]">
+            <div class="w-full pt-3 pb-2 border-b-[1px]">
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
-            </div> -->
+            </div>
 
             <div class="w-full py-4">
-                <div class="w-full flex justify-between items-center">
-                    <h3 class="text-[16px] text-[#55595c] font-bold">絞り込み条件</h3>
-                    <div>
-                        <el-button type="primary" size="large" @click="openCreate()">Add</el-button>
+                <div class="w-full flex justify-between gap-2 my-[15px]">
+                    <div class="flex gap-2">
+                        <div class="col-span-1">
+                            <el-input v-model="filters.search" class="!max-w-[320px]" size="large" placeholder="Search"
+                                      clearable @input="filterData">
+                                <template #prefix>
+                                    <img src="/images/svg/search-icon.svg" alt=""/>
+                                </template>
+                            </el-input>
+                        </div>
+                        <div class="flex-col">
+                            <el-date-picker
+                                v-model="filters.created_at"
+                                type="date"
+                                placeholder="Created at"
+                                size="large"
+                                class="!w-[185px]"
+                                value-format="YYYY-MM-DD"
+                                format="YYYY/MM/DD"
+                                @change="filterData"
+                            />
+                        </div>
                     </div>
-                </div>
-
-                <div class="w-full grid grid-cols-4 gap-2 my-[15px]">
-                    <div class="col-span-1">
-                        <el-input v-model="filters.name" class="w-full" size="large" placeholder="Search">
-                            <template #prefix>
-                                <img src="/images/svg/search-icon.svg" alt="" />
-                            </template>
-                        </el-input>
+                    <div>
+                        <div class="w-full flex justify-between items-center">
+                            <div>
+                                <el-button type="primary" size="large" @click="openCreate()">Add</el-button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -29,9 +44,9 @@
                     paginate-background @page-change="changePage">
                     <template #action="{ row }">
                         <div class="flex justify-center items-center gap-x-[12px]">
-                            <div class="cursor-pointer" @click="openShow(row?.id)">
-                                <img src="/images/svg/eye-icon.svg" />
-                            </div>
+<!--                            <div class="cursor-pointer" @click="openShow(row?.id)">-->
+<!--                                <img src="/images/svg/eye-icon.svg" />-->
+<!--                            </div>-->
                             <div class="cursor-pointer" @click="openEdit(row?.id)">
                                 <img src="/images/svg/pen-icon.svg" />
                             </div>
@@ -43,7 +58,8 @@
                 </DataTable>
             </div>
         </div>
-        <DeleteForm ref="deleteForm" @delete-action="deleteAccount" />
+        <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
+        <ModalModule ref="modalModule" :redirectRoute="appRoute('admin.module.index')" />
     </AdminLayout>
 </template>
 <script>
@@ -53,21 +69,14 @@ import { searchMenu } from '@/Mixins/breadcrumb.js'
 import DataTable from '@/Components/Page/DataTable.vue'
 import axios from '@/Plugins/axios'
 import DeleteForm from '@/Components/Page/DeleteForm.vue';
-import debounce from 'lodash/debounce'
+import debounce from 'lodash.debounce'
+import ModalModule from "./ModalModule.vue";
 export default {
-    components: { AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
-    props: {
-        roles: {
-            type: Array,
-            default: () => []
-        }
-    },
+    components: {ModalModule, AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
     data() {
         return {
             items: [],
             filters: {
-                name: null,
-                role: null,
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
@@ -95,39 +104,36 @@ export default {
         await this.fetchData()
     },
     methods: {
-        async fetchData() {
+        async fetchData(page = 1) {
             this.loadForm = true
+            this.filters.page = page
             let params = { ...this.filters }
             await axios.get(this.appRoute("admin.api.module.index", params)).then(response => {
                 this.items = response?.data?.data
                 this.paginate = response?.data?.meta
                 this.loadForm = false
             }).catch(error => {
-                console.log(error)
+                this.loadForm = false
+                this.$message.error(error?.response?.data?.message)
             })
         },
-        changePage(value) {
-            this.filters.page = value
-            this.fetchData()
+        changePage(page) {
+            this.fetchData(page)
         },
         filterData: debounce(function () {
             this.fetchData()
         }, 500),
-        showRole(value) {
-            let role = findRole(value)
-            return role?.label
-        },
         openCreate() {
-            this.$inertia.visit(this.appRoute('admin.system.create'))
+            this.$refs.modalModule.open()
         },
         openEdit(id) {
-            this.$inertia.visit(this.appRoute('admin.system.update', id))
+            this.$refs.modalModule.open(id)
         },
         openDeleteForm(id) {
             this.$refs.deleteForm.open(id)
         },
-        async deleteAccount(id) {
-            await axios.delete(this.appRoute("admin.api.system.delete", id)).then(response => {
+        async deleteItem(id) {
+            await axios.delete(this.appRoute("admin.api.module.destroy", id)).then(response => {
                 this.$message.success(response?.data?.message);
                 this.fetchData()
             }).catch(error => {

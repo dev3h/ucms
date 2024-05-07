@@ -8,6 +8,7 @@ use App\Http\Requests\RoleRequest;
 use App\Http\Resources\RoleResource;
 use App\Models\Action;
 use App\Models\Filters\RoleFilter;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
@@ -17,6 +18,7 @@ class RoleController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('view', User::class);
         try {
             $data = Role::filters(new RoleFilter($request))
                 ->orderBy('created_at', 'desc')
@@ -30,6 +32,7 @@ class RoleController extends Controller
 
     public function show($id)
     {
+        $this->authorize('view', User::class);
         try {
             $role = Role::find($id);
             if(!$role) {
@@ -42,6 +45,7 @@ class RoleController extends Controller
     }
     public function store(RoleRequest $request)
     {
+        $this->authorize('create', User::class);
         try {
             $data = $request->all();
             DB::beginTransaction();
@@ -71,6 +75,7 @@ class RoleController extends Controller
 
     public function update($id, RoleRequest $request)
     {
+        $this->authorize('update', User::class);
         try {
             $data = $request->all();
             DB::beginTransaction();
@@ -107,6 +112,21 @@ class RoleController extends Controller
             return $this->sendSuccessResponse(null,__('Update successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
+            return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        $this->authorize('delete', User::class);
+        try {
+            $role = Role::find($id);
+            if(!$role) {
+                return $this->sendErrorResponse(__('Data not found'), 404);
+            }
+            $role->delete();
+            return $this->sendSuccessResponse(null, __('Deleted successfully'));
+        } catch (\Throwable $e) {
             return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());
         }
     }

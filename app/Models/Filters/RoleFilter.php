@@ -30,7 +30,8 @@ class RoleFilter implements Filters
     {
         $request = $this->request;
         $query->when(isset($request->search), function ($query) use ($request) {
-            $query->whereLike('name', $request->input('search'));
+            $query->whereLike('name', $request->input('search'))
+            ->orWhereLike('code', $request->input('search'));
         });
     }
 }

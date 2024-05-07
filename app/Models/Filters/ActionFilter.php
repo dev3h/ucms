@@ -30,7 +30,8 @@ class ActionFilter implements Filters
     {
         $request = $this->request;
         $query->when(isset($request->search), function ($query) use ($request) {
-            $query->whereLike('name', $request->input('search'));
+            $query->whereLike('name', $request->input('search'))
+                ->orWhereLike('code', $request->input('search'));
         })
         ->when(isset($request->created_at), function ($query) use ($request) {
             $query->whereDate('created_at', $request->input('created_at'));

@@ -7,8 +7,8 @@
 
             <div class="w-full py-4">
                 <div class="w-full flex justify-between items-center my-[15px]">
-                    <div>
-                        <el-input v-model="filters.name" class="w-full" size="large" placeholder="Search">
+                    <div class="w-80">
+                        <el-input v-model="filters.name" class="w-full" size="large" placeholder="Search" clearable>
                             <template #prefix>
                                 <img src="/images/svg/search-icon.svg" alt="" />
                             </template>
@@ -35,7 +35,7 @@
                 </DataTable>
             </div>
         </div>
-        <DeleteForm ref="deleteForm" @delete-action="deleteAccount" />
+        <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
     </AdminLayout>
 </template>
 <script>
@@ -86,8 +86,9 @@ export default {
         await this.fetchData()
     },
     methods: {
-        async fetchData() {
+        async fetchData(page = 1) {
             this.loadForm = true
+            this.filters.page = page
             let params = { ...this.filters }
             await axios.get(this.appRoute("admin.api.role.index", params)).then(response => {
                 this.items = response?.data?.data
@@ -104,18 +105,14 @@ export default {
         filterData: debounce(function () {
             this.fetchData()
         }, 500),
-        showRole(value) {
-            let role = findRole(value)
-            return role?.label
-        },
         openCreate() {
             this.$inertia.visit(this.appRoute('admin.role.create'))
         },
         openDeleteForm(id) {
             this.$refs.deleteForm.open(id)
         },
-        async deleteAccount(id) {
-            await axios.delete(this.appRoute("admin.api.system.delete", id)).then(response => {
+        async deleteItem(id) {
+            await axios.delete(this.appRoute("admin.api.role.destroy", id)).then(response => {
                 this.$message.success(response?.data?.message);
                 this.fetchData()
             }).catch(error => {

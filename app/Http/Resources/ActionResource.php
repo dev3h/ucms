@@ -18,6 +18,10 @@ class ActionResource extends JsonResource
             "id" => $this?->id,
             "name" => $this?->name,
             "code" => $this?->code,
+            'module' => [
+                'id' => $this?->module?->id,
+                'name' => $this?->module?->name,
+            ],
             "created_at" => format_date($this?->created_at),
         ];
     }

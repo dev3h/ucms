@@ -29,7 +29,12 @@ class AuthenticatedSessionController extends Controller
         if (!Hash::check($password, $user->password)) {
             throw ValidationException::withMessages(['password' => __('auth.password')]);
         }
-        $routeRedirect = route('admin.system.index');
+        $routeRedirect = route('admin.profile');
+        if($user->two_factor_confirmed_at) {
+            $request->session()->put('login.id', $user->id);
+            return $this->sendSuccessResponse(route('two-factor.login'));
+        }
+
         Auth::loginUsingId($user->id, (bool)$request->remember);
 
         if ($user->is_change_password == PassFirstChangeEnum::NOT_CHANGE->value) {

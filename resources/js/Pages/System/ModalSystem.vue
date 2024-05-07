@@ -1,35 +1,30 @@
 <template>
     <div>
-        <el-dialog v-model="isShowModal" width="350">
+        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
+            <template #header>
+                <h2 class="text-2xl font-bold">{{ formType === 'add' ? 'Add' : 'Edit' }}</h2>
+            </template>
             <div class="w-full">
-                <el-form class="w-full grid grid-cols-3 gap-5" ref="form" :model="formData" :rules="rules"
+                <el-form class="w-full flex gap-2" ref="form" :model="formData" :rules="rules"
                     label-position="top">
 
-                    <div class="col-span-1">
-                        <el-form-item label="氏名" class="title--bold" prop="name" :error="getError('name')"
+                    <div class="flex-1">
+                        <el-form-item label="Name" class="title--bold" prop="name" :error="getError('name')"
                             :inline-message="hasError('name')">
-                            <el-input size="large" v-model="formData.name" />
+                            <el-input size="large" v-model="formData.name" clearable />
                         </el-form-item>
                     </div>
-
-                    <div class="col-span-1">
-                        <el-form-item label="権限" class="title--bold" prop="role" :error="getError('role')"
-                            :inline-message="hasError('role')">
-                            <el-select placeholder="権限" size="large" v-model="formData.role">
-                                <el-option v-for="role in roles" :key="role?.id" :label="showRole(role?.name)"
-                                    :value="role?.id" />
-                            </el-select>
-                        </el-form-item>
-                    </div>
-
-
-                    <div class="col-span-1">
-                        <el-form-item label="メールアドレス" class="title--bold" prop="email" :error="getError('email')"
-                            :inline-message="hasError('email')">
-                            <el-input size="large" v-model="formData.email" />
+                    <div class="flex-1">
+                        <el-form-item label="Code" class="title--bold" prop="name" :error="getError('code')"
+                                      :inline-message="hasError('code')">
+                            <el-input size="large" v-model="formData.code" clearable />
                         </el-form-item>
                     </div>
                 </el-form>
+            </div>
+            <div class="w-full my-[15px] flex justify-center items-center">
+                <el-button type="info" size="large" @click="closeModal">Cancel</el-button>
+                <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">Save</el-button>
             </div>
         </el-dialog>
     </div>
@@ -37,22 +32,19 @@
 
 <script>
 import axios from '@/Plugins/axios'
+import form from "@/Mixins/form.js";
 export default {
+    mixins: [form],
     props: {
-        action: {
-            type: String,
-        },
         redirectRoute: {
             type: String,
             default: null,
         },
-        type: {
-            type: String,
-        },
     },
-    emits: ['delete-success', 'delete-action', 'add-action', 'update-action'],
+    emits: ['add-success', 'update-success'],
     data() {
         return {
+            formType: 'add',
             isShowModal: false,
             current_id: null,
             formData: {
@@ -62,50 +54,64 @@ export default {
             },
             rules: {
                 name: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
-                email: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
-                role: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
+                code: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
             },
             loadingForm: false
         }
     },
     methods: {
-        open(id) {
+        async open(id) {
             if (id) {
                 this.current_id = id
+                this.formType = 'edit'
+                await this.fetchData()
             }
             this.isShowModal = true
         },
-        closeDeleteForm() {
+        closeModal() {
+            this.formData = {
+                id: null,
+                name: null,
+                code: null,
+            }
+            this.$refs.form.resetFields()
             this.isShowModal = false
             this.current_id = null
+            this.formType = 'add'
         },
-        async deleteItem() {
-            if (!this.action) {
-                this.$emit('delete-action', this.current_id)
-                this.isShowDeleteForm = false
-            } else {
-                try {
-                    this.loadingForm = true
-                    const { status, data } = await axios.delete(this.action + this.current_id)
-                    this.$message({
-                        type: status === 200 ? 'success' : 'error',
-                        message: data?.message,
-                    })
-                    this.isShowDeleteForm = false
-                    if (this.redirectRoute != null) {
-                        this.$inertia.visit(this.appRoute(this.redirectRoute))
-                    } else {
-                        this.$emit('delete-success', this.current_id)
-                    }
-                } catch (e) {
-                    this.$message({
-                        type: 'error',
-                        message: e?.response?.data?.message,
-                    })
-                }
+        async submit() {
+            this.loadingForm = true
+
+            const { action, method } = this.prepareSubmit()
+            const { status, data } = await axios[method](action, this.formData)
+            this.$message({
+                type: status === 200 ? 'success' : 'error',
+                message: data?.message,
+            })
+            this.loadingForm = false
+            this.isShowModal = false
+            this.$inertia.visit(this.redirectRoute)
+        },
+        async fetchData()
+        {
+            if (this.formType === 'edit') {
+                this.loadingForm = true
+                const { data } = await axios.get(this.appRoute('admin.api.system.show', this.current_id))
+                this.formData = data?.data
+                this.loadingForm = false
             }
         },
-        
+        prepareSubmit() {
+          let action = null;
+          let method = 'post';
+            if (this.formType === 'add') {
+                action = this.appRoute('admin.api.system.store');
+            } else {
+                action = this.appRoute('admin.api.system.update', this.current_id);
+                method = 'put';
+            }
+            return {action, method};
+        }
     },
 }
 </script>

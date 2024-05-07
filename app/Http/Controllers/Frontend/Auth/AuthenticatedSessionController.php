@@ -22,7 +22,7 @@ class AuthenticatedSessionController extends Controller
         if ($user === null) {
             return to_route('admin.login.form')->with('error', __('Token is invalid'));
         }
-        return Inertia::render('Auth/Password/ChangePasswordFirst', [
+        return Inertia::render('Auth/Page/Password/ChangePasswordFirst', [
             'user' => $user,
         ]);
     }
@@ -34,5 +34,10 @@ class AuthenticatedSessionController extends Controller
         request()->session()->invalidate();
         request()->session()->regenerateToken();
         return redirect($routeRedirect);
+    }
+
+    public function formTwoFactorChallenge()
+    {
+        return Inertia::render('Auth/Page/TwoFactorChallenge');
     }
 }

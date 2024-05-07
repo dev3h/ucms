@@ -44,13 +44,11 @@ select:focus {
 .el-dialog__header {
     width: 100%;
     background: var(--tw-white);
-    padding: 18px !important;
     border-radius: 0.5rem 0.5rem 0 0;
     color: #000;
     font-size: 1.25rem;
     font-weight: 500;
     line-height: 1.5rem;
-    padding-top: 20px !important;
 }
 
 .el-dialog__headerbtn {
@@ -58,6 +56,7 @@ select:focus {
     height: 48px !important;
     margin-top: 8px;
     margin-right: 8px;
+    /*display: none;*/
 }
 
 .el-dialog__headerbtn .el-dialog__close {
