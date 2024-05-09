@@ -1,0 +1,111 @@
+<template>
+    <div>
+        <div class="w-full py-4">
+            <div class="w-full flex justify-between items-center my-[15px]">
+                <div class="w-80">
+                    <el-input v-model="filters.name" class="w-full" size="large" placeholder="Search" clearable>
+                        <template #prefix>
+                            <img src="/images/svg/search-icon.svg" alt="" />
+                        </template>
+                    </el-input>
+                </div>
+                <div class="flex justify-end w-full">
+                    <el-button type="primary" size="large" @click="openCreate()">Assign users</el-button>
+                </div>
+                <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
+            </div>
+        </div>
+
+        <div class="w-full">
+            <DataTable v-loading="loadForm" :fields="fields" :items="items" :paginate="paginate" footer-center
+                       paginate-background @page-change="changePage">
+                <template #email="{row}">
+                    <Link v-if="row?.id" :href="route('admin.user.show', row?.id)">{{row?.email}}</Link>
+                </template>
+                <template #action="{ row }">
+                    <div class="flex justify-center items-center gap-x-[12px]">
+                        <div class="cursor-pointer" @click="openDeleteForm(row?.id)">
+                            <img src="/images/svg/trash-icon.svg" />
+                        </div>
+                    </div>
+                </template>
+            </DataTable>
+        </div>
+    </div>
+</template>
+
+<script>
+import AdminLayout from '@/Layouts/AdminLayout.vue';
+import BreadCrumbComponent from '@/Components/Page/BreadCrumb.vue';
+import { searchMenu } from '@/Mixins/breadcrumb.js'
+import DataTable from '@/Components/Page/DataTable.vue'
+import axios from '@/Plugins/axios'
+import DeleteForm from '@/Components/Page/DeleteForm.vue';
+import debounce from 'lodash.debounce'
+export default {
+    components: { AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
+    props: {
+        id: {
+            type: Number,
+            default: null
+        }
+    },
+    data() {
+        return {
+            items: [],
+            filters: {
+                name: null,
+                role: null,
+                page: Number(this.appRoute().params?.page ?? 1),
+            },
+            fields: [
+                { key: 'email', width: 400, label: 'User', align: 'left', headerAlign: 'left' },
+                { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+            ],
+            paginate: {},
+            loadForm: false
+        }
+    },
+    async created() {
+        await this.fetchData()
+    },
+    methods: {
+        async fetchData(page = 1) {
+            this.loadForm = true
+            this.filters.page = page
+            let params = { ...this.filters }
+            await axios.get(this.appRoute("admin.api.role.all-user", this.id)).then(response => {
+                this.items = response?.data?.data
+                this.paginate = response?.data?.meta
+                this.loadForm = false
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+        changePage(value) {
+            this.filters.page = value
+            this.fetchData()
+        },
+        filterData: debounce(function () {
+            this.fetchData()
+        }, 500),
+        openCreate() {
+            this.$inertia.visit(this.appRoute('admin.role.create'))
+        },
+        openDeleteForm(id) {
+            this.$refs.deleteForm.open(id)
+        },
+        async deleteItem(userId) {
+            await axios.delete(this.appRoute("admin.api.role.revoke-user", {id: this.id, user_id: userId})).then(response => {
+                this.$message.success(response?.data?.message);
+                this.fetchData()
+            }).catch(error => {
+                this.$message.error(error?.response?.data?.message)
+            })
+        },
+        openShow(id) {
+            this.$inertia.visit(this.appRoute('admin.role.show', id))
+        }
+    },
+}
+</script>

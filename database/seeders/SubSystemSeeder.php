@@ -11,19 +11,15 @@ class SubSystemSeeder extends Seeder
      */
     public function run(): void
     {
-        $subSystems = [
-            ['name' => 'Quản lý sinh viên', 'code' => 'STU', 'system_id' => 1],
-            ['name' => 'Quản lý giảng viên', 'code' => 'TEA', 'system_id' => 1],
-            ['name' => 'Quản lý học tập', 'code' => 'ACA', 'system_id' => 1],
-            ['name' => 'Quản lý đào tạo', 'code' => 'TRN', 'system_id' => 1],
-            ['name' => 'Quản lý nghiên cứu khoa học', 'code' => 'RES', 'system_id' => 2],
-            ['name' => 'Quản lý hành chính', 'code' => 'ADM', 'system_id' => 3],
-            ['name' => 'Quản lý tài chính', 'code' => 'FIN', 'system_id' => 3],
-            ['name' => 'Quản lý cơ sở vật chất', 'code' => 'INF', 'system_id' => 3],
-        ];
-
-        foreach ($subSystems as $subSystem) {
-            \App\Models\SubSystem::create($subSystem);
+        $system = \App\Models\System::all();
+        for($i = 1; $i <= 10; $i++) {
+            \App\Models\SubSystem::create([
+                'name' => 'Hệ thống con ' . $i,
+                'code' => 'SUBSYS' . $i,
+                'system_id' => $system->random()->id,
+            ]);
         }
+
+
     }
 }

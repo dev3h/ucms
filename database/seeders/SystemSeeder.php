@@ -11,14 +11,11 @@ class SystemSeeder extends Seeder
      */
     public function run(): void
     {
-        $systems = [
-            ['name' => 'Quản lý Học vụ', 'code' => 'ACM'],
-            ['name' => 'Quản lý Nghiên cứu Khoa học', 'code' => 'RES'],
-            ['name' => 'Quản lý Hành chính', 'code' => 'ADM'],
-        ];
-
-        foreach ($systems as $system) {
-            \App\Models\System::create($system);
+        for($i = 1; $i <= 10; $i++) {
+            \App\Models\System::create([
+                'name' => 'Hệ thống ' . $i,
+                'code' => 'SYS' . $i,
+            ]);
         }
     }
 }

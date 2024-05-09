@@ -45,6 +45,7 @@ class IntegrationSocialiteController extends Controller
                 'email' => $providerUser->getEmail(),
                'token' => $providerUser->token,
                 'refresh_token' => $providerUser->refreshToken,
+                'expires_in' => $providerUser->expiresIn,
            ]);
            return redirect()->route('admin.profile')->with('success', __('Integration successfully'));
        } catch (\Exception $e) {

@@ -36,7 +36,6 @@ class ActionRequest extends FormRequest
                 'max:255',
                 Rule::unique('actions', 'code')->ignore($this->id)->whereNull('deleted_at'),
             ],
-            'module_id' => 'required|exists:modules,id',
         ];
     }
 }

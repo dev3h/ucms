@@ -1,5 +1,11 @@
 export const MASTER_MENUS = [
     {
+        label: "Dashboard",
+        icon: "dashboard-icon.svg",
+        route: "admin.dashboard.index",
+        pathActive: "dashboard",
+    },
+    {
         label: "System Management",
         icon: "system-icon.svg",
         route: "admin.system.index",
@@ -37,6 +43,12 @@ export const MASTER_MENUS = [
     },
     {
         label: "Permission Management",
+        icon: "permission-icon.svg",
+        route: "admin.permission.index",
+        pathActive: "permission",
+    },
+    {
+        label: "Audit Logs",
         icon: "permission-icon.svg",
         route: "admin.permission.index",
         pathActive: "permission",

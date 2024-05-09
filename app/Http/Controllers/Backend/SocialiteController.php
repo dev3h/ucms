@@ -27,6 +27,13 @@ class SocialiteController extends Controller
             if (!$social) {
                 return redirect(route('admin.login.form'))->withErrors(__('User not link this social account'));
             }
+            $currentTime = time();
+            $expireTime = $providerUser->expiresIn ? $currentTime + $providerUser->expiresIn : null;
+            dd($currentTime > $expireTime);
+            if($expireTime && $currentTime > $expireTime) {
+                return redirect(route('admin.login.form'))->withErrors(__('Token expired'));
+            }
+
             $user = User::find($social->user_id);
             if($user->two_factor_confirmed_at) {
                 request()->session()->put('login.id', $user->id);

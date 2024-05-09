@@ -22,6 +22,10 @@
             <div class="w-full">
                 <DataTable v-loading="loadForm" :fields="fields" :items="items" :paginate="paginate" footer-center
                     paginate-background @page-change="changePage">
+                    <template #assigned="{row}">
+                        <span v-if="row?.assigned === 0">-</span>
+                        <span v-else>{{row?.assigned}} users</span>
+                    </template>
                     <template #action="{ row }">
                         <div class="flex justify-center items-center gap-x-[12px]">
                             <div class="cursor-pointer" @click="openShow(row?.id)">
@@ -65,6 +69,7 @@ export default {
             fields: [
                 { key: 'name', width: 400, label: 'Name', align: 'left', headerAlign: 'left' },
                 { key: 'code', width: 300, label: 'Code', align: 'left', headerAlign: 'left' },
+                { key: 'assigned', width: 300, label: 'Assigned', align: 'left', headerAlign: 'left'},
                 { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},

@@ -20,23 +20,6 @@
                             <el-input size="large" v-model="formData.code" clearable />
                         </el-form-item>
                     </div>
-                    <div class="flex-1">
-                        <el-form-item label="Module" class="title--bold" prop="module_id" :error="getError('module_id')"
-                                      :inline-message="hasError('module_id')">
-                            <el-select
-                                v-model="formData.module_id"
-                                placeholder="Select"
-                                size="large"
-                            >
-                                <el-option
-                                    v-for="module in modules"
-                                    :key="module.id"
-                                    :label="module.name"
-                                    :value="module.id"
-                                />
-                            </el-select>
-                        </el-form-item>
-                    </div>
                 </el-form>
             </div>
             <div class="w-full my-[15px] flex justify-center items-center">
@@ -50,6 +33,7 @@
 <script>
 import axios from '@/Plugins/axios'
 import form from "@/Mixins/form.js";
+import baseRuleValidate from "@/Store/Const/baseRuleValidate.js";
 export default {
     mixins: [form],
     props: {
@@ -69,12 +53,10 @@ export default {
                 id: null,
                 name: null,
                 code: null,
-                module_id: null,
             },
             rules: {
-                name: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
-                code: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
-                module_id: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
+                name: baseRuleValidate,
+                code: baseRuleValidate,
             },
             loadingForm: false
         }

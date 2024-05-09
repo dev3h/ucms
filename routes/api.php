@@ -38,10 +38,16 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
         Route::apiResource('/role', RoleController::class);
         Route::apiResource('/permission', PermissionController::class);
         Route::apiResource('/user', UserController::class);
+
         Route::get('/role/{id}/template-permission', [PermissionController::class, 'templatePermission'])->name('role.template-permission');
         Route::put('/role/{id}/update-permission', [PermissionController::class, 'updateTemplatePermission'])->name('role.update-template-permission');
         Route::post('/role/store', [RoleController::class, 'store'])->name('role.store');
         Route::get('/user/{id}/template-permission', [PermissionController::class, 'templatePermissionUser'])->name('user.template-permission');
+        Route::get('/role/{id}/all-user', [RoleController::class, 'getAllUserOfRole'])->name('role.all-user');
+        Route::post('/role/{id}/assign-user', [RoleController::class, 'assignUser'])->name('role.assign-user');
+        Route::delete('/role/{id}/revoked-user/{user_id}', [RoleController::class, 'revokeUser'])->name('role.revoke-user');
+        Route::get('/role/{id}/all-permission', [RoleController::class, 'getAllPermissionOfRole'])->name('role.all-permission');
+        Route::delete('/role/{id}/revoke-permission/{permission_id}', [RoleController::class, 'revokePermission'])->name('role.revoke-permission');
 
         Route::get('/code-for-permission', [PermissionController::class, 'getCodeForPermission'])->name('permission.code-for-permission');
         // integration with socialite
@@ -52,5 +58,4 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
         Route::post('/change-password', [ChangePasswordController::class, 'changePassword'])->name('change-password');
 
     });
-
 });

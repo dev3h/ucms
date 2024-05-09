@@ -4,78 +4,101 @@
             <div class="w-full pt-3 pb-2 border-b-[1px]">
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
-            <div class="w-full my-[15px] flex justify-start items-center">
-                <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">Update</el-button>
-                <el-button type="info" size="large" @click="goBack()">Back</el-button>
-            </div>
-            <div class="w-full">
-                <el-form class="w-full grid grid-cols-3 gap-5" ref="form" :model="formData" :rules="rules"
-                         label-position="top">
-
-                    <div class="col-span-1">
-                        <el-form-item label="Name" class="title--bold" prop="name" :error="getError('name')"
-                                      :inline-message="hasError('name')">
-                            <el-input size="large" v-model="formData.name" clearable />
-                        </el-form-item>
-                    </div>
-
-                    <div class="col-span-1">
-                        <el-form-item label="Code" class="title--bold" prop="code" :error="getError('code')"
-                                      :inline-message="hasError('code')">
-                            <el-input size="large" v-model="formData.code" clearable />
-                        </el-form-item>
-                    </div>
-                </el-form>
-            </div>
-            <div class="my-4">
-                <h2 class="text=3xl">Permissions <span class="text-red-500">*</span> </h2>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <el-card
-                    v-for="template in templatePermission"
-                    :key="template?.id"
-                    class="bg-blue-100 flex-1 p-3"
-                >
-                    <template #header>
-                        <h2 class="uppercase font-bold text-3xl">Hệ thống {{ template?.name }}</h2>
-                    </template>
-
+            <div class="w-full py-[12px] pr-4">
+                <div class="mt-2 border-b-[1px] border-[#8A8A8A] flex gap-[4px]">
                     <div
-                        v-if="template?.subsystems?.length > 0"
-                        v-for="subsystem in template?.subsystems"
-                        :key="subsystem?.id"
-                        class="ml-5 border border-black54 mb-5 p-2"
+                        class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
+                        :class="{
+                            'bg-primary text-white': tabActive === 1,
+                            'bg-[#F4F4F4] text-[#8A8A8A]': tabActive !== 1,
+                        }"
+                        @click="changeTab(1)"
                     >
-                        <h2>subsystem {{ subsystem?.name }}</h2>
-                        <div
-                            v-if="subsystem?.modules?.length > 0"
-                            v-for="module in subsystem?.modules"
-                            :key="module?.id"
-                            class="ml-5"
-                        >
-                            <h2>module {{ module?.name }}</h2>
-                            <div class="flex flex-wrap gap-2">
-                                <div
-                                    v-if="module?.actions?.length > 0"
-                                    v-for="action in module?.actions"
-                                    :key="action?.id"
-                                    class="ml-5"
-                                >
-                                    <div class="flex gap-1 items-center">
-                                        <h2 class="font-bold">
-                                            {{ action?.name }}
-                                        </h2>
-                                        <el-checkbox
-                                            v-model="action.checked"
-                                            size="large"
-                                            @change="handleCheckChange(action)"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        Permissions
                     </div>
-                </el-card>
+                    <div
+                        class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
+                        :class="{
+                            'bg-primary text-white': tabActive === 2,
+                            'bg-[#F4F4F4] text-[#8A8A8A]': tabActive !== 2,
+                        }"
+                        @click="changeTab(2)"
+                    >
+                        Users
+                    </div>
+                    <div
+                        class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
+                        :class="{
+                            'bg-primary text-white': tabActive === 3,
+                            'bg-[#F4F4F4] text-[#8A8A8A]': tabActive !== 3,
+                        }"
+                        @click="changeTab(3)"
+                    >
+                        General
+                    </div>
+                </div>
+            </div>
+
+<!--            <div v-if="tabActive === 1">-->
+<!--                <div class="my-4">-->
+<!--                    <h2 class="text=3xl">Permissions <span class="text-red-500">*</span></h2>-->
+<!--                </div>-->
+<!--                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">-->
+<!--                    <el-card-->
+<!--                        v-for="template in templatePermission"-->
+<!--                        :key="template?.id"-->
+<!--                        class="bg-blue-100 flex-1 p-3"-->
+<!--                    >-->
+<!--                        <template #header>-->
+<!--                            <h2 class="uppercase font-bold text-3xl">Hệ thống {{ template?.name }}</h2>-->
+<!--                        </template>-->
+
+<!--                        <div-->
+<!--                            v-if="template?.subsystems?.length > 0"-->
+<!--                            v-for="subsystem in template?.subsystems"-->
+<!--                            :key="subsystem?.id"-->
+<!--                            class="ml-5 border border-black54 mb-5 p-2"-->
+<!--                        >-->
+<!--                            <h2>subsystem {{ subsystem?.name }}</h2>-->
+<!--                            <div-->
+<!--                                v-if="subsystem?.modules?.length > 0"-->
+<!--                                v-for="module in subsystem?.modules"-->
+<!--                                :key="module?.id"-->
+<!--                                class="ml-5"-->
+<!--                            >-->
+<!--                                <h2>module {{ module?.name }}</h2>-->
+<!--                                <div class="flex flex-wrap gap-2">-->
+<!--                                    <div-->
+<!--                                        v-if="module?.actions?.length > 0"-->
+<!--                                        v-for="action in module?.actions"-->
+<!--                                        :key="action?.id"-->
+<!--                                        class="ml-5"-->
+<!--                                    >-->
+<!--                                        <div class="flex gap-1 items-center">-->
+<!--                                            <h2 class="font-bold">-->
+<!--                                                {{ action?.name }}-->
+<!--                                            </h2>-->
+<!--                                            <el-checkbox-->
+<!--                                                v-model="action.checked"-->
+<!--                                                size="large"-->
+<!--                                                @change="handleCheckChange(action)"-->
+<!--                                            />-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </el-card>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="w-full" v-if="tabActive === 1">
+                <PermissionsTab :id="id" />
+            </div>
+            <div class="w-full" v-if="tabActive === 3">
+                <GeneralTab :id="id" />
+            </div>
+            <div class="w-full" v-if="tabActive === 2">
+                <UsersTab :id="id" />
             </div>
         </div>
     </AdminLayout>
@@ -86,8 +109,11 @@ import BreadCrumbComponent from "@/Components/Page/BreadCrumb.vue";
 import { searchMenu } from "@/Mixins/breadcrumb.js";
 import axios from "@/Plugins/axios";
 import form from '@/Mixins/form.js'
+import GeneralTab from "@/Pages/Role/GeneralTab.vue";
+import UsersTab from "@/Pages/Role/UsersTab.vue";
+import PermissionsTab from "@/Pages/Role/PermissionsTab.vue";
 export default {
-    components: { AdminLayout, BreadCrumbComponent },
+    components: {PermissionsTab, UsersTab, GeneralTab, AdminLayout, BreadCrumbComponent },
     mixins: [form],
     props: {
         id: {
@@ -98,6 +124,7 @@ export default {
     data() {
         return {
             templatePermission: null,
+            tabActive: 1,
             formData: {
                 id: this.props?.id,
                 name: null,
@@ -176,6 +203,9 @@ export default {
             } else {
                 this.actions = this.actions.filter((item) => item !== action);
             }
+        },
+        changeTab(tab) {
+            this.tabActive = tab;
         },
     },
 };
