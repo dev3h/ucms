@@ -9,28 +9,26 @@
                         </template>
                     </el-input>
                 </div>
-<!--                <div class="flex justify-end w-full">-->
-<!--                    <el-button type="primary" size="large" @click="openCreate()">Assign users</el-button>-->
-<!--                </div>-->
-<!--                <DeleteForm ref="deleteForm" @delete-action="deleteItem" />-->
+                <div class="flex justify-end w-full">
+                    <el-button type="primary" size="large" @click="openAssign(id)">Add modules</el-button>
+                </div>
+                <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
             </div>
         </div>
 
         <div class="w-full">
             <DataTable v-loading="loadForm" :fields="fields" :items="items" :paginate="paginate" footer-center
                        paginate-background @page-change="changePage">
-                <template #email="{row}">
-                    <Link v-if="row?.id" :href="route('admin.user.show', row?.id)">{{row?.email}}</Link>
+                <template #action="{ row }">
+                    <div class="flex justify-center items-center gap-x-[12px]">
+                        <div class="cursor-pointer" @click="openDeleteForm(row?.id)">
+                            <img src="/images/svg/trash-icon.svg" />
+                        </div>
+                    </div>
                 </template>
-<!--                <template #action="{ row }">-->
-<!--                    <div class="flex justify-center items-center gap-x-[12px]">-->
-<!--                        <div class="cursor-pointer" @click="openDeleteForm(row?.id)">-->
-<!--                            <img src="/images/svg/trash-icon.svg" />-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </template>-->
             </DataTable>
         </div>
+        <ModalExtraAdd ref="modalAssign" @add-success="fetchData" />
     </div>
 </template>
 
@@ -42,8 +40,10 @@ import DataTable from '@/Components/Page/DataTable.vue'
 import axios from '@/Plugins/axios'
 import DeleteForm from '@/Components/Page/DeleteForm.vue';
 import debounce from 'lodash.debounce'
+import ModalAssign from "@/Pages/Role/ModalAssign.vue";
+import ModalExtraAdd from "@/Pages/SubSystem/ModalExtraAdd.vue";
 export default {
-    components: { AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
+    components: {ModalExtraAdd, ModalAssign, AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
     props: {
         id: {
             type: Number,
@@ -59,8 +59,9 @@ export default {
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
-                { key: 'email', label: 'User', align: 'left', headerAlign: 'left' },
-                // { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'name', width: 400, label: 'Name', align: 'left', headerAlign: 'left' },
+                { key: 'code', width: 400, label: 'Code', align: 'left', headerAlign: 'left' },
+                { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
             loadForm: false
@@ -74,7 +75,7 @@ export default {
             this.loadForm = true
             this.filters.page = page
             let params = { ...this.filters }
-            await axios.get(this.appRoute("admin.api.role.all-user", {
+            await axios.get(this.appRoute("admin.api.subsystem.all-module", {
                 id: this.id,
                 ...params
             })).then(response => {
@@ -82,7 +83,7 @@ export default {
                 this.paginate = response?.data?.meta
                 this.loadForm = false
             }).catch(error => {
-                console.log(error)
+                this.$message.error(error?.response?.data?.message)
             })
         },
         changePage(page) {
@@ -91,14 +92,14 @@ export default {
         filterData: debounce(function () {
             this.fetchData()
         }, 500),
-        openCreate() {
-            this.$inertia.visit(this.appRoute('admin.role.create'))
+        openAssign(id) {
+            this.$refs.modalAssign.open(id)
         },
         openDeleteForm(id) {
             this.$refs.deleteForm.open(id)
         },
-        async deleteItem(userId) {
-            await axios.delete(this.appRoute("admin.api.role.revoke-user", {id: this.id, user_id: userId})).then(response => {
+        async deleteItem(moduleId) {
+            await axios.delete(this.appRoute("admin.api.subsystem.remove-module", {id: this.id, module_id: moduleId})).then(response => {
                 this.$message.success(response?.data?.message);
                 this.fetchData()
             }).catch(error => {

@@ -125,16 +125,7 @@ export default {
         return {
             templatePermission: null,
             tabActive: 1,
-            formData: {
-                id: this.props?.id,
-                name: null,
-                code: null,
-            },
             actions: [],
-            rules: {
-                name: [{ required: true, message: "This field is required。", trigger: ["blur", "change"] }],
-                code: [{ required: true, message: "This field is required。", trigger: ["blur", "change"] }],
-            },
             loadingForm: false,
         };
     },
@@ -153,22 +144,7 @@ export default {
             ];
         },
     },
-    created() {
-        Promise.all([this.fetchRoleTemplate(), this.fetchData()]);
-    },
     methods: {
-        async fetchData() {
-            try {
-                const response = await axios.get(
-                    this.appRoute("admin.api.role.show", this.id)
-                );
-                if(response) {
-                    this.formData = response?.data?.data;
-                }
-            } catch (err) {
-                this.$message.error(err?.response?.data?.message);
-            }
-        },
         goBack() {
             this.$inertia.visit(this.appRoute("admin.role.index"));
         },
@@ -183,19 +159,6 @@ export default {
                 .catch((error) => {
                     this.$message.error(error?.response?.data?.message);
                 });
-        },
-       async submit() {
-            this.loadingForm = true;
-            const response = await axios.put(
-                this.appRoute("admin.api.role.update", this.id),
-                {
-                    ...this.formData,
-                    actions: this.actions
-                }
-            );
-            this.$message.success(response?.data?.message);
-            this.loadingForm = false;
-            this.actions = [];
         },
         handleCheckChange(action) {
             if (!this.actions.includes(action)) {

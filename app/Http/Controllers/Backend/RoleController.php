@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Backend;
 use App\Consts\PerPage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleRequest;
+use App\Http\Resources\RestPermissionResource;
 use App\Http\Resources\RolePermissionResource;
 use App\Http\Resources\RoleResource;
+use App\Http\Resources\RoleUserResource;
 use App\Models\Action;
 use App\Models\Filters\PermissionFilter;
 use App\Models\Filters\RoleFilter;
+use App\Models\Filters\UserFilter;
+use App\Models\System;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +50,7 @@ class RoleController extends Controller
         }
     }
 
-    public function getAllUserOfRole($id)
+    public function getAllUserOfRole($id, Request $request)
     {
         $this->authorize('view', User::class);
         try {
@@ -54,14 +58,9 @@ class RoleController extends Controller
             if(!$role) {
                 return $this->sendErrorResponse(__('Data not found'), 404);
             }
-            $users = $role->users;
-            $users = $users->map(function ($user) {
-                return [
-                    'id' => $user?->id,
-                    'email' => $user?->email,
-                ];
-            });
-            return $this->sendSuccessResponse($users);
+            $users = $role->users()->filters(new UserFilter($request))->orderBy('created_at', 'desc')->paginate(PerPage::DEFAULT);;
+            return RoleUserResource::collection($users)
+                ->additional(["status_code" => 200]);
         } catch (\Throwable $e) {
             return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());
         }
@@ -219,6 +218,40 @@ class RoleController extends Controller
             $permission = Permission::find($request->permission_id);
             $role->revokePermissionTo($permission);
             return $this->sendSuccessResponse(null, __('Revoke permission successfully'));
+        } catch (\Throwable $e) {
+            return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());
+        }
+    }
+
+    public function restPermission($id)
+    {
+        $this->authorize('delete', User::class);
+        try {
+            $role = Role::find($id);
+            if(!$role) {
+                return $this->sendErrorResponse(__('Data not found'), 404);
+            }
+            $permissions = Permission::all();
+            $permissionOfRole = $role->permissions;
+            $diffPermissions = $permissions->diff($permissionOfRole);
+            $data = new RestPermissionResource($diffPermissions);
+            return $this->sendSuccessResponse($data);
+        } catch (\Throwable $e) {
+            return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());
+        }
+    }
+
+    public function assignPermission(Request $request, $id)
+    {
+        $this->authorize('update', User::class);
+        try {
+            $role = Role::find($id);
+            if(!$role) {
+                return $this->sendErrorResponse(__('Data not found'), 404);
+            }
+            $permissionIds = $request->permission_ids;
+            $role->permissions()->attach($permissionIds);
+            return $this->sendSuccessResponse(null, __('Assign permission successfully'));
         } catch (\Throwable $e) {
             return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());
         }

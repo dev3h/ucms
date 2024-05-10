@@ -10,7 +10,7 @@
                     </el-input>
                 </div>
                 <div class="flex justify-end w-full">
-                    <el-button type="primary" size="large" @click="openCreate()">Assign permissions</el-button>
+                    <el-button type="primary" size="large" @click="openAssign(id)">Assign permissions</el-button>
                 </div>
                 <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
             </div>
@@ -28,6 +28,7 @@
                 </template>
             </DataTable>
         </div>
+        <ModalAssign ref="modalAssign" @assign-success="fetchData" />
     </div>
 </template>
 
@@ -39,8 +40,9 @@ import DataTable from '@/Components/Page/DataTable.vue'
 import axios from '@/Plugins/axios'
 import DeleteForm from '@/Components/Page/DeleteForm.vue';
 import debounce from 'lodash.debounce'
+import ModalAssign from "@/Pages/Role/ModalAssign.vue";
 export default {
-    components: { AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
+    components: {ModalAssign, AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
     props: {
         id: {
             type: Number,
@@ -89,8 +91,8 @@ export default {
         filterData: debounce(function () {
             this.fetchData()
         }, 500),
-        openCreate() {
-            this.$inertia.visit(this.appRoute('admin.role.create'))
+        openAssign(id) {
+            this.$refs.modalAssign.open(id, 'permission')
         },
         openDeleteForm(id) {
             this.$refs.deleteForm.open(id)

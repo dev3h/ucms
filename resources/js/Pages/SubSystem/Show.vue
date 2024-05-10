@@ -1,0 +1,146 @@
+<template>
+    <AdminLayout>
+        <div class="w-full h-full bg-white px-4">
+            <div class="w-full pt-3 pb-2 border-b-[1px]">
+                <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
+            </div>
+            <div class="w-full py-[12px] pr-4">
+                <div class="mt-2 border-b-[1px] border-[#8A8A8A] flex gap-[4px]">
+                    <div
+                        class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
+                        :class="{
+                            'bg-primary text-white': tabActive === 1,
+                            'bg-[#F4F4F4] text-[#8A8A8A]': tabActive !== 1,
+                        }"
+                        @click="changeTab(1)"
+                    >
+                        Modules
+                    </div>
+                    <div
+                        class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
+                        :class="{
+                            'bg-primary text-white': tabActive === 2,
+                            'bg-[#F4F4F4] text-[#8A8A8A]': tabActive !== 2,
+                        }"
+                        @click="changeTab(2)"
+                    >
+                        General
+                    </div>
+                </div>
+            </div>
+            <div class="w-full" v-if="tabActive === 1">
+                <ModuleTab :id="id" />
+            </div>
+            <div class="w-full" v-if="tabActive === 2">
+                <GeneralTab :id="id" />
+            </div>
+        </div>
+    </AdminLayout>
+</template>
+zz<script>
+import AdminLayout from "@/Layouts/AdminLayout.vue";
+import BreadCrumbComponent from "@/Components/Page/BreadCrumb.vue";
+import { searchMenu } from "@/Mixins/breadcrumb.js";
+import axios from "@/Plugins/axios";
+import form from '@/Mixins/form.js'
+import GeneralTab from "@/Pages/SubSystem/GeneralTab.vue";
+import ModuleTab from "@/Pages/SubSystem/ModuleTab.vue";
+export default {
+    components: {ModuleTab, GeneralTab, AdminLayout, BreadCrumbComponent },
+    mixins: [form],
+    props: {
+        id: {
+            type: Number,
+            default: () => null,
+        },
+    },
+    data() {
+        return {
+            templatePermission: null,
+            tabActive: 1,
+            formData: {
+                id: this.props?.id,
+                name: null,
+                code: null,
+            },
+            actions: [],
+            rules: {
+                name: [{ required: true, message: "This field is required。", trigger: ["blur", "change"] }],
+                code: [{ required: true, message: "This field is required。", trigger: ["blur", "change"] }],
+            },
+            loadingForm: false,
+        };
+    },
+    computed: {
+        setbreadCrumbHeader() {
+            let menuOrigin = searchMenu();
+            return [
+                {
+                    name: menuOrigin?.label,
+                    route: this.appRoute("admin.subsystem.index"),
+                },
+                {
+                    name: this.id,
+                    route: "",
+                },
+            ];
+        },
+    },
+    created() {
+        this.fetchData();
+    },
+    methods: {
+        async fetchData() {
+            try {
+                const response = await axios.get(
+                    this.appRoute("admin.api.role.show", this.id)
+                );
+                if(response) {
+                    this.formData = response?.data?.data;
+                }
+            } catch (err) {
+                this.$message.error(err?.response?.data?.message);
+            }
+        },
+        goBack() {
+            this.$inertia.visit(this.appRoute("admin.role.index"));
+        },
+        async fetchRoleTemplate() {
+            await axios
+                .get(
+                    this.appRoute("admin.api.role.template-permission", this.id)
+                )
+                .then((response) => {
+                    this.templatePermission = response?.data?.data;
+                })
+                .catch((error) => {
+                    this.$message.error(error?.response?.data?.message);
+                });
+        },
+       async submit() {
+            this.loadingForm = true;
+            const response = await axios.put(
+                this.appRoute("admin.api.role.update", this.id),
+                {
+                    ...this.formData,
+                    actions: this.actions
+                }
+            );
+            this.$message.success(response?.data?.message);
+            this.loadingForm = false;
+            this.actions = [];
+        },
+        handleCheckChange(action) {
+            if (!this.actions.includes(action)) {
+                this.actions.push(action);
+            } else {
+                this.actions = this.actions.filter((item) => item !== action);
+            }
+        },
+        changeTab(tab) {
+            this.tabActive = tab;
+        },
+    },
+};
+</script>
+<style></style>

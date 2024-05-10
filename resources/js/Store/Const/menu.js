@@ -49,7 +49,7 @@ export const MASTER_MENUS = [
     },
     {
         label: "Audit Logs",
-        icon: "permission-icon.svg",
+        icon: "audit-log-icon.svg",
         route: "admin.permission.index",
         pathActive: "permission",
     },
