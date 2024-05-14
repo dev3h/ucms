@@ -5,12 +5,14 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -74,5 +76,12 @@ class User extends Authenticatable
         $name = $this->name;
         $email = $this->email;
         $this->notify(new ResetPasswordNotification($token, $name, $email));
+    }
+
+    public function permissions(): BelongsToMany
+    {
+        return $this->belongsToMany(Permission::class, 'model_has_permissions', 'model_id', 'permission_id')
+            ->withPivot('is_direct', 'model_type');
+
     }
 }

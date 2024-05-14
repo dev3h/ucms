@@ -14,4 +14,12 @@ class ModuleController extends Controller
         $this->authorize('view', User::class);
         return Inertia::render('Module/Index');
     }
+
+    public function show($id)
+    {
+        $this->authorize('view', User::class);
+        return Inertia::render('Module/Show', [
+            'id' => +$id
+        ]);
+    }
 }

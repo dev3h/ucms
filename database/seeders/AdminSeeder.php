@@ -20,5 +20,7 @@ class AdminSeeder extends Seeder
             'is_change_password' => 1
         ]);
         $admin->assignRole("admin");
+        // copy all permissions of role admin to user then assign permission to user
+        $admin->syncPermissions($admin->roles->first()->permissions);
     }
 }

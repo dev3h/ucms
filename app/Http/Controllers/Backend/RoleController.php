@@ -58,7 +58,7 @@ class RoleController extends Controller
             if(!$role) {
                 return $this->sendErrorResponse(__('Data not found'), 404);
             }
-            $users = $role->users()->filters(new UserFilter($request))->orderBy('created_at', 'desc')->paginate(PerPage::DEFAULT);;
+            $users = $role->users()->filters(new UserFilter($request))->orderBy('created_at', 'desc')->paginate(PerPage::DEFAULT);
             return RoleUserResource::collection($users)
                 ->additional(["status_code" => 200]);
         } catch (\Throwable $e) {
@@ -235,6 +235,18 @@ class RoleController extends Controller
             $permissionOfRole = $role->permissions;
             $diffPermissions = $permissions->diff($permissionOfRole);
             $data = new RestPermissionResource($diffPermissions);
+            return $this->sendSuccessResponse($data);
+        } catch (\Throwable $e) {
+            return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());
+        }
+    }
+
+    public function getAllPermission()
+    {
+        $this->authorize('view', User::class);
+        try {
+            $permissions = Permission::all();
+            $data = new RestPermissionResource($permissions);
             return $this->sendSuccessResponse($data);
         } catch (\Throwable $e) {
             return $this->sendErrorResponse(__('Something went wrong'), $e->getMessage());

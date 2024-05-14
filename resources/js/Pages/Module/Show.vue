@@ -14,7 +14,7 @@
                         }"
                         @click="changeTab(1)"
                     >
-                        Modules
+                        Actions
                     </div>
                     <div
                         class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
@@ -24,29 +24,43 @@
                         }"
                         @click="changeTab(2)"
                     >
+                        Subsystems
+                    </div>
+                    <div
+                        class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
+                        :class="{
+                            'bg-primary text-white': tabActive === 3,
+                            'bg-[#F4F4F4] text-[#8A8A8A]': tabActive !== 3,
+                        }"
+                        @click="changeTab(3)"
+                    >
                         General
                     </div>
                 </div>
             </div>
             <div class="w-full" v-if="tabActive === 1">
-                <ModuleTab :id="id" />
+                <ActionTab :id="id" />
             </div>
             <div class="w-full" v-if="tabActive === 2">
+                <SubsystemTab :id="id" />
+            </div>
+            <div class="w-full" v-if="tabActive === 3">
                 <GeneralTab :id="id" />
             </div>
         </div>
     </AdminLayout>
 </template>
-zz<script>
+<script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import BreadCrumbComponent from "@/Components/Page/BreadCrumb.vue";
 import { searchMenu } from "@/Mixins/breadcrumb.js";
 import axios from "@/Plugins/axios";
 import form from '@/Mixins/form.js'
-import GeneralTab from "@/Pages/SubSystem/GeneralTab.vue";
-import ModuleTab from "@/Pages/SubSystem/ModuleTab.vue";
+import GeneralTab from "@/Pages/Module/GeneralTab.vue";
+import SubsystemTab from "@/Pages/Module/SubsystemTab.vue";
+import ActionTab from "@/Pages/Module/ActionTab.vue";
 export default {
-    components: {ModuleTab, GeneralTab, AdminLayout, BreadCrumbComponent },
+    components: {ActionTab, SubsystemTab, GeneralTab, AdminLayout, BreadCrumbComponent },
     mixins: [form],
     props: {
         id: {
@@ -57,11 +71,6 @@ export default {
     data() {
         return {
             tabActive: 1,
-            formData: {
-                id: this.props?.id,
-                name: null,
-                code: null,
-            },
             actions: [],
             loadingForm: false,
         };
@@ -72,7 +81,7 @@ export default {
             return [
                 {
                     name: menuOrigin?.label,
-                    route: this.appRoute("admin.subsystem.index"),
+                    route: this.appRoute("admin.module.index"),
                 },
                 {
                     name: this.id,
@@ -88,7 +97,7 @@ export default {
         async fetchData() {
             try {
                 const response = await axios.get(
-                    this.appRoute("admin.api.role.show", this.id)
+                    this.appRoute("admin.api.module.show", this.id)
                 );
                 if(response) {
                     this.formData = response?.data?.data;

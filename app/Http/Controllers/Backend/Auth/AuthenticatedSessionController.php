@@ -43,6 +43,9 @@ class AuthenticatedSessionController extends Controller
             $user->save();
             return $this->sendSuccessResponse(route('admin.password-first.form', ['token' => $str]));
         }
+        activity()
+            ->causedBy($user)
+            ->log('Login success');
 
         return $this->sendSuccessResponse($routeRedirect);
     }

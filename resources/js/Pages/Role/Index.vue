@@ -40,6 +40,7 @@
             </div>
         </div>
         <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
+        <ModalRole ref="modalRole" :redirectRoute="appRoute('admin.role.index')" />
     </AdminLayout>
 </template>
 <script>
@@ -50,8 +51,9 @@ import DataTable from '@/Components/Page/DataTable.vue'
 import axios from '@/Plugins/axios'
 import DeleteForm from '@/Components/Page/DeleteForm.vue';
 import debounce from 'lodash.debounce'
+import ModalRole from "./ModalRole.vue";
 export default {
-    components: { AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
+    components: {ModalRole, AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
     props: {
         roles: {
             type: Array,
@@ -111,7 +113,7 @@ export default {
             this.fetchData()
         }, 500),
         openCreate() {
-            this.$inertia.visit(this.appRoute('admin.role.create'))
+            this.$refs.modalRole.open()
         },
         openDeleteForm(id) {
             this.$refs.deleteForm.open(id)
