@@ -22,6 +22,10 @@
             <div class="w-full">
                 <DataTable v-loading="loadForm" :fields="fields" :items="items" :paginate="paginate" footer-center
                     paginate-background @page-change="changePage">
+                    <template #assigned="{row}">
+                        <span v-if="row?.assigned === 0">-</span>
+                        <span v-else>{{row?.assigned}} users</span>
+                    </template>
                     <template #action="{ row }">
                         <div class="flex justify-center items-center gap-x-[12px]">
                             <div class="cursor-pointer" @click="openShow(row?.id)">
@@ -36,6 +40,7 @@
             </div>
         </div>
         <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
+        <ModalRole ref="modalRole" :redirectRoute="appRoute('admin.role.index')" />
     </AdminLayout>
 </template>
 <script>
@@ -46,8 +51,9 @@ import DataTable from '@/Components/Page/DataTable.vue'
 import axios from '@/Plugins/axios'
 import DeleteForm from '@/Components/Page/DeleteForm.vue';
 import debounce from 'lodash.debounce'
+import ModalRole from "./ModalRole.vue";
 export default {
-    components: { AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
+    components: {ModalRole, AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
     props: {
         roles: {
             type: Array,
@@ -65,6 +71,7 @@ export default {
             fields: [
                 { key: 'name', width: 400, label: 'Name', align: 'left', headerAlign: 'left' },
                 { key: 'code', width: 300, label: 'Code', align: 'left', headerAlign: 'left' },
+                { key: 'assigned', width: 300, label: 'Assigned', align: 'left', headerAlign: 'left'},
                 { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
@@ -106,7 +113,7 @@ export default {
             this.fetchData()
         }, 500),
         openCreate() {
-            this.$inertia.visit(this.appRoute('admin.role.create'))
+            this.$refs.modalRole.open()
         },
         openDeleteForm(id) {
             this.$refs.deleteForm.open(id)

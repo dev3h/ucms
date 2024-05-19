@@ -20,23 +20,6 @@
                             <el-input size="large" v-model="formData.code" clearable />
                         </el-form-item>
                     </div>
-                    <div class="flex-1">
-                        <el-form-item label="SubSystem" class="title--bold" prop="system_id" :error="getError('sub_system_id')"
-                                      :inline-message="hasError('sub_system_id')">
-                            <el-select
-                                v-model="formData.sub_system_id"
-                                placeholder="Select"
-                                size="large"
-                            >
-                                <el-option
-                                    v-for="subsystem in subsystems"
-                                    :key="subsystem.id"
-                                    :label="subsystem.name"
-                                    :value="subsystem.id"
-                                />
-                            </el-select>
-                        </el-form-item>
-                    </div>
                 </el-form>
             </div>
             <div class="w-full my-[15px] flex justify-center items-center">
@@ -50,6 +33,7 @@
 <script>
 import axios from '@/Plugins/axios'
 import form from "@/Mixins/form.js";
+import baseRuleValidate from "@/Store/Const/baseRuleValidate.js";
 export default {
     mixins: [form],
     props: {
@@ -69,12 +53,10 @@ export default {
                 id: null,
                 name: null,
                 code: null,
-                sub_system_id: null,
             },
             rules: {
-                name: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
-                code: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
-                sub_system_id: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
+                name: baseRuleValidate,
+                code: baseRuleValidate,
             },
             loadingForm: false
         }
@@ -98,7 +80,6 @@ export default {
                 id: null,
                 name: null,
                 code: null,
-                sub_system_id: null,
             }
             this.$refs.form.resetFields()
             this.formType = 'add'
@@ -123,7 +104,6 @@ export default {
                 const { data } = await axios.get(this.appRoute('admin.api.module.show', this.current_id))
                 this.formData = {
                     ...data?.data,
-                    sub_system_id: data?.data?.subsystem?.id
                 }
                 this.loadingForm = false
             }

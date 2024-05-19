@@ -14,10 +14,12 @@ class RoleResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $numberOfAssigned = $this?->users?->count();
         return [
             "id" => $this?->id,
             "name" => $this?->name,
             "code" => $this?->code,
+            "assigned" => $numberOfAssigned,
         ];
     }
 }

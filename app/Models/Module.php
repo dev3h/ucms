@@ -13,13 +13,13 @@ class Module extends Model
 
     protected $guarded = [];
 
-     public function subsystem()
+     public function subsystems()
     {
-        return $this->belongsTo(SubSystem::class, 'sub_system_id');
+        return $this->belongsToMany(SubSystem::class, 'subsystem_modules');
     }
 
     public function actions()
     {
-        return $this->hasMany(Action::class);
+        return $this->belongsToMany(Action::class, 'module_actions');
     }
 }

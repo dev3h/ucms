@@ -21,6 +21,6 @@ class SubSystem extends Model
 
     public function modules()
     {
-        return $this->hasMany(Module::class);
+        return $this->belongsToMany(Module::class, 'subsystem_modules');
     }
 }

@@ -48,17 +48,11 @@ class RolePermissionSeeder extends Seeder
 
         // Assign specific permissions to the lecturer role
         $facultyRole = Role::where('name', 'teacher')->first();
-        $facultyRole->syncPermissions([
-            'ACM-CMG-CRC-ACC',
-            'ACM-CMG-CRC-DEC',
-            'ACM-GRD-RDG-EGD',
-        ]);
+        $facultyRole->syncPermissions($permissions->random(5));
 
         // Assign specific permissions to the student role
         $studentRole = Role::where('name', 'student')->first();
-        $studentRole->syncPermissions([
-            'ACM-CMG-CRC-ACC',
-        ]);
+        $studentRole->syncPermissions($permissions->random(1));
 
     }
 }

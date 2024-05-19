@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code');
-            $table->foreignId('sub_system_id')->constrained('sub_systems')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

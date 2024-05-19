@@ -14,4 +14,12 @@ class SubSystemController extends Controller
         $this->authorize('view', User::class);
         return Inertia::render('SubSystem/Index');
     }
+
+    public function show($id)
+    {
+        $this->authorize('view', User::class);
+        return Inertia::render('SubSystem/Show', [
+            'id' => +$id
+        ]);
+    }
 }

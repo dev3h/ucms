@@ -35,7 +35,6 @@ class ModuleRequest extends FormRequest
                 'max:255',
                 Rule::unique('modules', 'code')->ignore($this->id)->whereNull('deleted_at'),
             ],
-            'sub_system_id' => 'required|exists:sub_systems,id',
         ];
     }
 }

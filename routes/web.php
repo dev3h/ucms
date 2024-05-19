@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\ActionController;
 use App\Http\Controllers\Frontend\ApplicationUserController;
 use App\Http\Controllers\Frontend\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Frontend\Auth\ResetPasswordController;
+use App\Http\Controllers\Frontend\DashboardController;
 use App\Http\Controllers\Frontend\ModuleController;
 use App\Http\Controllers\Frontend\PermissionController;
 use App\Http\Controllers\Frontend\ProfileController;
@@ -76,6 +77,9 @@ Route::prefix("admin/")->as("admin.")->group(function () {
 
        // application user
         Route::get('/application', [ApplicationUserController::class, 'index'])->name('application');
+
+        // dashboard
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     });
 
 });

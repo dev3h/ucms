@@ -50,6 +50,7 @@
 <script>
 import axios from '@/Plugins/axios'
 import form from "@/Mixins/form.js";
+import baseRuleValidate from "@/Store/Const/baseRuleValidate.js";
 export default {
     mixins: [form],
     props: {
@@ -72,9 +73,9 @@ export default {
                 system_id: null,
             },
             rules: {
-                name: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
-                code: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
-                system_id: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
+                name: baseRuleValidate,
+                code: baseRuleValidate,
+                system_id: baseRuleValidate,
             },
             loadingForm: false
         }
