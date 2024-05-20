@@ -10,7 +10,7 @@
                     </el-input>
                 </div>
                 <div class="flex justify-end w-full">
-                    <el-button type="warning" size="large" @click="openAssign(id)">Ignore permissions of role</el-button>
+                    <el-button type="warning" size="large" @click="openIgnore(id)">Ignore permissions of role</el-button>
                     <el-button type="primary" size="large" @click="openAssign(id)">Assign permissions</el-button>
                 </div>
                 <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
@@ -30,6 +30,7 @@
             </DataTable>
         </div>
         <ModalAssign ref="modalAssign" @assign-success="fetchData" />
+        <ModalIgnore ref="modalIgnore" @ignore-success="fetchData" />
     </div>
 </template>
 
@@ -41,8 +42,9 @@ import axios from '@/Plugins/axios'
 import DeleteForm from '@/Components/Page/DeleteForm.vue';
 import debounce from 'lodash.debounce'
 import ModalAssign from "@/Pages/User/ModalAssign.vue";
+import ModalIgnore from "@/Pages/User/ModalIgnore.vue";
 export default {
-    components: {ModalAssign, AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
+    components: {ModalIgnore, ModalAssign, AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
     props: {
         id: {
             type: Number,
@@ -93,6 +95,9 @@ export default {
         }, 500),
         openAssign(id) {
             this.$refs.modalAssign.open(id, 'permission')
+        },
+        openIgnore(id) {
+            this.$refs.modalIgnore.open(id)
         },
         openDeleteForm(id) {
             this.$refs.deleteForm.open(id)

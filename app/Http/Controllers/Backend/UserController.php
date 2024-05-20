@@ -156,11 +156,62 @@ class UserController extends Controller
             if (!$user) {
                 return $this->sendErrorResponse(__('Data not found'), 404);
             }
-            $permissions = $user->permissions()->where('is_direct', '!=', 3)->filters(new PermissionFilter($request))
+            $permissions = $user->permissions()->wherePivot('is_direct', '!=' , 3)->where('code', 'LIKE', '%' . $request->input('search') . '%')
                 ->orderBy('created_at', 'desc')->paginate(PerPage::DEFAULT);
 
             return PermissionResource::collection($permissions)
                 ->additional(["status_code" => 200]);
+        } catch (\Throwable $e) {
+            return $this->sendErrorResponse(__('Data not found'), $e->getMessage());
+        }
+    }
+
+    public function getAllPermissionOfUserByRole($role_id, $user_id)
+    {
+        try {
+            $user = User::find($user_id);
+            if (!$user) {
+                return $this->sendErrorResponse(__('Data not found'), 404);
+            }
+            $role = Role::find($role_id);
+            if (!$role) {
+                return $this->sendErrorResponse(__('Data not found'), 404);
+            }
+            $rolePermissions = $role->permissions()->get();
+            $userPermissions = $user->permissions()->get();
+            // get same permission of user in role
+            $permissions = $userPermissions->intersect($rolePermissions);
+            return PermissionResource::collection($permissions)
+                ->additional(["status_code" => 200]);
+        } catch (\Throwable $e) {
+            return $this->sendErrorResponse(__('Data not found'), $e->getMessage());
+        }
+    }
+
+    public function ignorePermissionForUserRole($id, Request $request)
+    {
+        try {
+            $user = User::find($id);
+            if (!$user) {
+                return $this->sendErrorResponse(__('Data not found'), 404);
+            }
+            $permissionIds = $request->input('permission_ids');
+            $removePermissionIgnoreIds = $request->input('remove_permission_ignore_ids');
+            if (count($permissionIds) > 0) {
+                $permissions = $user->permissions()->whereIn('id', $permissionIds)->get();
+                foreach ($permissions as $permission) {
+                    $permission->pivot->is_direct = 3;
+                    $permission->pivot->save();
+                }
+            }
+            if (count($removePermissionIgnoreIds) > 0) {
+                $permissions = $user->permissions()->whereIn('id', $removePermissionIgnoreIds)->get();
+                foreach ($permissions as $permission) {
+                    $permission->pivot->is_direct = 0;
+                    $permission->pivot->save();
+                }
+            }
+            return $this->sendSuccessResponse(null, __('Updated successfully'));
         } catch (\Throwable $e) {
             return $this->sendErrorResponse(__('Data not found'), $e->getMessage());
         }

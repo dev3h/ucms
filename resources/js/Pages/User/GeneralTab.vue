@@ -15,9 +15,9 @@
             </div>
 
             <div class="col-span-1">
-                <el-form-item label="Code" class="title--bold" prop="code" :error="getError('code')"
-                              :inline-message="hasError('code')">
-                    <el-input size="large" v-model="formData.code" clearable />
+                <el-form-item label="Email" class="title--bold" prop="email" :error="getError('email')"
+                              :inline-message="hasError('email')">
+                    <el-input size="large" v-model="formData.email" clearable />
                 </el-form-item>
             </div>
 
@@ -47,7 +47,7 @@ export default {
             },
             rules: {
                 name: baseRuleValidate,
-                code: baseRuleValidate,
+                email: baseRuleValidate,
             },
             loadingForm: false,
         };
@@ -59,7 +59,7 @@ export default {
         async fetchData() {
             try {
                 const response = await axios.get(
-                    this.appRoute("admin.api.role.show", this.id)
+                    this.appRoute("admin.api.user.show", this.id)
                 );
                 if(response) {
                     this.formData = response?.data?.data;
@@ -74,12 +74,7 @@ export default {
         async submit() {
             this.loadingForm = true;
             const response = await axios.put(
-                this.appRoute("admin.api.role.update", this.id),
-                {
-                    ...this.formData,
-                    actions: this.actions
-                }
-            );
+                this.appRoute("admin.api.user.update", this.id),this.formData);
             this.$message.success(response?.data?.message);
             this.loadingForm = false;
             this.actions = [];

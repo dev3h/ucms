@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend\Auth;
 
+use App\Enums\PassFirstChangeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\UpdateResetPasswordRequest;
@@ -28,6 +29,11 @@ class ResetPasswordController extends Controller
                 $user->forceFill([
                     'password' => Hash::make($password)
                 ]);
+
+                if ($user->is_change_password === PassFirstChangeEnum::NOT_CHANGE->value) {
+                    $user->is_change_password = PassFirstChangeEnum::CHANGED->value;
+                    $user->token_first_change = null;
+                }
 
                 $user->save();
 
