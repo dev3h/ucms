@@ -11,6 +11,7 @@
         "php": "^8.2",
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.0",
+        "laravel/horizon": "^5.24",
         "laravel/jetstream": "^5.0",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.12",
