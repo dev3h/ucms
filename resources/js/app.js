@@ -10,8 +10,10 @@ import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import 'remixicon/fonts/remixicon.css'
 import { Link } from '@inertiajs/vue3'
+import {createPinia} from "pinia";
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const pinia = createPinia()
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -21,6 +23,7 @@ createInertiaApp({
             .use(plugin)
             .use(ElementPlus)
             .use(ZiggyVue)
+            .use(pinia)
             .component('Link', Link)
             .mixin({ methods: { appRoute: route } })
             .mount(el);
