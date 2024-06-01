@@ -12,33 +12,51 @@ class AuthenticationTest extends TestCase
 
     public function test_login_screen_can_be_rendered(): void
     {
-        $response = $this->get('/login');
+        $response = $this->get(route('admin.login.form'));
 
         $response->assertStatus(200);
     }
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'email' => 'abc@gmail.com',
+            'password' => bcrypt('a12345678X'),
+        ]);
 
-        $response = $this->post('/login', [
+        $response = $this->post(route('admin.api.login.handle'), [
             'email' => $user->email,
-            'password' => 'password',
+            'password' => 'a12345678X',
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $response->assertStatus(200);
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
     {
         $user = User::factory()->create();
 
-        $this->post('/login', [
+        $this->post(route('admin.api.login.handle'), [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
 
         $this->assertGuest();
+    }
+    public function test_users_not_enter_email(): void
+    {
+        $response = $this->post(route('admin.api.login.handle'), [
+            'password' => 'a12345678X',
+        ]);
+
+        $response->assertSessionHasErrors('email');
+    }
+    public function test_users_not_enter_password(): void
+    {
+        $response = $this->post(route('admin.api.login.handle'), [
+            'email' => 'abc@gmail.com',
+        ]);
+        $response->assertSessionHasErrors('password');
     }
 }

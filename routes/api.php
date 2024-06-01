@@ -53,6 +53,8 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
         Route::apiResource('/permission', PermissionController::class);
         Route::apiResource('/user', UserController::class);
         Route::get('/user/{id}/all-permission', [UserController::class, 'getAllPermissionOfUser'])->name('user.all-permission');
+        Route::get('/user/{user_id}/role/{role_id}/all-permission', [UserController::class, 'getAllPermissionOfUserByRole'])->name('user.role.all-permission');
+        Route::put('/user/{id}/ignore-permission-for-user-role', [UserController::class, 'ignorePermissionForUserRole'])->name('user.ignore-permission-for-user-role');
 
         Route::get('/role/get/all-permission', [RoleController::class, 'getAllPermission'])->name('role.get-all-permission');
         Route::get('/role/{id}/template-permission', [PermissionController::class, 'templatePermission'])->name('role.template-permission');
