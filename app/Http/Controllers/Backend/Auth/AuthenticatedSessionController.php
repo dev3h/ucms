@@ -29,6 +29,33 @@ class AuthenticatedSessionController extends Controller
         if (!Hash::check($password, $user->password)) {
             throw ValidationException::withMessages(['password' => __('auth.password')]);
         }
+
+//        change\
+        if ($user->hasRole('master_admin') || $user->hasRole('master_user')) {
+            $routeRedirect = route('master.account.index');
+            Auth::guard('admin')->loginUsingId($user->id, $request->remember ? true : false);
+        } else {
+            $routeRedirect = route('business.account.index');
+            Auth::guard('business')->loginUsingId($user->id, $request->remember ? true : false);
+        }
+        if ($user->pass_is_changed == PassFirstChangeEnum::NOT_CHANGE) {
+            do {
+                // Tạo một chuỗi ngẫu nhiên mới
+                $str = Str::random(16);
+                // Kiểm tra xem chuỗi này đã được sử dụng bởi bất kỳ người dùng nào khác chưa
+            } while (Admin::where('token_first_change', $str)->exists());
+            $user->token_first_change = $str;
+            $user->save();
+            if ($user->hasRole('master_admin') || $user->hasRole('master_user')) {
+                $routeRedirect = 'master.password-first.form';
+            } else {
+                $routeRedirect = 'business.password-first.form';
+            }
+            return $this->sendSuccessResponse(route($routeRedirect, ['token' => $str]));
+        }
+        return $this->sendSuccessResponse($routeRedirect);
+//        end change
+
         $routeRedirect = route('admin.profile');
         if($user->two_factor_confirmed_at) {
             $request->session()->put('login.id', $user->id);

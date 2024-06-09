@@ -168,6 +168,7 @@ export default {
 }
 
 .admin-layout .el-menu--popup-container .el-menu-item.is-active {
+    --tw-pink-dark-color: #ff4d4f;
     color: var(--tw-pink-dark-color);
 }
 

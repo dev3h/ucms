@@ -88,8 +88,27 @@ Route::get('/', function () {
    return redirect()->route('admin.login.form');
 });
 require_once __DIR__ . '/fortify.php';
-Route::get('admin/reset-password/{token}', [ResetPasswordController::class, 'passwordReset'])->name('password.reset')
+Route::get('admin/reset-password/{token}',  [ResetPasswordController::class, 'passwordReset'])->name('password.reset')
     ->middleware(['guest', 'signed', 'throttle:6,1']);
+
+Route::prefix("app/")->as("app.")->group(function () {
+    Route::middleware(['guest'])->group(function () {
+        Route::get('/login', [AuthenticatedSessionController::class, 'formLogin'])->name('login.form');
+        Route::get('/change-password-first', [AuthenticatedSessionController::class, 'formChangePasswordFirst'])->name('password-first.form');
+        Route::get('/forgot-password', [ResetPasswordController::class, 'formForgotPassword'])
+            ->name('forgot-password.form');
+
+        Route::get('/confirm-forgot-password', [ResetPasswordController::class, 'confirmForgotPassword'])
+            ->name('form-confirm-forgot-password');
+
+        // Auth SNS for user
+        Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirectSocial'])->name('socialite.redirect');
+        Route::get('/callback/{provider}', [SocialiteController::class, 'callbackSocial'])->name('socialite.callback');
+
+        Route::get('two-factor-challenge', [AuthenticatedSessionController::class, 'formTwoFactorChallenge'])->name('two-factor-challenge.form');
+
+    });
+});
 
 
 

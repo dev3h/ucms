@@ -30,6 +30,15 @@ class AuthenticatedSessionController extends Controller
     public function logout()
     {
         $routeRedirect = route('admin.login.form');
+
+        $currentUser = $this->getCurrentUser();
+        $user = User::whereId($currentUser->id)->first();
+        $routeRedirect = route('master.form-login');
+
+        if ($user->hasRole('admin_enterprise') || $user->hasRole('user_enterprise')) {
+            $routeRedirect = route('business.form-login');
+        }
+
         Auth::logout();
         request()->session()->invalidate();
         request()->session()->regenerateToken();
