@@ -14,9 +14,18 @@ use App\Http\Controllers\Backend\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+//Route::get('/user', function (Request $request) {
+//    return $request->user();
+//})->middleware('auth:sanctum');
+
+// api send otp and login user
+Route::post('/send-otp-login', [LoginController::class, 'sendOtpLogin']);
+Route::post('/check-otp-login', [LoginController::class, 'checkOtpLogin']);
+
+// api send otp and register user
+Route::post('/send-otp-register', [RegisterController::class, 'sendOtpRegister']);
+Route::post('/check-otp-register', [RegisterController::class, 'checkOtpRegister']);
+
 
 Route::prefix("admin")->as("admin.api.")->group(function () {
     Route::middleware(['guest'])->group(function () {
