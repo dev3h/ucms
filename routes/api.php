@@ -18,14 +18,6 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //})->middleware('auth:sanctum');
 
-// api send otp and login user
-Route::post('/send-otp-login', [LoginController::class, 'sendOtpLogin']);
-Route::post('/check-otp-login', [LoginController::class, 'checkOtpLogin']);
-
-// api send otp and register user
-Route::post('/send-otp-register', [RegisterController::class, 'sendOtpRegister']);
-Route::post('/check-otp-register', [RegisterController::class, 'checkOtpRegister']);
-
 
 Route::prefix("admin")->as("admin.api.")->group(function () {
     Route::middleware(['guest'])->group(function () {
@@ -37,6 +29,7 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
     });
 
     Route::middleware(['auth'])->group(function () {
+        Route::get('me', [AuthenticatedSessionController::class, 'me'])->name('me');
         Route::post('/change-password-first', [AuthenticatedSessionController::class, 'changePasswordFirst'])->name('password-first.change');
 
         Route::apiResource('/system', SystemController::class);
@@ -110,3 +103,14 @@ Route::prefix("app")->as("app.api.")->group(function () {
 
     });
 });
+
+//// api send otp and login user
+//Route::post('/send-otp-login', [LoginController::class, 'sendOtpLogin']);
+//Route::post('/check-otp-login', [LoginController::class, 'checkOtpLogin']);
+//
+//// api send otp and register user
+//Route::post('/send-otp-register', [RegisterController::class, 'sendOtpRegister']);
+//Route::post('/check-otp-register', [RegisterController::class, 'checkOtpRegister']);
+
+
+

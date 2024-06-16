@@ -87,7 +87,7 @@ Route::prefix("admin/")->as("admin.")->group(function () {
 Route::get('/', function () {
    return redirect()->route('admin.login.form');
 });
-require_once __DIR__ . '/fortify.php';
+//require_once __DIR__ . '/fortify.php';
 Route::get('admin/reset-password/{token}',  [ResetPasswordController::class, 'passwordReset'])->name('password.reset')
     ->middleware(['guest', 'signed', 'throttle:6,1']);
 
@@ -109,6 +109,7 @@ Route::prefix("app/")->as("app.")->group(function () {
 
     });
 });
+
 
 
 

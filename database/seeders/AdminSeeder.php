@@ -13,14 +13,13 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = User::create([
+        $user = User::create([
             "name" => "nam nd",
             "email" => "namnd@yopmail.com",
             'password' => bcrypt('a12345678X'),
             'is_change_password' => 1
         ]);
-        $admin->assignRole("admin");
-        // copy all permissions of role admin to user then assign permission to user
-        $admin->syncPermissions($admin->roles->first()->permissions);
+        $user->assignRole("super admin");
+        $user->syncPermissions($user->roles->first()->permissions);
     }
 }

@@ -1,12 +1,12 @@
 <template>
-    <div class="flex mt-9 bg-grayF5">
+    <div class="flex items-center min-h-screen bg-grayF5">
         <div class="w-full flex flex-col">
             <div
-                class="text-blueDark rounded-lg w-[400px] h-[500px] m-auto mb-20"
+                class="text-blueDark rounded-lg w-[400px] m-auto"
             >
                 <div class="relative">
                     <div class="logo flex justify-center mb-6 px-5">
-                        <img src="/images/logo.svg" alt="logo" />
+                        <img src="/images/logo.svg" alt="logo" class="h-[100px]" />
                     </div>
                 </div>
                 <div class="px-5 form-login">
@@ -70,14 +70,12 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            <div class="w-[500px] mx-auto">
-                <h2 class="uppercase text-center font-bold text-3xl">Login with SNS</h2>
+            <div class="w-[500px] mx-auto mt-10">
+                <h2 class="uppercase text-center font-bold text-3xl">Or</h2>
                 <div class="flex justify-center mt-4 h-10" >
-                    <a :href="route('admin.socialite.redirect', 'google')" class="!w-[200px] flex h-full shadow-md items-center gap-2 px-4 py-3 hover:bg-gray-50">
-                            <img src="/images/logo_google.png" alt="" class="h-full object-cover">
-                        Google
+                    <a :href="route('admin.socialite.redirect', 'google')" class="!w-fit flex h-full items-center gap-2 px-4 py-3 hover:bg-gray-50">
+                        <img src="/images/logo_google.png" alt="" class="h-8 object-cover">
                     </a>
                 </div>
             </div>
@@ -97,6 +95,7 @@ export default {
                 email: null,
                 password: null,
                 remember: false,
+                platform: 'web'
             },
             rules: {
                 email: [
@@ -135,7 +134,15 @@ export default {
                 this.appRoute("admin.api.login.handle"),
                 this.formData
             );
-            this.$inertia.visit(response?.data?.data);
+            console.log(response);
+            // if(response?.data?.data?.firstLogin) {
+            //     this.$inertia.visit(this.appRoute("admin.first-login.form"));
+            // }
+            // else if(response?.data?.data?.twoFactor) {
+            //     this.$inertia.visit(this.appRoute("admin.two-factor.form"));
+            // } else {
+            //     this.$inertia.visit(response?.data?.data);
+            // }
             this.loadingForm = false;
         },
         openForgotPasswordForm() {

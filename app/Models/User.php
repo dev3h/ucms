@@ -14,8 +14,9 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens;
     use HasFactory;
@@ -81,7 +82,22 @@ class User extends Authenticatable
     public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class, 'model_has_permissions', 'model_id', 'permission_id')
-            ->withPivot('is_direct', 'model_type');
+            ->withPivot('is_direct')
+            ->withPivotValue('model_type', self::class);
+    }
 
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    public function deviceTokens()
+    {
+        return $this->hasMany(DeviceToken::class);
     }
 }

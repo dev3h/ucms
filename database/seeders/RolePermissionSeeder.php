@@ -15,9 +15,7 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         $roles = [
-            ['name' => 'admin', 'code' => 'ADMIN'],
-            ['name' => 'teacher', 'code' => 'TEACHER'],
-            ['name' => 'student', 'code' => 'STUDENT'],
+            ['name' => 'super admin', 'code' => 'SUPER_ADMIN'],
         ];
         foreach ($roles as $role) {
             Role::create($role);
@@ -42,17 +40,8 @@ class RolePermissionSeeder extends Seeder
         }
 
         // Assign full permissions to the administrator role
-        $adminRole = Role::where('name', 'admin')->first();
+        $superAdminRole = Role::where('name', 'super admin')->first();
         $permissions = Permission::all();
-        $adminRole->syncPermissions($permissions);
-
-        // Assign specific permissions to the lecturer role
-        $facultyRole = Role::where('name', 'teacher')->first();
-        $facultyRole->syncPermissions($permissions->random(5));
-
-        // Assign specific permissions to the student role
-        $studentRole = Role::where('name', 'student')->first();
-        $studentRole->syncPermissions($permissions->random(1));
-
+        $superAdminRole->syncPermissions($permissions);
     }
 }

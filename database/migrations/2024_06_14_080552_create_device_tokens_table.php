@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('device_tokens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('device_id');
-            $table->string('token');
+            $table->string('device_id')->nullable();
+            $table->text('token');
+            $table->text('refresh_token')->nullable();
             $table->smallInteger('platform')->nullable()
-                ->comment('1: Android(ATL), 2: iOS(APNs), 3: Web Push');
-            $table->string('endpoint_arn')->nullable();
+                ->comment('1: Web, 2: Android, 3: iOS');
             $table->timestamps();
             $table->softDeletes();
         });

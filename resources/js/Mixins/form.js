@@ -91,12 +91,12 @@ export default {
             } catch (error) {
                 let message =
                     error.response?.data?.message ??
-                    "エラーが発生しました。もう一度お試しください。";
+                    "An error has occurred. please try again.";
 
                 if (error.response?.status === 422) {
 
                     this.setErrors(error.response?.data?.errors ?? {});
-                    message = "入力値をもう一度チェックしてください。";
+                    message = "Please check your input values again.";
                 } else {
                     this.$message.error({ message: message, grouping: true });
                 }
