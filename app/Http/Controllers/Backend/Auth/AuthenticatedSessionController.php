@@ -18,7 +18,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthenticatedSessionController extends Controller
 {
-    public function handleLogin(LoginRequest $request)
+    public function handleLogin1(LoginRequest $request)
     {
         $email = $request->email;
         $password = $request->password;
@@ -93,6 +93,25 @@ class AuthenticatedSessionController extends Controller
             ->log('Login success');
 
         return $this->sendSuccessResponse($dataResponse, __('Login successfully.'));
+    }
+
+    public function handleLogin(LoginRequest $request)
+    {
+        $email = $request->email;
+        $password = $request->password;
+        $user = User::query()->where('email', $email)->first();
+
+        if ($user === null) {
+            throw ValidationException::withMessages(['email' => __('auth.failed')]);
+        }
+
+        if (!Hash::check($password, $user->password)) {
+            throw ValidationException::withMessages(['password' => __('auth.password')]);
+        }
+
+        $routeRedirect = route('admin.user.index');
+        Auth::loginUsingId($user->id, (bool)$request->remember);
+        return $this->sendSuccessResponse($routeRedirect);
     }
 
     public function changePasswordFirst(ChangePasswordFirstRequest $request)

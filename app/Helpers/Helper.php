@@ -27,3 +27,19 @@ if (!function_exists('format_datetime')) {
         return Carbon::parse($datetime)->format('Y/m/d H:i');
     }
 }
+
+if (!function_exists('get_current_user_login')) {
+    /**
+     * Retrieves the currently logged in user.
+     *
+     * @return mixed
+     */
+    function get_current_user_login()
+    {
+        if (auth()->check()) {
+            return auth()->user();
+        }
+
+        return null;
+    }
+}

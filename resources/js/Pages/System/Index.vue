@@ -1,11 +1,11 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white px-4">
-            <div class="w-full pt-3 pb-2 border-b-[1px]">
+        <div class="w-full h-full bg-white">
+            <div class="w-full pt-3 pb-2 border-b-[1px] px-4">
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
 
-            <div class="w-full py-4">
+            <div class="w-full px-4">
                 <div class="w-full flex justify-between gap-2 my-[15px]">
                     <div class="flex gap-2">
                         <div class="col-span-1">
@@ -41,7 +41,7 @@
 
             <div class="w-full">
                 <DataTable v-loading="loadForm" :fields="fields" :items="items" :paginate="paginate" footer-center
-                    paginate-background @page-change="changePage">
+                    paginate-background @page-change="changePage" @size-change="changeSize">
                     <template #action="{ row }">
                         <div class="flex justify-center items-center gap-x-[12px]">
 <!--                            <div class="cursor-pointer" @click="openShow(row?.id)">-->
@@ -78,6 +78,7 @@ export default {
             items: [],
             filters: {
                 page: Number(this.appRoute().params?.page ?? 1),
+                limit: Number(this.appRoute().query?.limit ?? 10),
             },
             fields: [
                 { key: 'name', width: 400, label: 'Name', align: 'left', headerAlign: 'left' },
@@ -141,7 +142,12 @@ export default {
         },
         openShow(id) {
             this.$inertia.visit(this.appRoute('admin.account.show', id))
-        }
+        },
+        changeSize(value) {
+            this.filters.page = 1
+            this.filters.limit = value
+            this.fetchData()
+        },
     },
 }
 </script>

@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\RoleController;
 use App\Http\Controllers\Frontend\SubSystemController;
 use App\Http\Controllers\Frontend\SystemController;
 use App\Http\Controllers\Frontend\UserController;
+use App\Http\Middleware\CustomJWTAuth;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -56,6 +57,7 @@ Route::prefix("admin/")->as("admin.")->group(function () {
 
     });
 
+//    Route::middleware([CustomJWTAuth::class])
     Route::middleware(['auth'])->group(function () {
 
         Route::get('/change-password-first', [AuthenticatedSessionController::class, 'formChangePasswordFirst'])->name('password-first.form');
@@ -106,7 +108,6 @@ Route::prefix("app/")->as("app.")->group(function () {
         Route::get('/callback/{provider}', [SocialiteController::class, 'callbackSocial'])->name('socialite.callback');
 
         Route::get('two-factor-challenge', [AuthenticatedSessionController::class, 'formTwoFactorChallenge'])->name('two-factor-challenge.form');
-
     });
 });
 

@@ -135,14 +135,14 @@ export default {
                 this.formData
             );
             console.log(response);
-            // if(response?.data?.data?.firstLogin) {
-            //     this.$inertia.visit(this.appRoute("admin.first-login.form"));
-            // }
-            // else if(response?.data?.data?.twoFactor) {
-            //     this.$inertia.visit(this.appRoute("admin.two-factor.form"));
-            // } else {
-            //     this.$inertia.visit(response?.data?.data);
-            // }
+            if(response?.data?.data?.firstLogin) {
+                this.$inertia.visit(this.appRoute("admin.first-login.form"));
+            }
+            else if(response?.data?.data?.twoFactor) {
+                this.$inertia.visit(this.appRoute("admin.two-factor.form"));
+            } else {
+                this.$inertia.visit(response?.data?.data);
+            }
             this.loadingForm = false;
         },
         openForgotPasswordForm() {
