@@ -6,7 +6,7 @@
             </div>
 
             <div class="w-full px-4">
-                <div class="w-full flex justify-between gap-2 my-[15px]">
+                <div class="w-full flex justify-between gap-2 my-2">
                     <div class="flex gap-2">
                         <div class="col-span-1">
                             <el-input v-model="filters.search" class="!w-80" size="large" placeholder="Search"
@@ -48,10 +48,10 @@
 <!--                                <img src="/images/svg/eye-icon.svg" />-->
 <!--                            </div>-->
                             <div class="cursor-pointer" @click="openEdit(row?.id)">
-                                <img src="/images/svg/pen-icon.svg" />
+                                <img src="/images/svg/pen-icon.svg" alt="" />
                             </div>
                             <div class="cursor-pointer" @click="openDeleteForm(row?.id)">
-                                <img src="/images/svg/trash-icon.svg" />
+                                <img src="/images/svg/trash-icon.svg" alt="" />
                             </div>
                         </div>
                     </template>
@@ -62,6 +62,7 @@
         <ModalSystem ref="modalSystem" :redirectRoute="appRoute('admin.system.index')" />
     </AdminLayout>
 </template>
+
 <script>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import BreadCrumbComponent from '@/Components/Page/BreadCrumb.vue';
@@ -71,6 +72,7 @@ import axios from '@/Plugins/axios'
 import DeleteForm from '@/Components/Page/DeleteForm.vue';
 import debounce from 'lodash.debounce'
 import ModalSystem from "@/Pages/System/ModalSystem.vue";
+
 export default {
     components: {ModalSystem, AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
     data() {

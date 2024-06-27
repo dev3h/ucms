@@ -3,9 +3,11 @@
         <div class="scroll-wrapper" />
         <el-table
             ref="table"
+            border
             :data="items"
             :default-sort="defaultSort || {}"
             empty-text="No data"
+            :max-height="tableHeight ?? null"
             @sort-change="sortChange"
             @selection-change="handleSelectionChange"
             @row-click="rowClick"
@@ -14,6 +16,7 @@
             <el-table-column v-if="enableIndex" type="index" fixed width="70" label="No." align="center" />
             <el-table-column
                 v-for="(field, index) in fields"
+                :index="index"
                 :key="index"
                 :fixed="field.fixed"
                 :prop="field.key"
@@ -40,18 +43,34 @@
             </template>
         </el-table>
         <slot v-if="paginate && items.length" name="after">
-            <div v-if="!disablePaginateFooter" class="card-footer" :class="{ 'card-footer--center': footerCenter }">
+            <div
+                v-if="!disablePaginateFooter"
+                class="card-footer" :class="{ 'card-footer--center': footerCenter }"
+            >
                 <div class="table-pagination flex justify-end items-end">
-                    <div v-if="!disableTableInfo && paging.from && paging.to" class="table-showing mr-4 w-[200px]">
-                        <span class="text-[#646464] text-sm">
-                            {{ `${paging.from}-${paging.to} of ${paging.total} items` }}
-                        </span>
+                    <div v-if="!disableTableInfo && paging.from && paging.to" class="flex items-center">
+                        <div class="table-showing whitespace-nowrap">
+                            <span class="text-[#646464] text-sm">
+                                {{ `${paging.from}-${paging.to} of ${paging.total} items` }}
+                            </span>
+                        </div>
+                        <el-select
+                            v-model="paging.per_page"
+                            @change="handleSizeChange"
+                            class="min-w-[55px] select-option"
+                            :suffix-icon="getCaretBottom"
+                        >
+                            <el-option
+                                v-for="(item, index) in pageSizesOpt"
+                                :key="index" :label="item" :value="item"
+                            />
+                        </el-select>
                     </div>
                     <div class="flex justify-end items-center w-[100%]">
                         <button
                             :disabled="paging.current_page == 1"
                             class="h-[32px] px-[8px] border-[1px] border-[#DCDFE6] rounded-l-[4px] text-[14px]"
-                            :class="{ 'cursor-not-allowed opacity-50': paging.current_page == 1 }"
+                            :class="{'cursor-not-allowed opacity-50' : paging.current_page == 1}"
                             @click="handleCurrentChange(1)"
                         >
                             First
@@ -59,11 +78,11 @@
                         <div>
                             <el-pagination
                                 v-model:page-size="pageSize"
-                                :current-page="Number(paginate.current_page) || 1"
+                                :current-page="Number(paging.current_page) || 1"
                                 :page-sizes="pageSizesOpt"
                                 :pager-count="pagerCount"
                                 layout="->, prev, pager, next"
-                                :total="paginate.total"
+                                :total="paging.total"
                                 :background="paginateBackground"
                                 :prev-icon="getDArrowLeft"
                                 :next-icon="getDArrowRight"
@@ -74,7 +93,7 @@
                         <button
                             :disabled="paging.current_page == paging.last_page"
                             class="h-[32px] px-[8px] border-[1px] border-[#DCDFE6] rounded-r-[4px] text-[14px]"
-                            :class="{ 'cursor-not-allowed opacity-50': paging.current_page == paging.last_page }"
+                            :class="{'cursor-not-allowed opacity-50' : paging.current_page == paging.last_page}"
                             @click="handleCurrentChange(paging.last_page)"
                         >
                             Last
@@ -87,28 +106,33 @@
 </template>
 
 <script>
-import { DArrowLeft, DArrowRight } from '@element-plus/icons-vue'
+import {DArrowLeft, DArrowRight, CaretBottom} from '@element-plus/icons-vue'
 
 const pageSizesOpt = [5, 10, 20, 50, 100]
 
 export default {
     props: {
-        fields: { type: Array, default: () => [] },
-        items: { type: Array, default: () => [] },
-        paginate: { type: Object, default: () => {} },
-        enableIndex: { type: Boolean, default: false },
-        enableSelectBox: { type: Boolean, default: false },
-        disableTableInfo: { type: Boolean, default: false },
-        disablePaginateFooter: { type: Boolean, default: false },
-        headerCenter: { type: Boolean, default: false },
-        footerCenter: { type: Boolean, default: false },
-        paginateBackground: { type: Boolean, default: true },
-        defaultSort: { type: Object, default: () => {} },
-        tableHeight: { type: Number, default: 550 },
-        pagerCount: { type: Number },
+        fields: {type: Array, default: () => []},
+        items: {type: Array, default: () => []},
+        paginate: {
+            type: Object, default: () => {
+            }
+        },
+        enableIndex: {type: Boolean, default: false},
+        enableSelectBox: {type: Boolean, default: false},
+        disableTableInfo: {type: Boolean, default: false},
+        disablePaginateFooter: {type: Boolean, default: false},
+        headerCenter: {type: Boolean, default: false},
+        footerCenter: {type: Boolean, default: false},
+        paginateBackground: {type: Boolean, default: true},
+        defaultSort: {
+            type: Object, default: () => {
+            }
+        },
+        tableHeight: {type: Number, default: 700},
+        pagerCount: {type: Number}
     },
     emits: ['row-selected', 'page-change', 'size-change', 'sort-change', 'row-click'],
-
     data() {
         return {
             pageSizesOpt,
@@ -127,8 +151,10 @@ export default {
         getDArrowLeft() {
             return DArrowLeft
         },
+        getCaretBottom() {
+            return CaretBottom;
+        }
     },
-
     mounted() {
         let triggerScroll = null
         this.$nextTick(() => {
@@ -150,6 +176,17 @@ export default {
                         this.scrollTable(event.currentTarget.scrollLeft)
                     } else {
                         triggerScroll = null
+                    }
+                })
+
+                this.$el.querySelector('.el-scrollbar__wrap').addEventListener('scroll', (event) => {
+                    // prevent infinite trigger scroll
+                    if (triggerScroll !== 'table') {
+                        triggerScroll = 'top'
+                        this.scrollTable(tableEl.scrollLeft)
+                    } else {
+                        triggerScroll = null
+                        this.scrollTable(tableEl.scrollLeft)
                     }
                 })
 
@@ -208,7 +245,6 @@ export default {
             element.addEventListener('mouseleave', upListener)
         })
     },
-
     methods: {
         toggleSelection(rows) {
             if (rows) {
@@ -223,7 +259,7 @@ export default {
             this.$emit('row-selected', selectedItems)
         },
         rowClick(row) {
-            this.$emit('row-click', row)
+            this.$emit('row-click', row);
         },
         handleCurrentChange(value) {
             this.$emit('page-change', value)
@@ -231,6 +267,7 @@ export default {
         },
         handleSizeChange(value) {
             this.$emit('size-change', value)
+            this.paginate.current_page = 1
             this.upClassDataTable()
         },
         scrollTop(val) {
@@ -294,9 +331,10 @@ export default {
 }
 
 .DataTable .el-table__header th.el-table__cell {
-    background-color: var(--tw-gray59);
+    background-color: var(--tw-header-table);
     color: var(--tw-white);
 }
+
 .DataTable .el-table__row td.el-table__cell {
     color: var(--tw-header-table);
     padding: 18px 10px 18px 16px;
@@ -340,6 +378,7 @@ export default {
     /* border: 0; */
     border: 1px solid #dcdfe6;
 }
+
 .DataTable .el-pagination.is-background button .el-icon {
     font-size: 15px !important;
 }
@@ -369,16 +408,14 @@ export default {
 .DataTable.is-never-shadow {
     border: none;
 }
+
 .el-table thead {
     color: #000;
     /* font-size: 13px; */
 }
 
 .el-table__header .el-table__cell {
-    padding: 7px 10px 7px 16px;
-}
-.el-table__header .el-table__cell {
-    padding: 7px 10px 7px 16px;
+    padding: 10px 16px;
 }
 
 .DataTable .el-scrollbar__bar.is-horizontal {
@@ -400,11 +437,25 @@ export default {
     padding: 12px 16px;
 }
 
+.DataTable .table-pagination .el-select .el-select__wrapper {
+    box-shadow: unset !important;
+}
+
 .DataTable .table-pagination .el-pagination {
     width: 100%;
 }
 
 .DataTable .table-pagination .el-pagination .el-pagination__sizes {
     margin-right: auto;
+}
+
+.DataTable .select-option .el-select__wrapper {
+    text-align: right;
+    box-shadow: none;
+    padding: 0 !important;
+}
+
+.DataTable .select-option .el-select__placeholder.is-transparent {
+    color: var(--el-input-text-color, var(--el-text-color-regular));
 }
 </style>

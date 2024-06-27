@@ -111,6 +111,12 @@ class AuthenticatedSessionController extends Controller
 
         $routeRedirect = route('admin.user.index');
         Auth::loginUsingId($user->id, (bool)$request->remember);
+        activity()
+            ->causedBy($user)
+            ->logType('info')
+            ->log('Login success');
+
+
         return $this->sendSuccessResponse($routeRedirect);
     }
 

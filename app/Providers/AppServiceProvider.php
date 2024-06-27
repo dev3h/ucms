@@ -13,6 +13,8 @@ use App\Observers\SubSystemObserver;
 use App\Observers\SystemObserver;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Permission;
+use App\Services\ActivityLoggerService;
+use Spatie\Activitylog\ActivityLogger as SpatieActivityLogger;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         \Laravel\Fortify\Fortify::ignoreRoutes();
+
+        $this->app->singleton(SpatieActivityLogger::class, ActivityLoggerService::class);
     }
 
     /**

@@ -18,7 +18,7 @@ class SystemController extends Controller
         try {
             $data = System::filters(new SystemFilter($request))
                 ->orderBy('created_at', 'desc')
-                ->paginate(PerPage::DEFAULT);
+                ->paginate($request->limit ?? PerPage::DEFAULT);
             return SystemResource::collection($data)
                 ->additional(["status_code" => 200]);
         } catch (\Throwable $e) {

@@ -15,7 +15,7 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         $roles = [
-            ['name' => 'super admin', 'code' => 'SUPER_ADMIN'],
+            ['name' => 'master_admin', 'code' => 'SUPER_ADMIN'],
         ];
         foreach ($roles as $role) {
             Role::create($role);
@@ -40,7 +40,7 @@ class RolePermissionSeeder extends Seeder
         }
 
         // Assign full permissions to the administrator role
-        $superAdminRole = Role::where('name', 'super admin')->first();
+        $superAdminRole = Role::where('name', 'master_admin')->first();
         $permissions = Permission::all();
         $superAdminRole->syncPermissions($permissions);
     }

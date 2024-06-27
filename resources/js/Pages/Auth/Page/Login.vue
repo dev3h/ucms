@@ -134,7 +134,6 @@ export default {
                 this.appRoute("admin.api.login.handle"),
                 this.formData
             );
-            console.log(response);
             if(response?.data?.data?.firstLogin) {
                 this.$inertia.visit(this.appRoute("admin.first-login.form"));
             }

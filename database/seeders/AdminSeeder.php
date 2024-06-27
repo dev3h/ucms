@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
             'password' => bcrypt('a12345678X'),
             'is_change_password' => 1
         ]);
-        $user->assignRole("super admin");
+        $user->assignRole("master admin");
         $user->syncPermissions($user->roles->first()->permissions);
     }
 }

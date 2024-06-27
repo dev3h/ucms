@@ -52,7 +52,7 @@ export default {
 </script>
 <style>
 .admin-layout {
-    font-family: 'Noto Sans Japanese', 'Yu Gothic', YuGothic, sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
 }
 

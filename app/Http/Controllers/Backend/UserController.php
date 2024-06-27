@@ -7,10 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\RoleResource;
+use App\Http\Resources\UserActivityLogResource;
 use App\Http\Resources\UserResource;
 use App\Mail\SendPasswordCreateAdminEmail;
 use App\Models\Action;
 use App\Models\Filters\PermissionFilter;
+use App\Models\Filters\UserActivityLogFilter;
 use App\Models\Filters\UserFilter;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -212,6 +214,23 @@ class UserController extends Controller
                 }
             }
             return $this->sendSuccessResponse(null, __('Updated successfully'));
+        } catch (\Throwable $e) {
+            return $this->sendErrorResponse(__('Data not found'), $e->getMessage());
+        }
+    }
+
+    public function getUserLogs($id)
+    {
+        try {
+            $user = User::find($id);
+            if (!$user) {
+                return $this->sendErrorResponse(__('Data not found'), 404);
+            }
+            $logs = $user->activityLogs()->filter(new UserActivityLogFilter(request()))->orderBy('created_at', 'desc')
+                ->paginate(PerPage::DEFAULT);
+
+            return UserActivityLogResource::collection($logs)
+                ->additional(["status_code" => 200]);
         } catch (\Throwable $e) {
             return $this->sendErrorResponse(__('Data not found'), $e->getMessage());
         }
