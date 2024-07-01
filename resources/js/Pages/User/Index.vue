@@ -1,12 +1,12 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white px-4">
-            <div class="w-full pt-3 pb-2 border-b-[1px]">
+        <div class="w-full h-full bg-white">
+            <div class="w-full pt-3 pb-2 border-b-[1px] px-4">
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
 
-            <div class="w-full py-4">
-                <div class="w-full flex justify-between items-center my-[15px]">
+            <div class="w-full">
+                <div class="w-full flex justify-between items-center px-4 my-2">
                     <div class="flex gap-2">
                         <el-input v-model="filters.search" class="!w-80" size="large" placeholder="Search" clearable @input="filterData">
                             <template #prefix>
@@ -79,7 +79,7 @@ export default {
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
-                { key: 'name', width: 400, label: 'Name', align: 'left', headerAlign: 'left' },
+                { key: 'name', width: 200, label: 'Name', align: 'left', headerAlign: 'left' },
                 { key: 'email', width: 300, label: 'Email', align: 'left', headerAlign: 'left' },
                 { key: 'role_name', width: 300, label: 'Role', align: 'left', headerAlign: 'left' },
                 { key: 'created_at', width: 300, label: 'Created At', align: 'left', headerAlign: 'left'},

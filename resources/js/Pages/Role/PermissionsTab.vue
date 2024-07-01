@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="w-full py-4">
-            <div class="w-full flex justify-between items-center my-[15px]">
+        <div class="w-full px-4">
+            <div class="w-full flex justify-between items-center my-2">
                 <div class="w-80">
                     <el-input v-model="filters.search" class="w-full" size="large" placeholder="Search" clearable @input="filterData">
                         <template #prefix>
