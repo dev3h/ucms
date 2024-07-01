@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\DeviceToken;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,34 @@ class AuthenticatedSessionController extends Controller
         ]);
     }
 
+//    public function logout()
+//    {
+//        $routeRedirect = route('admin.login.form');
+//
+//        $currentUser = $this->getCurrentUser();
+//        $user = User::whereId($currentUser->id)->first();
+//        $routeRedirect = route('master.form-login');
+//
+//        if ($user->hasRole('admin_enterprise') || $user->hasRole('user_enterprise')) {
+//            $routeRedirect = route('business.form-login');
+//        }
+//
+//        try {
+//            $token = Auth::guard('user')->getToken();
+//            JWTAuth::setToken($token)->invalidate($token);
+//
+//            // remove device token
+//            $deviceTokens = DeviceToken::where('user_id', $currentUser->id)->get();
+//            foreach ($deviceTokens as $deviceToken) {
+//                $deviceToken->delete();
+//            }
+//
+//            return $this->sendSuccessResponse(true, __('Logout successfully.'));
+//        } catch (\Exception $e) {
+//            return $this->sendErrorResponse(__('Something went wrong.'), $e->getMessage());
+//        }
+////        return redirect($routeRedirect);
+//    }
     public function logout()
     {
         $routeRedirect = route('admin.login.form');

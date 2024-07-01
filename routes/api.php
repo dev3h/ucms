@@ -10,14 +10,14 @@ use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SubSystemController;
 use App\Http\Controllers\Backend\SystemController;
-use App\Http\Controllers\Backend\TwoFactorAuthController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+//Route::get('/user', function (Request $request) {
+//    return $request->user();
+//})->middleware('auth:sanctum');
+
 
 Route::prefix("admin")->as("admin.api.")->group(function () {
     Route::middleware(['guest'])->group(function () {
@@ -29,6 +29,7 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
     });
 
     Route::middleware(['auth'])->group(function () {
+        Route::get('me', [AuthenticatedSessionController::class, 'me'])->name('me');
         Route::post('/change-password-first', [AuthenticatedSessionController::class, 'changePasswordFirst'])->name('password-first.change');
 
         Route::apiResource('/system', SystemController::class);
@@ -53,6 +54,7 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
         Route::apiResource('/permission', PermissionController::class);
         Route::apiResource('/user', UserController::class);
         Route::get('/user/{id}/all-permission', [UserController::class, 'getAllPermissionOfUser'])->name('user.all-permission');
+        Route::get('/user/{id}/user-logs', [UserController::class, 'getUserLogs'])->name('user.user-logs');
         Route::get('/user/{user_id}/role/{role_id}/all-permission', [UserController::class, 'getAllPermissionOfUserByRole'])->name('user.role.all-permission');
         Route::put('/user/{id}/ignore-permission-for-user-role', [UserController::class, 'ignorePermissionForUserRole'])->name('user.ignore-permission-for-user-role');
 
@@ -79,3 +81,37 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
 
     });
 });
+
+Route::prefix("app")->as("app.api.")->group(function () {
+    Route::middleware(['guest'])->group(function () {
+        Route::post('/login', [AuthenticatedSessionController::class, 'handleLogin'])->name('login.handle');
+
+        Route::post('/send-mail-reset-password', [ResetPasswordController::class, 'sendMailResetPassword'])
+            ->name('send-mail-reset-password');
+        Route::post('/update-password', [ResetPasswordController::class, 'passwordResetUpdate'])->name('reset-password.update');
+    });
+
+    Route::middleware(['auth'])->group(function () {
+        Route::post('/change-password-first', [AuthenticatedSessionController::class, 'changePasswordFirst'])->name('password-first.change');
+
+        Route::get('/code-for-permission', [PermissionController::class, 'getCodeForPermission'])->name('permission.code-for-permission');
+        // integration with socialite
+        Route::get('/integration-socialites', [IntegrationSocialiteController::class, 'getAllIntegrationSocial'])->name('get-all-integration-socialite');
+        Route::delete('/unlink-socialite/{provider_id}', [IntegrationSocialiteController::class, 'unlinkIntegrationSocial'])->name('unlink-integration-socialite');
+
+        // change password
+        Route::post('/change-password', [ChangePasswordController::class, 'changePassword'])->name('change-password');
+
+    });
+});
+
+//// api send otp and login user
+//Route::post('/send-otp-login', [LoginController::class, 'sendOtpLogin']);
+//Route::post('/check-otp-login', [LoginController::class, 'checkOtpLogin']);
+//
+//// api send otp and register user
+//Route::post('/send-otp-register', [RegisterController::class, 'sendOtpRegister']);
+//Route::post('/check-otp-register', [RegisterController::class, 'checkOtpRegister']);
+
+
+

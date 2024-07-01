@@ -54,3 +54,12 @@ export const MASTER_MENUS = [
         pathActive: "permission",
     },
 ];
+
+export const APP_MENUS = [
+    {
+        label: "Application",
+        icon: "application-icon.svg",
+        route: "app.application.index",
+        pathActive: "application",
+    },
+];

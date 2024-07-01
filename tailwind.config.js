@@ -16,6 +16,8 @@ export default {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+                secondary: ["Meiryo", "sans-serif"],
+                primary: ["Roboto", "sans-serif"],
             },
             colors: {
                 primary: "#002147",

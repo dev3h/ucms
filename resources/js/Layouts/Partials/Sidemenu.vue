@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { MASTER_MENUS } from '@/Store/Const/menu.js'
+import { MASTER_MENUS, APP_MENUS } from '@/Store/Const/menu.js'
 import { isArray, isEmpty } from 'lodash'
 
 export default {
@@ -76,16 +76,24 @@ export default {
     },
     created() {
         this.getCurrentUrl()
-        this.menus = MASTER_MENUS
+        if (this.pathSubmenu[1] === 'admin') {
+            this.menus = MASTER_MENUS
+        } else {
+            let menuBusiness = APP_MENUS
+            let excludeList = ['initial-message', 'message-advice', 'data-management', 'setting']
+            if (this.$page?.props?.auth?.role !== 'admin_enterprise') {
+                menuBusiness = menuBusiness.filter((item) => !excludeList.includes(item.pathActive))
+            }
+            // console.log(menuBusiness)
+            this.menus = menuBusiness
+        }
     },
     methods: {
         getCurrentUrl() {
             const pathname = window.location.pathname.split('/')
             const menus = this.menus.map((item) => item.pathActive)
             let currentUrl = pathname.filter((element) => menus.includes(element)).toString()
-            if (currentUrl == 'topic-forums') {
-                currentUrl = 'forums'
-            }
+
             this.defaultActive = currentUrl || 'dashboard'
             this.pathSubmenu = window.location.pathname.split('/')
             if (this.pathSubmenu[2] == 'my-account') {

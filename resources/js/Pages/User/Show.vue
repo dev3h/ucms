@@ -44,6 +44,9 @@
             <div class="w-full" v-if="tabActive === 2">
                 <GeneralTab :id="id" />
             </div>
+            <div class="w-full" v-if="tabActive === 3">
+                <UserLogsTab :id="id" />
+            </div>
         </div>
     </AdminLayout>
 </template>
@@ -54,10 +57,11 @@ import { searchMenu } from "@/Mixins/breadcrumb.js";
 import axios from "@/Plugins/axios";
 import form from '@/Mixins/form.js'
 import GeneralTab from "@/Pages/User/GeneralTab.vue";
-import UsersTab from "@/Pages/Role/UsersTab.vue";
+
 import PermissionsTab from "@/Pages/User/PermissionsTab.vue";
+import UserLogsTab from "@/Pages/User/UserLogsTab.vue";
 export default {
-    components: {PermissionsTab, UsersTab, GeneralTab, AdminLayout, BreadCrumbComponent },
+    components: {UserLogsTab, PermissionsTab, GeneralTab, AdminLayout, BreadCrumbComponent },
     mixins: [form],
     props: {
         id: {

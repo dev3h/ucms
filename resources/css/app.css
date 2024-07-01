@@ -29,4 +29,8 @@ select:focus {
     border-color: #004D63 !important;
 }
 
+body {
+    font-family: var(--tw-fontPrimary) !important;
+}
+
 

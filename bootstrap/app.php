@@ -1,8 +1,13 @@
 <?php
 
+use App\Exceptions\BaseException;
+use App\Helpers\ResponseHelper;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,6 +17,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->use([
+            \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+            \App\Http\Middleware\RequestLoggerMiddleware::class,
+            \App\Http\Middleware\LimitRequest::class,
+        ]);
+
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
@@ -26,11 +37,27 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         ]);
+
         $middleware->redirectTo(
             guests: '/admin/login',
             users: '/admin/profile',
         );
     })
+
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->dontReport([
+            BaseException::class
+        ]);
+
+        $exceptions->render(function (Throwable $e, Request $request) {
+            if ($request->is('api/*') || $request->is('admin/api/*')) {
+                if ($e instanceof NotFoundHttpException) {
+                    return ResponseHelper::sendErrorResponse(__('errors.no_data'), null, 404);
+                }
+
+                if ($e instanceof TooManyRequestsHttpException) {
+                    return ResponseHelper::sendErrorResponse(__('errors.too_many_requests'), null, 429);
+                }
+            }
+        });
     })->create();
