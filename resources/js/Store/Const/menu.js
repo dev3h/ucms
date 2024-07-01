@@ -53,6 +53,12 @@ export const MASTER_MENUS = [
         route: "admin.permission.index",
         pathActive: "permission",
     },
+    {
+        label: 'Notifications',
+        icon: 'bell-icon.svg',
+        route: 'admin.notification.index',
+        pathActive: 'notification',
+    },
 ];
 
 export const APP_MENUS = [

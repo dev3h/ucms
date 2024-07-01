@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Frontend\Auth\ResetPasswordController;
 use App\Http\Controllers\Frontend\DashboardController;
 use App\Http\Controllers\Frontend\ModuleController;
+use App\Http\Controllers\Frontend\NotificationController;
 use App\Http\Controllers\Frontend\PermissionController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\RoleController;
@@ -19,26 +20,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-//Route::get('/', function () {
-//    return Inertia::render('Welcome', [
-//        'canLogin' => Route::has('login'),
-//        'canRegister' => Route::has('register'),
-//        'laravelVersion' => Application::VERSION,
-//        'phpVersion' => PHP_VERSION,
-//    ]);
-//});
-//
-//Route::middleware([
-//    'auth:sanctum',
-//    config('jetstream.auth_session'),
-//    'verified',
-//])->group(function () {
-//    Route::get('/dashboard', function () {
-//        return Inertia::render('Dashboard');
-//    })->name('dashboard');
-//});
-
-// //Frontend
+//Frontend
 Route::prefix("admin/")->as("admin.")->group(function () {
     Route::middleware(['guest'])->group(function () {
         Route::get('/login', [AuthenticatedSessionController::class, 'formLogin'])->name('login.form');
@@ -82,6 +64,14 @@ Route::prefix("admin/")->as("admin.")->group(function () {
 
         // dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+        // Notification user
+        Route::prefix('/notification')->as('notification.')->group(function () {
+            Route::get('/', [NotificationController::class, 'index'])->name('index');
+            Route::get('/create', [NotificationController::class, 'create'])->name('create');
+            Route::get('/{id}', [NotificationController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [NotificationController::class, 'update'])->name('update');
+        });
     });
 
 });
@@ -89,7 +79,7 @@ Route::prefix("admin/")->as("admin.")->group(function () {
 Route::get('/', function () {
    return redirect()->route('admin.login.form');
 });
-//require_once __DIR__ . '/fortify.php';
+require_once __DIR__ . '/fortify.php';
 Route::get('admin/reset-password/{token}',  [ResetPasswordController::class, 'passwordReset'])->name('password.reset')
     ->middleware(['guest', 'signed', 'throttle:6,1']);
 
