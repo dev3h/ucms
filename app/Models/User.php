@@ -12,13 +12,15 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Traits\UserLogTrait;
 
-class User extends Authenticatable implements JWTSubject
+
+class User extends Authenticatable implements JWTSubject, Auditable
 {
     use HasApiTokens;
     use HasFactory;
@@ -27,8 +29,8 @@ class User extends Authenticatable implements JWTSubject
     use TwoFactorAuthenticatable;
     use SoftDeletes;
     use HasRoles;
-    use LogsActivity;
-
+    use UserLogTrait;
+    use \OwenIt\Auditing\Auditable;
     /**
      * The attributes that are mass assignable.
      *
@@ -108,10 +110,5 @@ class User extends Authenticatable implements JWTSubject
     public function activityLogs()
     {
         return $this->hasMany(ActivityLog::class, 'causer_id');
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logOnly(['name','email']);
     }
 }

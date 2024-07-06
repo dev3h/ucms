@@ -29,9 +29,8 @@ class SocialiteController extends Controller
             }
             $currentTime = time();
             $expireTime = $providerUser->expiresIn ? $currentTime + $providerUser->expiresIn : null;
-            dd($currentTime > $expireTime);
             if($expireTime && $currentTime > $expireTime) {
-                return redirect(route('admin.login.form'))->withErrors(__('Token expired'));
+                return redirect(route('admin.login.form'))->withErrors(__('Token sns expired'));
             }
 
             $user = User::find($social->user_id);

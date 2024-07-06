@@ -1,12 +1,12 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white px-4">
-            <div class="w-full pt-3 pb-2 border-b-[1px]">
+        <div class="w-full h-full bg-white">
+            <div class="w-full pt-3 pb-2 border-b-[1px] px-4">
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
 
-            <div class="w-full py-4">
-                <div class="w-full flex justify-between gap-2 my-[15px]">
+            <div class="w-full px-4">
+                <div class="w-full flex justify-between gap-2 my-2">
                     <div class="flex gap-2">
                         <div class="col-span-1">
                             <el-input v-model="filters.search" class="!max-w-[320px]" size="large" placeholder="Search"

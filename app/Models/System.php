@@ -5,24 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class System extends Model
+class System extends Model implements Auditable
 {
     use HasFactory;
     use SoftDeletes;
-    use LogsActivity;
+    use \OwenIt\Auditing\Auditable;
 
     protected $guarded = [];
 
     public function subsystems()
     {
         return $this->hasMany(SubSystem::class);
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->logOnly(['name','code']);
     }
 }

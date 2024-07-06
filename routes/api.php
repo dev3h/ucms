@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\Backend\ActionController;
+use App\Http\Controllers\Backend\Admin\NotificationController as AdminNotificationController;
+use App\Http\Controllers\Backend\AuditLogController;
 use App\Http\Controllers\Backend\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Backend\Auth\ResetPasswordController;
 use App\Http\Controllers\Backend\ChangePasswordController;
 use App\Http\Controllers\Backend\IntegrationSocialiteController;
 use App\Http\Controllers\Backend\ModuleController;
+use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\PermissionController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\SubSystemController;
@@ -78,7 +81,18 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
 
         // change password
         Route::post('/change-password', [ChangePasswordController::class, 'changePassword'])->name('change-password');
+        // Notification user
+        Route::prefix('/notification')->as('notification.')->group(function () {
+            Route::get('/', [NotificationController::class, 'index'])->name('index');
+            Route::get('/{id}', [NotificationController::class, 'show'])->name('show');
+            Route::post('/', [NotificationController::class, 'store'])->name('store');
+            Route::put('/{id}', [NotificationController::class, 'update'])->name('update');
+            Route::delete('/{id}', [NotificationController::class, 'destroy'])->name('delete');
+            Route::post('/get-member-can-add', [NotificationController::class, 'membersCanAdd'])
+                ->name('member-can-add');
+        });
 
+        Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log.index');
     });
 });
 

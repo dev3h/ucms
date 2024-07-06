@@ -6,4 +6,5 @@ return [
     App\Providers\HorizonServiceProvider::class,
     App\Providers\JetstreamServiceProvider::class,
     Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+    OwenIt\Auditing\AuditingServiceProvider::class,
 ];

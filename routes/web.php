@@ -4,41 +4,21 @@ use App\Http\Controllers\Backend\IntegrationSocialiteController;
 use App\Http\Controllers\Backend\SocialiteController;
 use App\Http\Controllers\Frontend\ActionController;
 use App\Http\Controllers\Frontend\ApplicationUserController;
+use App\Http\Controllers\Frontend\AuditLogController;
 use App\Http\Controllers\Frontend\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Frontend\Auth\ResetPasswordController;
 use App\Http\Controllers\Frontend\DashboardController;
 use App\Http\Controllers\Frontend\ModuleController;
+use App\Http\Controllers\Frontend\NotificationController;
 use App\Http\Controllers\Frontend\PermissionController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\RoleController;
 use App\Http\Controllers\Frontend\SubSystemController;
 use App\Http\Controllers\Frontend\SystemController;
 use App\Http\Controllers\Frontend\UserController;
-use App\Http\Middleware\CustomJWTAuth;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-//Route::get('/', function () {
-//    return Inertia::render('Welcome', [
-//        'canLogin' => Route::has('login'),
-//        'canRegister' => Route::has('register'),
-//        'laravelVersion' => Application::VERSION,
-//        'phpVersion' => PHP_VERSION,
-//    ]);
-//});
-//
-//Route::middleware([
-//    'auth:sanctum',
-//    config('jetstream.auth_session'),
-//    'verified',
-//])->group(function () {
-//    Route::get('/dashboard', function () {
-//        return Inertia::render('Dashboard');
-//    })->name('dashboard');
-//});
-
-// //Frontend
+//Frontend
 Route::prefix("admin/")->as("admin.")->group(function () {
     Route::middleware(['guest'])->group(function () {
         Route::get('/login', [AuthenticatedSessionController::class, 'formLogin'])->name('login.form');
@@ -70,6 +50,7 @@ Route::prefix("admin/")->as("admin.")->group(function () {
         Route::resource('role', RoleController::class);
         Route::resource('permission', PermissionController::class);
         Route::resource('user', UserController::class);
+        Route::resource('audit-log', AuditLogController::class);
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
@@ -82,6 +63,14 @@ Route::prefix("admin/")->as("admin.")->group(function () {
 
         // dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+        // Notification user
+        Route::prefix('/notification')->as('notification.')->group(function () {
+            Route::get('/', [NotificationController::class, 'index'])->name('index');
+            Route::get('/create', [NotificationController::class, 'create'])->name('create');
+            Route::get('/{id}', [NotificationController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [NotificationController::class, 'update'])->name('update');
+        });
     });
 
 });
@@ -89,27 +78,9 @@ Route::prefix("admin/")->as("admin.")->group(function () {
 Route::get('/', function () {
    return redirect()->route('admin.login.form');
 });
-//require_once __DIR__ . '/fortify.php';
+require_once __DIR__ . '/fortify.php';
 Route::get('admin/reset-password/{token}',  [ResetPasswordController::class, 'passwordReset'])->name('password.reset')
     ->middleware(['guest', 'signed', 'throttle:6,1']);
-
-Route::prefix("app/")->as("app.")->group(function () {
-    Route::middleware(['guest'])->group(function () {
-        Route::get('/login', [AuthenticatedSessionController::class, 'formLogin'])->name('login.form');
-        Route::get('/change-password-first', [AuthenticatedSessionController::class, 'formChangePasswordFirst'])->name('password-first.form');
-        Route::get('/forgot-password', [ResetPasswordController::class, 'formForgotPassword'])
-            ->name('forgot-password.form');
-
-        Route::get('/confirm-forgot-password', [ResetPasswordController::class, 'confirmForgotPassword'])
-            ->name('form-confirm-forgot-password');
-
-        // Auth SNS for user
-        Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirectSocial'])->name('socialite.redirect');
-        Route::get('/callback/{provider}', [SocialiteController::class, 'callbackSocial'])->name('socialite.callback');
-
-        Route::get('two-factor-challenge', [AuthenticatedSessionController::class, 'formTwoFactorChallenge'])->name('two-factor-challenge.form');
-    });
-});
 
 
 

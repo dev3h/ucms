@@ -1,6 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
+import "../css/_variable.css";
 import '../css/custom.css';
+import "../css/custom_ckeditor.css";
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -11,6 +13,7 @@ import "element-plus/dist/index.css";
 import 'remixicon/fonts/remixicon.css'
 import { Link } from '@inertiajs/vue3'
 import {createPinia} from "pinia";
+import CKEditor from '@ckeditor/ckeditor5-vue'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 const pinia = createPinia()
@@ -22,6 +25,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ElementPlus)
+            .use(CKEditor)
             .use(ZiggyVue)
             .use(pinia)
             .component('Link', Link)

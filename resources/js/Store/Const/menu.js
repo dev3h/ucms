@@ -50,8 +50,14 @@ export const MASTER_MENUS = [
     {
         label: "Audit Logs",
         icon: "audit-log-icon.svg",
-        route: "admin.permission.index",
-        pathActive: "permission",
+        route: "admin.audit-log.index",
+        pathActive: "audit-log",
+    },
+    {
+        label: 'Notifications',
+        icon: 'bell-icon.svg',
+        route: 'admin.notification.index',
+        pathActive: 'notification',
     },
 ];
 

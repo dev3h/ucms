@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="w-full py-4">
-            <div class="w-full flex justify-between items-center my-[15px]">
+        <div class="w-full px-4">
+            <div class="w-full flex justify-between items-center my-2">
                 <div class="w-80">
                     <el-input v-model="filters.search" class="w-full" size="large" placeholder="Search" clearable @input="filterData">
                         <template #prefix>
@@ -9,11 +9,6 @@
                         </template>
                     </el-input>
                 </div>
-                <div class="flex justify-end w-full">
-                    <el-button type="warning" size="large" @click="openIgnore(id)">Ignore permissions of role</el-button>
-                    <el-button type="primary" size="large" @click="openAssign(id)">Assign permissions</el-button>
-                </div>
-                <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
             </div>
         </div>
 
@@ -29,8 +24,6 @@
                 </template>
             </DataTable>
         </div>
-        <ModalAssign ref="modalAssign" @assign-success="fetchData" />
-        <ModalIgnore ref="modalIgnore" @ignore-success="fetchData" />
     </div>
 </template>
 
@@ -60,9 +53,10 @@ export default {
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
-                { key: 'name', width: 400, label: 'Name', align: 'left', headerAlign: 'left' },
-                { key: 'code', width: 400, label: 'Code', align: 'left', headerAlign: 'left' },
-                { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'created_at', label: 'Time', align: 'left', headerAlign: 'left' },
+                { key: 'actor', label: 'Actor', align: 'left', headerAlign: 'left' },
+                { key: 'event', label: 'Event', align: 'left', headerAlign: 'left' },
+                { key: 'target', label: 'Target', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
             loadForm: false
