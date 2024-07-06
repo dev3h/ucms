@@ -1,10 +1,10 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white px-4">
-            <div class="w-full pt-3 pb-2 border-b-[1px]">
+        <div class="w-full h-full bg-white">
+            <div class="w-full pt-3 pb-2 border-b-[1px] px-4">
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
-            <div class="w-full py-[12px] pr-4">
+            <div class="w-full py-[12px] pr-4 ">
                 <div class="mt-2 border-b-[1px] border-[#8A8A8A] flex gap-[4px]">
                     <div
                         class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"

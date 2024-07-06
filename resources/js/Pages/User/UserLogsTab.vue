@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="w-full py-4">
-            <div class="w-full flex justify-between items-center my-[15px]">
+        <div class="w-full px-4">
+            <div class="w-full flex justify-between items-center my-2">
                 <div class="w-80">
                     <el-input v-model="filters.search" class="w-full" size="large" placeholder="Search" clearable @input="filterData">
                         <template #prefix>
@@ -9,11 +9,6 @@
                         </template>
                     </el-input>
                 </div>
-                <div class="flex justify-end w-full">
-                    <el-button type="warning" size="large" @click="openIgnore(id)">Ignore permissions of role</el-button>
-                    <el-button type="primary" size="large" @click="openAssign(id)">Assign permissions</el-button>
-                </div>
-                <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
             </div>
         </div>
 
@@ -29,8 +24,6 @@
                 </template>
             </DataTable>
         </div>
-        <ModalAssign ref="modalAssign" @assign-success="fetchData" />
-        <ModalIgnore ref="modalIgnore" @ignore-success="fetchData" />
     </div>
 </template>
 
