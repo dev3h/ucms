@@ -5,32 +5,32 @@
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
             <div class="w-full my-[15px] flex justify-start items-center">
-                <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">Save</el-button>
-                <el-button type="info" size="large" @click="goBack()">Back</el-button>
+                <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">{{$t('button.save')}}</el-button>
+                <el-button type="info" size="large" @click="goBack()">{{$t('button.cancel')}}</el-button>
             </div>
             <div class="w-full">
-                <el-form class="w-full grid grid-cols-2 gap-5" ref="form" :model="formData" :rules="rules"
+                <el-form class="w-full grid grid-col lg:grid-cols-2 gap-5" ref="form" :model="formData" :rules="rules"
                          label-position="top">
 
                     <div class="col-span-1">
-                        <el-form-item label="Name" class="title--bold" prop="name" :error="getError('name')"
+                        <el-form-item :label="$t('column.common.name')" class="title--bold" prop="name" :error="getError('name')"
                                       :inline-message="hasError('name')">
                             <el-input size="large" v-model="formData.name" clearable />
                         </el-form-item>
                     </div>
 
                     <div class="col-span-1">
-                        <el-form-item label="Email" class="title--bold" prop="email" :error="getError('email')"
+                        <el-form-item :label="$t('input.common.email')" class="title--bold" prop="email" :error="getError('email')"
                                       :inline-message="hasError('email')">
                             <el-input size="large" v-model="formData.email" clearable />
                         </el-form-item>
                     </div>
                     <div class="col-span-1">
-                        <el-form-item label="Role" class="title--bold" prop="role_id" :error="getError('role_id')"
+                        <el-form-item :label="$t('sidebar.role')" class="title--bold" prop="role_id" :error="getError('role_id')"
                                       :inline-message="hasError('role_id')">
                             <el-select
                                 v-model="formData.role_id"
-                                placeholder="Select"
+                                :placeholder="$t('input.common.select')"
                                 size="large"
                                 clearable
                             >
@@ -48,12 +48,15 @@
         </div>
     </AdminLayout>
 </template>
+
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import BreadCrumbComponent from "@/Components/Page/BreadCrumb.vue";
 import { searchMenu } from "@/Mixins/breadcrumb.js";
 import axios from "@/Plugins/axios";
 import form from '@/Mixins/form.js'
+import baseRuleValidate from "@/Store/Const/baseRuleValidate.js";
+
 export default {
     components: { AdminLayout, BreadCrumbComponent },
     mixins: [form],
@@ -72,12 +75,13 @@ export default {
             formData: {
                 name: null,
                 code: null,
+                role_id: null
             },
             actions: [],
             rules: {
-                name: [{ required: true, message: "This field is required。", trigger: ["blur", "change"] }],
-                email: [{ required: true, message: "This field is required。", trigger: ["blur", "change"] }],
-                role_id: [{ required: true, message: "This field is required。", trigger: ["blur", "change"] }],
+                name: baseRuleValidate(this.$t),
+                email: baseRuleValidate(this.$t),
+                role_id: baseRuleValidate(this.$t),
             },
             loadingForm: false,
         };
@@ -91,7 +95,7 @@ export default {
                     route: this.appRoute("admin.role.index"),
                 },
                 {
-                    name: "Create new user",
+                    name: 'breadcrumb.create-user',
                     route: "",
                 },
             ];

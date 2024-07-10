@@ -7,7 +7,7 @@
         </div>
         <div class="w-full sm:max-w-md px-6 py-2 overflow-hidden">
             <p class="text-[20px] font-bold py-3 w-full text-center">
-                Change Password
+                {{ $t("auth-page.change-password-first-page.title") }}
             </p>
             <div class="mt-4 form-change-password">
                 <el-form
@@ -18,7 +18,7 @@
                     @keypress.enter="doSubmit"
                 >
                     <el-form-item
-                        label="Initial password"
+                        :label="$t('input.common.initial-password')"
                         prop="old_password"
                         :inline-message="hasError('old_password')"
                         :error="getError('old_password')"
@@ -32,7 +32,7 @@
                         />
                     </el-form-item>
                     <el-form-item
-                        label="New Password"
+                        :label="$t('input.common.new-password')"
                         prop="password"
                         :inline-message="hasError('password')"
                         :error="getError('password')"
@@ -46,7 +46,7 @@
                         />
                     </el-form-item>
                     <el-form-item
-                        label="New password (re-enter)"
+                        :label="$t('input.common.confirm-new-password')"
                         prop="password_confirmation"
                         :inline-message="hasError('password_confirmation')"
                         :error="getError('password_confirmation')"
@@ -68,7 +68,7 @@
                         size="large"
                         @click.prevent="doSubmit"
                     >
-                        Change
+                        {{ $t("button.update") }}
                     </el-button>
                 </div>
             </div>
@@ -78,6 +78,7 @@
 <script>
 import form from "@/Mixins/form";
 import axios from "@/Plugins/axios";
+import baseRuleValidate from "@/Store/Const/baseRuleValidate.js";
 
 export default {
     name: "Login",
@@ -95,27 +96,9 @@ export default {
                 password_confirmation: null,
             },
             rules: {
-                old_password: [
-                    {
-                        required: true,
-                        message: "This field is required.",
-                        trigger: ["change", "blur"],
-                    },
-                ],
-                password: [
-                    {
-                        required: true,
-                        message: "This field is required.",
-                        trigger: ["change", "blur"],
-                    },
-                ],
-                password_confirmation: [
-                    {
-                        required: true,
-                        message: "This field is required.",
-                        trigger: ["change", "blur"],
-                    },
-                ],
+                old_password: baseRuleValidate(this.$t),
+                password: baseRuleValidate(this.$t),
+                password_confirmation: baseRuleValidate(this.$t),
             },
             loading: false,
         };

@@ -27,6 +27,11 @@ class AuthenticatedSessionController extends Controller
             throw ValidationException::withMessages(['password' => __('auth.password')]);
         }
 
+        if($user->two_factor_confirmed_at) {
+            $request->session()->put('login.id', $user->id);
+            return $this->sendSuccessResponse(route('two-factor.login'));
+        }
+
         $routeRedirect = route('admin.user.index');
         Auth::loginUsingId($user->id, (bool)$request->remember);
         Auth::user()->recordAuditEvent('login', [], ['logged_in_at' => now()]);

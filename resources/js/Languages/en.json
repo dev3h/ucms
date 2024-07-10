@@ -1,0 +1,156 @@
+{
+    "auth-page": {
+        "login-title": "Login",
+        "click-forgot-password": "Click here if you have forgotten your password",
+        "or": "Or",
+        "forgot-password-page": {
+            "title": "Enter your email address to reset your password"
+        },
+        "confirm-forgot-password-page": {
+            "title": "We have sent the password reset URL to {email}",
+            "content": "Please check the email you sent",
+            "enter-email-again": "Enter email address again"
+        },
+        "reset-password-page": {
+            "title": "Change Password First Time Login"
+        },
+        "change-password-first-page": {
+            "title": "Change Password First Time Login"
+        },
+        "2fa-challenge-page": {
+            "title": "Enter your verify code provided by authenticator app.",
+            "title-recovery": "Enter one of your emergency recovery codes."
+        },
+        "return to login": "Return to login screen"
+    },
+    "my-page": {
+        "change-password": "Change password",
+        "link-account": "Link account",
+        "2fa": {
+            "title": "Two-factor authentication",
+            "2faEnabled": "You have enabled two factor authentication.",
+            "complete2faSetup": "Finish enabling two factor authentication.",
+            "2faNotEnabled": "You have not enabled two factor authentication.",
+            "2faPrompt": "When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone's Google Authenticator application.",
+            "finalize2fa": "To finish enabling two factor authentication, scan the following QR code using your phone's authenticator application or enter the setup key and provide the generated OTP code.",
+            "2faActive": "Two factor authentication is now enabled. Scan the following QR code using your phone's authenticator application or enter the setup key.",
+            "saveRecoveryCodes": "Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.",
+            "setup-key": "Setup key"
+        }
+    },
+    "common": {
+
+    },
+    "button": {
+        "login": "Login",
+        "logout": "Logout",
+        "send": "Send",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "delete": "Delete",
+        "edit": "Edit",
+        "save": "Save",
+        "add": "Add",
+        "update": "Update",
+        "resend-email": "Resend email",
+        "ok": "OK",
+        "verify": "Verify",
+        "recovery-code": "Use recovery code",
+        "auth-code": "Use authenticator code",
+        "general": "General",
+        "user-log": "User log",
+        "ignore-permission-in-role": "Ignore permission in role",
+        "assign-permission": "Assign permission",
+        "assign-user": "Assign user",
+        "assign": "Assign",
+        "not-link": "Not link",
+        "link": "Link",
+        "unlink": "Unlink",
+        "enable": "Enable",
+        "disable": "Disable",
+        "re-recovery-code": "Regenerate recovery code",
+        "show-recovery-code": "Show recovery code"
+    },
+    "input": {
+        "common": {
+            "email": "Email",
+            "password": "Password",
+            "new-password": "New password",
+            "confirm-new-password": "New password (re-enter)",
+            "initial-password": "Initial password",
+            "current-password": "Current password",
+            "select": "Select"
+        },
+        "recovery-code": "Recovery code",
+        "publish": {
+            "now": "Now",
+            "schedule": "Schedule",
+            "start-date": "Start date",
+            "end-date": "End date"
+        },
+        "content": "Content"
+    },
+    "validate": {
+        "required": "This field is required",
+        "email": "Invalid email address",
+        "password": "Password must be at least 6 characters long"
+    },
+    "column": {
+        "common": {
+            "name": "Name",
+            "code": "Code",
+            "created-at": "Created at",
+            "actions": "Action"
+        },
+        "last-seen": "Last seen",
+        "activity": "Activity",
+        "time": "Time",
+        "actor": "Actor",
+        "event": "Event",
+        "target": "Target",
+        "users": "Users",
+        "permissions": "Permissions",
+        "type-send": "Type send",
+        "publish-at": "Publish at",
+        "all-users": "All users",
+        "specific-users": "Specific users",
+        "title": "Title"
+    },
+    "sidebar": {
+        "dashboard": "Dashboard",
+        "system": "System",
+        "subsystem": "Subsystem",
+        "module": "Module",
+        "action": "Action",
+        "user": "User",
+        "role": "Role",
+        "permission": "Permission",
+        "audit-log": "Audit Log",
+        "notification": "Notification"
+    },
+    "form": {
+        "add": "Add",
+        "edit": "Edit",
+        "confirm-delete": "Are you sure you want to delete it?",
+        "item-added": "added",
+        "ignore": "Ignore",
+        "confirm-password": {
+            "title": "Confirm password",
+            "content": "Confirm your password to continue."
+        }
+    },
+    "paginate": {
+        "items": "items",
+        "of": "of",
+        "first": "First",
+        "last": "Last"
+    },
+    "breadcrumb": {
+        "create-user": "Create User"
+    },
+    "pop-menu": {
+        "profile": "Profile",
+        "application": "Application",
+        "logout": "Logout"
+    }
+}

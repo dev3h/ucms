@@ -2,13 +2,13 @@
     <div>
         <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
             <template #header>
-                <h2 class="text-2xl font-bold">Ignore permissions</h2>
+                <h2 class="text-2xl font-bold">{{$t("form.ignore")}} {{$t("sidebar.permission")}}</h2>
             </template>
             <div class="w-full">
                 <div class="flex border">
                     <div class="flex-1 border-r">
                         <div class="h-12 border-b px-4 flex items-center">
-                            <el-input v-model="search"  size="large" placeholder="Search"
+                            <el-input v-model="search"  size="large" :placeholder="$t('input.common.search')"
                                       @input="filterData" clearable>
                                 <template #prefix>
                                     <img src="/images/svg/search-icon.svg" alt=""/>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="flex-1">
                         <div class="h-12 border-b px-4 flex items-center">
-                            <span>{{ dataHandle?.length }} permissions ignore</span>
+                            <span>{{ dataHandle?.length }} {{ $t('sidebar.permission') }} {{$t("form.ignore")}}</span>
                         </div>
                         <div class="max-h-[300px] h-full overflow-y-scroll">
                             <div v-for="item in dataHandle" :key="item" class="hover:bg-gray-200">
@@ -40,8 +40,8 @@
                 </div>
             </div>
                 <div class="w-full my-[15px] flex justify-center items-center">
-                <el-button type="info" size="large" @click="closeModal">Cancel</el-button>
-                <el-button type="primary" size="large" @click="handleIgnorePermission" :loading="loadingForm">Update</el-button>
+                <el-button type="info" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
+                <el-button type="primary" size="large" @click="handleIgnorePermission" :loading="loadingForm">{{$t('button.update')}}</el-button>
             </div>
         </el-dialog>
     </div>

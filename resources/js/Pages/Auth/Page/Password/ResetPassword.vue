@@ -3,9 +3,9 @@
         class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-grayF5"
     >
         <div
-            class="text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase leading-[28.80px] text-center mb-[17px]"
+            class="text-zinc-800 text-2xl font-bold uppercase leading-[28.80px] text-center mb-[17px]"
         >
-            Change new password
+            {{ $t("auth-page.reset-password-page.title") }}
         </div>
         <div class="w-full sm:max-w-md px-6 py-4 overflow-hidden">
             <div class="mt-4 form-change-password">
@@ -17,7 +17,7 @@
                     @keypress.enter="doSubmit"
                 >
                     <el-form-item
-                        label="New Password"
+                        :label="$t('input.common.new-password')"
                         prop="password"
                         :inline-message="hasError('password')"
                         :error="getError('password')"
@@ -31,7 +31,7 @@
                         />
                     </el-form-item>
                     <el-form-item
-                        label="New password (re-enter)"
+                        :label="$t('input.common.confirm-new-password')"
                         prop="password_confirmation"
                         :inline-message="hasError('password_confirmation')"
                         :error="getError('password_confirmation')"
@@ -53,17 +53,17 @@
                         size="large"
                         @click.prevent="doSubmit"
                     >
-                        Update
+                        {{ $t("button.update")}}
                     </el-button>
                 </div>
             </div>
         </div>
         <div class="h-[21px] justify-start items-center inline-flex mt-[21px]">
             <Link
-                class="text-center text-zinc-800 text-sm font-bold font-['Meiryo'] leading-[21px] cursor-pointer underline"
+                class="text-center text-zinc-800 text-sm font-bold leading-[21px] cursor-pointer underline"
                 :href="this.appRoute('admin.login.form')"
             >
-                Return to login screen
+                {{ $t("auth-page.return-to-login") }}
             </Link>
         </div>
     </div>
@@ -71,6 +71,7 @@
 <script>
 import form from "@/Mixins/form";
 import axios from "@/Plugins/axios";
+import baseRuleValidate from "@/Store/Const/baseRuleValidate.js";
 
 export default {
     name: "ResetPassword",
@@ -90,20 +91,8 @@ export default {
                 token: this.token,
             },
             rules: {
-                password: [
-                    {
-                        required: true,
-                        message: "This field is required",
-                        trigger: ["change", "blur"],
-                    },
-                ],
-                password_confirmation: [
-                    {
-                        required: true,
-                        message: "This field is required",
-                        trigger: ["change", "blur"],
-                    },
-                ],
+                password: baseRuleValidate(this.$t),
+                password_confirmation: baseRuleValidate(this.$t),
             },
             loadingForm: false,
         };

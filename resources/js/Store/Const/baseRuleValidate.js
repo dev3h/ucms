@@ -1,5 +1,5 @@
-const baseRuleValidate = [
-    { required: true, message: 'This field is required', trigger: ['blur', 'change'] }
-]
+const baseRuleValidate = ($t) => ([
+    { required: true, message: $t('validate.required'), trigger: ['blur', 'change'] }
+]);
 
-export default baseRuleValidate
+export default baseRuleValidate;

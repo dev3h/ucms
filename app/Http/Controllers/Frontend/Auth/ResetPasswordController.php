@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
-use phpseclib3\Crypt\Hash;
+use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {

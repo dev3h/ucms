@@ -4,12 +4,12 @@
             <div class="w-4/5 form">
                 <div class="form-body mb-4">
                     <img src="/images/svg/recycle-bin.svg" style="margin: 0 auto" />
-                    <p class="text-center text-[#303133] bold my-4 text-lg font-bold">Are you sure you want to delete it?</p>
+                    <p class="text-center text-[#303133] bold my-4 text-lg font-bold">{{$t('form.confirm-delete')}}</p>
                 </div>
                 <div class="flex form-footer mt-[30px]">
-                    <el-button class="w-1/2 !bg-[#8A8A8A] !text-white" @click="closeDeleteForm">Cancel</el-button>
+                    <el-button class="w-1/2 !bg-[#8A8A8A] !text-white" @click="closeDeleteForm">{{$t('button.cancel')}}</el-button>
                     <el-button class="text-white btnDelete w-1/2" type="danger" @click.prevent="deleteItem"
-                        >OK</el-button
+                        >{{$t('button.ok')}}</el-button
                     >
                 </div>
             </div>

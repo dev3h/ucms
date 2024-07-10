@@ -27,19 +27,19 @@
                             <el-dropdown-item command="changeProfile">
                                 <div class="flex items-center">
                                     <img src="/images/svg/profile-icon.svg" class="mr-2" />
-                                    <span class="whitespace-nowrap">Profile</span>
+                                    <span class="whitespace-nowrap">{{$t('pop-menu.profile')}}</span>
                                 </div>
                             </el-dropdown-item>
                             <el-dropdown-item command="changeApplication">
                                 <div class="flex items-center">
                                     <img src="/images/svg/application-icon.svg" class="mr-2" />
-                                    <span class="whitespace-nowrap">Application</span>
+                                    <span class="whitespace-nowrap">{{$t('pop-menu.application')}}</span>
                                 </div>
                             </el-dropdown-item>
                             <el-dropdown-item command="logout">
                                 <div class="flex items-center" @click="dialogVisible = true">
                                     <img src="/images/svg/log-out-icon.svg" class="mr-2" />
-                                    <span class="whitespace-nowrap mt-1">Logout</span>
+                                    <span class="whitespace-nowrap mt-1">{{$t('pop-menu.logout')}}</span>
                                 </div>
                             </el-dropdown-item>
                         </el-dropdown-menu>

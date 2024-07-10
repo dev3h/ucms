@@ -9,7 +9,7 @@
                 <div class="w-full flex justify-between gap-2 my-2">
                     <div class="flex gap-2">
                         <div class="col-span-1">
-                            <el-input v-model="filters.search" class="!w-80" size="large" placeholder="Search"
+                            <el-input v-model="filters.search" class="!w-80" size="large" :placeholder="$t('input.common.search')"
                                       clearable @input="filterData">
                                 <template #prefix>
                                     <img src="/images/svg/search-icon.svg" alt=""/>
@@ -20,7 +20,7 @@
                             <el-date-picker
                                 v-model="filters.created_at"
                                 type="date"
-                                placeholder="Created at"
+                                :placeholder="$t('column.common.created-at')"
                                 size="large"
                                 class="!w-[185px]"
                                 value-format="YYYY-MM-DD"
@@ -32,7 +32,7 @@
                     <div>
                         <div class="w-full flex justify-between items-center">
                             <div>
-                                <el-button type="primary" size="large" @click="openCreate()">Add</el-button>
+                                <el-button type="primary" size="large" @click="openCreate()">{{$t('button.add')}}</el-button>
                             </div>
                         </div>
                     </div>
@@ -83,10 +83,10 @@ export default {
                 limit: Number(this.appRoute().query?.limit ?? 10),
             },
             fields: [
-                { key: 'name', width: 400, label: 'Name', align: 'left', headerAlign: 'left' },
-                { key: 'code', width: 300, label: 'Code', align: 'left', headerAlign: 'left' },
-                { key: 'created_at', width: 200, label: 'Created at', align: 'left', headerAlign: 'left' },
-                { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'name', width: 400, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
+                { key: 'code', width: 300, label: this.$t('column.common.code'), align: 'left', headerAlign: 'left' },
+                { key: 'created_at', width: 200, label: this.$t('column.common.created-at'), align: 'left', headerAlign: 'left' },
+                { key: 'action', label: this.$t('column.common.action'), align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
             loadForm: false

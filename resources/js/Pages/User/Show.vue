@@ -14,7 +14,7 @@
                         }"
                         @click="changeTab(1)"
                     >
-                        Permissions
+                        {{$t('sidebar.permission')}}
                     </div>
                     <div
                         class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
@@ -24,7 +24,7 @@
                         }"
                         @click="changeTab(2)"
                     >
-                        General
+                        {{$t('button.user-log')}}
                     </div>
                     <div
                         class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
@@ -34,7 +34,7 @@
                         }"
                         @click="changeTab(3)"
                     >
-                        User logs
+                        {{$t('button.general')}}
                     </div>
                 </div>
             </div>
@@ -42,10 +42,10 @@
                 <PermissionsTab :id="id" />
             </div>
             <div class="w-full" v-if="tabActive === 2">
-                <GeneralTab :id="id" />
+                <UserLogsTab :id="id" />
             </div>
             <div class="w-full" v-if="tabActive === 3">
-                <UserLogsTab :id="id" />
+                <GeneralTab :id="id" />
             </div>
         </div>
     </AdminLayout>

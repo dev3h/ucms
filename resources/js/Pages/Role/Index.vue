@@ -8,13 +8,13 @@
             <div class="w-full px-4">
                 <div class="w-full flex justify-between items-center my-2">
                     <div class="w-80">
-                        <el-input v-model="filters.name" class="w-full" size="large" placeholder="Search" clearable>
+                        <el-input v-model="filters.name" class="w-full" size="large" :placeholder="$t('input.common.search')" clearable>
                             <template #prefix>
                                 <img src="/images/svg/search-icon.svg" alt="" />
                             </template>
                         </el-input>
                     </div>
-                    <el-button type="primary" size="large" @click="openCreate()">Add</el-button>
+                    <el-button type="primary" size="large" @click="openCreate()">{{$t('button.add')}}</el-button>
 
                 </div>
             </div>
@@ -24,7 +24,7 @@
                     paginate-background @page-change="changePage">
                     <template #assigned="{row}">
                         <span v-if="row?.assigned === 0">-</span>
-                        <span v-else>{{row?.assigned}} users</span>
+                        <span v-else>{{row?.assigned}} {{$t('column.users')}}</span>
                     </template>
                     <template #action="{ row }">
                         <div class="flex justify-center items-center gap-x-[12px]">
@@ -69,10 +69,10 @@ export default {
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
-                { key: 'name', width: 400, label: 'Name', align: 'left', headerAlign: 'left' },
-                { key: 'code', width: 300, label: 'Code', align: 'left', headerAlign: 'left' },
-                { key: 'assigned', width: 300, label: 'Assigned', align: 'left', headerAlign: 'left'},
-                { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'name', width: 400, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
+                { key: 'code', width: 300, label: this.$t('column.common.code'), align: 'left', headerAlign: 'left' },
+                { key: 'assigned', width: 300, label: this.$t('button.assign'), align: 'left', headerAlign: 'left'},
+                { key: 'action', label: this.$t('column.common.action'), align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
             loadForm: false

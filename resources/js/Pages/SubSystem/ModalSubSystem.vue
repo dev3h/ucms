@@ -2,30 +2,30 @@
     <div>
         <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
             <template #header>
-                <h2 class="text-2xl font-bold">{{ formType === 'add' ? 'Add' : 'Edit' }}</h2>
+                <h2 class="text-2xl font-bold">{{ formType === 'add' ? $t('form.add') : $t('form.edit') }}</h2>
             </template>
             <div class="w-full">
-                <el-form class="w-full grid grid-cols-2 gap-2" ref="form" :model="formData" :rules="rules"
+                <el-form class="w-full grid grid-col lg:grid-cols-2 gap-5" ref="form" :model="formData" :rules="rules"
                     label-position="top">
 
                     <div class="flex-1">
-                        <el-form-item label="Name" class="title--bold" prop="name" :error="getError('name')"
+                        <el-form-item :label="$t('column.common.name')" class="title--bold" prop="name" :error="getError('name')"
                             :inline-message="hasError('name')">
                             <el-input size="large" v-model="formData.name" clearable />
                         </el-form-item>
                     </div>
                     <div class="flex-1">
-                        <el-form-item label="Code" class="title--bold" prop="name" :error="getError('code')"
+                        <el-form-item :label="$t('column.common.code')" class="title--bold" prop="name" :error="getError('code')"
                                       :inline-message="hasError('code')">
                             <el-input size="large" v-model="formData.code" clearable />
                         </el-form-item>
                     </div>
                     <div class="flex-1">
-                        <el-form-item label="System" class="title--bold" prop="system_id" :error="getError('system_id')"
+                        <el-form-item :label="$t('sidebar.system')" class="title--bold" prop="system_id" :error="getError('system_id')"
                                       :inline-message="hasError('system_id')">
                             <el-select
                                 v-model="formData.system_id"
-                                placeholder="Select"
+                                :placeholder="$t('input.common.select')"
                                 size="large"
                             >
                                 <el-option
@@ -40,8 +40,8 @@
                 </el-form>
             </div>
             <div class="w-full my-[15px] flex justify-center items-center">
-                <el-button type="info" size="large" @click="closeModal">Cancel</el-button>
-                <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">Save</el-button>
+                <el-button type="info" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
+                <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">{{$t('button.save')}}</el-button>
             </div>
         </el-dialog>
     </div>
@@ -73,9 +73,9 @@ export default {
                 system_id: null,
             },
             rules: {
-                name: baseRuleValidate,
-                code: baseRuleValidate,
-                system_id: baseRuleValidate,
+                name: baseRuleValidate(this.$t),
+                code: baseRuleValidate(this.$t),
+                system_id: baseRuleValidate(this.$t),
             },
             loadingForm: false
         }

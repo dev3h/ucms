@@ -9,7 +9,7 @@
                 <div class="w-full flex justify-between gap-2 my-2">
                     <div class="flex gap-2">
                         <div class="col-span-1">
-                            <el-input v-model="filters.search" class="!w-80" size="large" placeholder="Search"
+                            <el-input v-model="filters.search" class="!w-80" size="large" :placeholder="$t('input.common.search')"
                                       clearable @input="filterData">
                                 <template #prefix>
                                     <img src="/images/svg/search-icon.svg" alt=""/>
@@ -20,7 +20,7 @@
                             <el-date-picker
                                 v-model="filters.created_at"
                                 type="date"
-                                placeholder="Created at"
+                                :placeholder="$t('column.common.created-at')"
                                 size="large"
                                 class="!w-[185px]"
                                 value-format="YYYY-MM-DD"
@@ -59,10 +59,10 @@ export default {
                 limit: Number(this.appRoute().query?.limit ?? 10),
             },
             fields: [
-                { key: 'created_at', label: 'Time', align: 'left', headerAlign: 'left' },
-                { key: 'actor', label: 'Actor', align: 'left', headerAlign: 'left' },
-                { key: 'event', label: 'Event', align: 'left', headerAlign: 'left' },
-                { key: 'target', label: 'Target', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'created_at', label: this.$t('column.time'), align: 'left', headerAlign: 'left' },
+                { key: 'actor', label: this.$t('column.actor'), align: 'left', headerAlign: 'left' },
+                { key: 'event', label: this.$t('column.event'), align: 'left', headerAlign: 'left' },
+                { key: 'target', label: this.$t('column.target'), align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
             loadForm: false

@@ -9,7 +9,7 @@
                     <div class="w-full flex items-center flex-wrap gap-2 ">
                         <el-input
                             v-model="filters.search" size="large"
-                            placeholder="Search"
+                            :placeholder="$t('input.common.search')"
                             clearable
                             class="max-w-[300px]"
                             @input="filterData"
@@ -20,18 +20,18 @@
                         </el-input>
                         <el-select
                             v-model="filters.sender_type" size="large"
-                            placeholder="Type send"
+                            :placeholder="$t('column.type-send')"
                             clearable
                             class="max-w-[200px]"
                             :suffix-icon="getCaretBottom"
                             @change="fetchData()"
                         >
-                            <el-option label="All user" :value="1" />
-                            <el-option label="Specific user" :value="2" />
+                            <el-option :label="$t('column.all-users')" :value="1" />
+                            <el-option :label="$t('column.specific-users')" :value="2" />
                         </el-select>
                         <el-date-picker
                             v-model="filters.published_at"
-                            size="large" placeholder="Publish at"
+                            size="large" :placeholder="$t('column.publish-at')"
                             clearable
                             format="YYYY/MM/DD"
                             value-format="YYYY/MM/DD"
@@ -45,7 +45,7 @@
                             class="button-min--width"
                             @click="openCreate()"
                         >
-                            Create
+                            {{$t("button.add")}}
                         </el-button>
                     </div>
                 </div>
@@ -54,8 +54,8 @@
                 <DataTable v-loading="loadForm" :fields="fields" :items="items" :paginate="paginate" footer-center
                     paginate-background @page-change="changePage" @size-change="changeSize">
                     <template #user_nicknames="{ row }">
-                        <div v-if="row?.sender_type == 1">All user</div>
-                        <div v-else>Specific user</div>
+                        <div v-if="row?.sender_type == 1">{{$t('column.all-users')}}</div>
+                        <div v-else>{{$t('column.specific-users')}}</div>
                     </template>
                     <template #published_at="{ row }">
                         <span v-if="row?.is_schedule == 1">
@@ -119,10 +119,10 @@ export default {
                 limit: 10
             },
             fields: [
-                { key: 'title', minWidth: 200, label: 'Title', align: 'left', headerAlign: 'left' },
-                { key: 'user_nicknames', minWidth: 200, label: 'Type send', align: 'left', headerAlign: 'left' },
-                { key: 'published_at', minWidth: 200, label: 'Publish at', align: 'left', headerAlign: 'left' },
-                { key: 'created_at', minWidth: 200, label: 'Created at', align: 'left', headerAlign: 'left' },
+                { key: 'title', minWidth: 200, label: this.$t('column.title'), align: 'left', headerAlign: 'left' },
+                { key: 'user_nicknames', minWidth: 200, label: this.$t('column.type-send'), align: 'left', headerAlign: 'left' },
+                { key: 'published_at', minWidth: 200, label: this.$t('column.publish-at'), align: 'left', headerAlign: 'left' },
+                { key: 'created_at', minWidth: 200, label: this.$t('column.common.created-at'), align: 'left', headerAlign: 'left' },
                 { key: 'action', label: '', width: 180, align: 'center', headerAlign: 'center', fixed: 'right' },
             ],
             paginate: {},

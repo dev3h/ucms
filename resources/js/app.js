@@ -13,10 +13,22 @@ import "element-plus/dist/index.css";
 import 'remixicon/fonts/remixicon.css'
 import { Link } from '@inertiajs/vue3'
 import {createPinia} from "pinia";
+import { createI18n } from 'vue-i18n'
 import CKEditor from '@ckeditor/ckeditor5-vue'
+import en from '@/Languages/en.json';
+import vi from '@/Languages/vi.json';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 const pinia = createPinia()
+const messages = {
+    en,
+    vi,
+};
+const i18n = createI18n({
+    locale: 'vi',
+    fallbackLocale: 'en',
+    messages: messages
+})
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -28,6 +40,7 @@ createInertiaApp({
             .use(CKEditor)
             .use(ZiggyVue)
             .use(pinia)
+            .use(i18n)
             .component('Link', Link)
             .mixin({ methods: { appRoute: route } })
             .mount(el);
