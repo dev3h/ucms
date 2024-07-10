@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             ModuleSeeder::class,
             ActionSeeder::class,
             RolePermissionSeeder::class,
-            AdminSeeder::class,
+            UserSeeder::class,
         ]);
 
     }

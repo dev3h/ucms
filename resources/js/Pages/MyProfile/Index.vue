@@ -1,9 +1,10 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white px-16 py-8">
-            <el-card class="mb-8">
+        <div class="w-full h-full bg-white grid lg:grid-cols-2 grid-col gap-5 px-16 py-8">
+            <!-- Profile -->
+            <el-card>
                 <div class="px-4 w-full">
-                    <div class="grid grid-cols-3">
+                    <div>
                         <div class="flex flex-col gap-2">
                             <span>Name</span>
                             <span>{{user?.name}}</span>
@@ -19,7 +20,8 @@
                     </div>
                 </div>
             </el-card>
-            <el-card class="mb-8">
+            <!-- Update password -->
+            <el-card>
                 <div class="w-full flex justify-center">
                     <div class="px-4 w-full">
                         <div class="text-[24px] font-bold mb-8">Change Password</div>
@@ -60,13 +62,13 @@
                     </div>
                 </div>
             </el-card>
+            <!-- Integration account -->
             <el-card>
                 <h2 class="uppercase font-bold mb-4">Linked Accounts</h2>
-
                 <div>
                     <div>
                         <h3 class="text-lg mb-2">Google</h3>
-                        <div class="flex items-center gap-2">
+                        <div class="flex flex-wrap items-center gap-2">
                             <img src="/images/logo_google.png" alt="" width="30" height="30" class="object-cover">
                            <div>
                                 <span v-if="isLinked('google')">
@@ -88,10 +90,10 @@
                     </div>
                 </div>
             </el-card>
-
-            <el-card class="my-8">
+            <!-- 2FA -->
+            <el-card>
                 <h2 class="uppercase font-bold mb-4">Two Factor Authentication</h2>
-                <TwoFactorAuthenticationForm />
+                <TwoFactorAuthenticationForm class="h-full" />
             </el-card>
         </div>
     </AdminLayout>

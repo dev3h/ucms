@@ -68,6 +68,30 @@ select:focus {
     width: 30px;
     height: 30px;
 }
+/*dialog custom*/
+.el-dialog.dialog-base {
+    padding: 0 !important;
+
+    .el-dialog__header {
+        background-color: var(--tw-grayF5);
+        padding: 17px 32px !important;
+
+        i {
+            font-size: 24px;
+        }
+    }
+
+    .el-dialog__body {
+        padding: 24px 32px;
+    }
+
+    .el-dialog__footer {
+        padding: 20px 0;
+        background-color: var(--tw-grayF5);
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+}
 
 .el-form-item__label {
     /* line-height: 1.25rem; */

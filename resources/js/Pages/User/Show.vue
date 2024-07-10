@@ -83,7 +83,7 @@ export default {
             return [
                 {
                     name: menuOrigin?.label,
-                    route: this.appRoute("admin.role.index"),
+                    route: this.appRoute("admin.user.index"),
                 },
                 {
                     name: this.id,

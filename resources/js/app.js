@@ -1,8 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
+import "../css/_variable.css";
 import '../css/custom.css';
 import "../css/custom_ckeditor.css";
-import "../css/_variable.css";
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';

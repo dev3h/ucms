@@ -53,9 +53,10 @@ export default {
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
-                { key: 'name', width: 400, label: 'Name', align: 'left', headerAlign: 'left' },
-                { key: 'code', width: 400, label: 'Code', align: 'left', headerAlign: 'left' },
-                { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'created_at', label: 'Time', align: 'left', headerAlign: 'left' },
+                { key: 'actor', label: 'Actor', align: 'left', headerAlign: 'left' },
+                { key: 'event', label: 'Event', align: 'left', headerAlign: 'left' },
+                { key: 'target', label: 'Target', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
             loadForm: false

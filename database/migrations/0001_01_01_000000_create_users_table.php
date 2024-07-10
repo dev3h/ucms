@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('profile_photo_path', 2048)->nullable();
             $table->boolean('is_change_password')->default(false);
             $table->string('token_first_change')->nullable();
+            $table->timestamp('last_seen')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

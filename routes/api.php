@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\ActionController;
 use App\Http\Controllers\Backend\Admin\NotificationController as AdminNotificationController;
+use App\Http\Controllers\Backend\AuditLogController;
 use App\Http\Controllers\Backend\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Backend\Auth\ResetPasswordController;
 use App\Http\Controllers\Backend\ChangePasswordController;
@@ -90,6 +91,8 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
             Route::post('/get-member-can-add', [NotificationController::class, 'membersCanAdd'])
                 ->name('member-can-add');
         });
+
+        Route::get('/audit-log', [AuditLogController::class, 'index'])->name('audit-log.index');
     });
 });
 

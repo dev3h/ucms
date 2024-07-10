@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserActivityLogResource extends JsonResource
+class UserLogResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,10 @@ class UserActivityLogResource extends JsonResource
     {
         return [
             "id" => $this?->id,
-            "name" => $this?->name,
-            "code" => $this?->code,
-            "created_at" => format_date($this?->created_at),
+            "actor" => $this?->user?->name,
+            "event" => $this?->event,
+            "target" => $this?->auditable_type,
+            "created_at" => format_datetime($this?->created_at),
         ];
     }
 }
