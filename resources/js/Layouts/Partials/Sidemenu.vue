@@ -1,5 +1,5 @@
 <template>
-    <el-aside width="265" class="fixed top-[60px] bottom-0 left-0 z-[5]">
+    <el-aside width="265" class="fixed left-0 z-[5]">
         <div class="relative h-full bg-[#fff]">
             <!-- Side bar -->
             <div class="admin-sidebar h-full relative pt-[60px]">
@@ -9,7 +9,7 @@
                     <template v-for="(menu, index) in menus" :key="index">
                         <el-menu-item v-if="!menu.subMenus" :index="menu.pathActive" class="menu-item-custom"
                             :class="checkActive(menu.pathActive) ? 'is-active ' : ''" @click="onMenuClick(menu)">
-                            <el-image class="icon w-6 h-6 object-cover" :src="`/images/aside/${menu.icon}`" alt />
+                            <el-image class="icon w-6 h-6 object-cover" :src="`/images/aside/${menu.icon}`" alt="" />
                             <template #title>
                                 <span class="menu-item-text pl-2 font-bold">{{ $t(menu.label) }}</span>
                             </template>
@@ -44,15 +44,17 @@
                 </el-menu>
             </div>
 
-            <div class="absolute left-[0] pl-[16px] top-[0] right-[0] pt-[16px] bg-[white] cursor-pointer"
+            <div class="absolute w-full flex item-center justify-between p-2 top-[0] right-[0] bg-[white] shadow-sm cursor-pointer backdrop-blur-2xl"
                 :class="!collapseAside ? 'right-4' : 'right-8'">
-                <span v-if="!collapseAside" title="メニューを拡大する" @click.prevent="toggleCollapse">
+                <span v-if="!collapseAside" @click.prevent="toggleCollapse">
+
                     <i class="ri-menu-unfold-line text-2xl text-primary" />
                 </span>
 
-                <span title="メニューを縮小する" @click.prevent="toggleCollapse">
-                    <i v-if="collapseAside" class="ri-menu-fold-line text-3xl text-gray8A" />
-                </span>
+                <Link v-if="collapseAside" :href="appRoute('admin.system.index')" class="inline-block w-fit">
+                    <img src="/images/logo.svg" alt="logo" class="!h-12 object-cover" />
+                </Link>
+                <i @click.prevent="toggleCollapse" v-if="collapseAside" class="ri-menu-fold-line text-3xl text-gray8A flex items-center" />
             </div>
         </div>
     </el-aside>

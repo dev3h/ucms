@@ -1,20 +1,21 @@
 <template>
     <div class="admin-layout">
-        <AdminHeader />
 
-        <el-container>
+        <el-container class="min-h-screen">
             <Sidemenu v-if="isShowSideBar" @zoom-out-sidebar="hiddenMenu" />
 
             <el-container>
                 <el-main
                     id="el-main"
                     style="background-color: #e9e9e9"
+                    class="py-4 relative"
                     :class="{
                         'ml-[285px]': isZoomOutMenu && isShowSideBar,
                         'ml-[54px]': !isZoomOutMenu && isShowSideBar,
                     }"
                 >
-                    <slot />
+                    <AdminHeader />
+                    <slot/>
                 </el-main>
             </el-container>
         </el-container>
@@ -57,13 +58,13 @@ export default {
 }
 
 .admin-layout .el-aside {
-    height: calc(100vh - 60px);
+    //height: calc(100vh - 50px);
     /* border-right: 1px solid #d9d9d9; */
 }
 
 .admin-layout > .el-container {
-    padding-top: 60px;
-    min-height: 100vh;
+    //padding-top: 60px;
+    //min-height: 100vh;
 }
 
 .admin-layout .el-menu {
