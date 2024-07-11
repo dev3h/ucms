@@ -51,7 +51,7 @@
                     <div v-if="!disableTableInfo && paging.from && paging.to" class="flex items-center">
                         <div class="table-showing whitespace-nowrap">
                             <span class="text-[#646464] text-sm">
-                                {{ `${paging.from}-${paging.to} of ${paging.total} items` }}
+                                {{ `${paging.from}-${paging.to} ${$t('paginate.of')} ${paging.total} ${$t('paginate.items')}` }}
                             </span>
                         </div>
                         <el-select
@@ -73,7 +73,7 @@
                             :class="{'cursor-not-allowed opacity-50' : paging.current_page == 1}"
                             @click="handleCurrentChange(1)"
                         >
-                            First
+                            {{$t('paginate.first')}}
                         </button>
                         <div>
                             <el-pagination
@@ -96,7 +96,7 @@
                             :class="{'cursor-not-allowed opacity-50' : paging.current_page == paging.last_page}"
                             @click="handleCurrentChange(paging.last_page)"
                         >
-                            Last
+                            {{$t('paginate.last')}}
                         </button>
                     </div>
                 </div>

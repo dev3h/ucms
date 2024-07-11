@@ -8,12 +8,12 @@
             <div class="w-full">
                 <div class="w-full flex justify-between items-center px-4 my-2">
                     <div class="flex gap-2">
-                        <el-input v-model="filters.search" class="!w-80" size="large" placeholder="Search" clearable @input="filterData">
+                        <el-input v-model="filters.search" class="!w-80" size="large" :placeholder="$t('input.common.search')" clearable @input="filterData">
                             <template #prefix>
                                 <img src="/images/svg/search-icon.svg" alt="" />
                             </template>
                         </el-input>
-                        <el-select v-model="filters.role_id" class="!w-[240px]" size="large" placeholder="Select Role" clearable @change="fetchData">
+                        <el-select v-model="filters.role_id" class="!w-[240px]" size="large" :placeholder="$t('sidebar.role')" clearable @change="fetchData">
                             <el-option
                                 v-for="role in roles"
                                 :key="role.id"
@@ -24,7 +24,7 @@
                         <el-date-picker
                             v-model="filters.created_at"
                             type="date"
-                            placeholder="Created at"
+                            :placeholder="$t('column.common.created-at')"
                             size="large"
                             class="!w-[240px]"
                             value-format="YYYY-MM-DD"
@@ -32,7 +32,7 @@
                             @change="filterData"
                         />
                     </div>
-                    <el-button type="primary" size="large" @click="openCreate()">Add</el-button>
+                    <el-button type="primary" size="large" @click="openCreate()">{{$t('button.add')}}</el-button>
 
                 </div>
             </div>
@@ -41,7 +41,10 @@
                 <DataTable v-loading="loadForm" :fields="fields" :items="items" :paginate="paginate" footer-center
                     paginate-background @page-change="changePage">
                     <template  #activity="{ row }">
-                        <div class="w-5 h-5 rounded-full" :class="row?.activity === 'online' ? 'bg-green-500' : 'bg-gray-300'"></div>
+                        <div class="flex justify-center">
+                            <div class="w-5 h-5 rounded-full"
+                                 :class="row?.activity === 'online' ? 'bg-green-500' : 'bg-gray-300'"></div>
+                        </div>
                     </template>
                     <template #action="{ row }">
                         <div class="flex justify-center items-center gap-x-[12px]">
@@ -82,13 +85,13 @@ export default {
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
-                { key: 'name', width: 200, label: 'Name', align: 'left', headerAlign: 'left' },
-                { key: 'email', width: 200, label: 'Email', align: 'left', headerAlign: 'left' },
-                { key: 'role_name', width: 200, label: 'Role', align: 'left', headerAlign: 'left' },
-                {key: 'last_seen', width: 200, label: 'Last seen', align: 'left', headerAlign: 'left'},
-                {key: 'activity', width: 200, label: 'Activity', align: 'center', headerAlign: 'left'},
-                { key: 'created_at', width: 200, label: 'Created At', align: 'left', headerAlign: 'left'},
-                { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'name', width: 200, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
+                { key: 'email', width: 200, label: this.$t('input.common.email'), align: 'left', headerAlign: 'left' },
+                { key: 'role_name', width: 200, label: this.$t('sidebar.role'), align: 'left', headerAlign: 'left' },
+                {key: 'last_seen', width: 200, label: this.$t('column.last-seen'), align: 'left', headerAlign: 'left'},
+                {key: 'activity', width: 200, label: this.$t('column.activity'), align: 'center', headerAlign: 'left'},
+                { key: 'created_at', width: 200, label: this.$t('column.common.created-at'), align: 'left', headerAlign: 'left'},
+                { key: 'action', label: this.$t('column.common.action'), align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
             loadForm: false

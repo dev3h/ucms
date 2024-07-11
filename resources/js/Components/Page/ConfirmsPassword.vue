@@ -5,21 +5,23 @@
         </span>
 
          <el-dialog v-model="confirmingPassword" width="500" :close-on-click-modal="false" class="dialog-base"
-                    :title="title">
-            {{ content }}
+                    :title="$t(title)">
+            {{ $t(content) }}
 
             <div class="mt-4">
                 <el-input ref="passwordInput" v-model="form.password" type="password"
                           show-password
-                          clearable placeholder="Password" @keyup.enter="confirmPassword" />
+                          clearable placeholder="" @keyup.enter="confirmPassword" />
 
                 <InputError :message="form.error" class="mt-2" />
             </div>
             <template #footer>
                 <div class="w-full flex justify-center items-center gap-3 bg-[#F5F5F5]">
-                    <el-button type="info" class="!h-8" @click="closeModal()" >Cancel</el-button>
+                    <el-button type="info" class="!h-8" @click="closeModal()" >{{$t('button.cancel')}}</el-button>
                     <el-button type="primary" class="!h-8" :disabled="form.processing"
-                               @click="confirmPassword" >{{ button }}</el-button>
+                           @click="confirmPassword" >
+                        {{ $t(button) }}
+                    </el-button>
                 </div>
             </template>
         </el-dialog>
@@ -41,15 +43,15 @@ export default {
     props: {
         title: {
             type: String,
-            default: 'Confirm Password',
+            default: 'form.confirm-password.title',
         },
         content: {
             type: String,
-            default: 'For your security, please confirm your password to continue.',
+            default: 'form.confirm-password.content',
         },
         button: {
             type: String,
-            default: 'Confirm',
+            default: "button.confirm",
         },
     },
     data() {

@@ -1,27 +1,27 @@
 <template>
     <div class="px-4">
-        <div class="w-full my-[15px] flex justify-start items-center">
-            <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">Update</el-button>
-            <el-button type="info" size="large" @click="goBack()">Back</el-button>
+        <div class="w-full my-5 flex justify-start items-center">
+            <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">{{$t('button.update')}}</el-button>
+            <el-button type="info" size="large" @click="goBack()">{{$t('button.cancel')}}</el-button>
         </div>
-        <el-form class="w-full grid grid-cols-2 gap-5" ref="form" :model="formData" :rules="rules"
+        <el-form class="w-full grid grid-col lg:grid-cols-2 gap-5" ref="form" :model="formData" :rules="rules"
                  label-position="top">
 
             <div class="col-span-1">
-                <el-form-item label="Name" class="title--bold" prop="name" :error="getError('name')"
+                <el-form-item :label="$t('column.common.name')" class="title--bold" prop="name" :error="getError('name')"
                               :inline-message="hasError('name')">
                     <el-input size="large" v-model="formData.name" clearable />
                 </el-form-item>
             </div>
 
             <div class="col-span-1">
-                <el-form-item label="Code" class="title--bold" prop="code" :error="getError('code')"
+                <el-form-item :label="$t('column.common.code')" class="title--bold" prop="code" :error="getError('code')"
                               :inline-message="hasError('code')">
                     <el-input size="large" v-model="formData.code" clearable />
                 </el-form-item>
             </div>
             <div class="col-span-1">
-                <el-form-item label="System" class="title--bold" prop="system_id" :error="getError('system_id')"
+                <el-form-item :label="$t('sidebar.system')" class="title--bold" prop="system_id" :error="getError('system_id')"
                               :inline-message="hasError('system_id')">
                     <el-select
                         v-model="formData.system_id"
@@ -65,9 +65,9 @@ export default {
                 system_id: null,
             },
             rules: {
-                name: baseRuleValidate,
-                code: baseRuleValidate,
-                system_id: baseRuleValidate,
+                name: baseRuleValidate(this.$t),
+                code: baseRuleValidate(this.$t),
+                system_id: baseRuleValidate(this.$t),
             },
             loadingForm: false,
         };

@@ -3,7 +3,7 @@
         <div class="w-full px-4">
             <div class="w-full flex justify-between items-center my-2">
                 <div class="w-80">
-                    <el-input v-model="filters.search" class="w-full" size="large" placeholder="Search" clearable @input="filterData">
+                    <el-input v-model="filters.search" class="w-full" size="large" :placeholder="$t('input.common.search')" clearable @input="filterData">
                         <template #prefix>
                             <img src="/images/svg/search-icon.svg" alt="" />
                         </template>
@@ -53,10 +53,10 @@ export default {
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
-                { key: 'created_at', label: 'Time', align: 'left', headerAlign: 'left' },
-                { key: 'actor', label: 'Actor', align: 'left', headerAlign: 'left' },
-                { key: 'event', label: 'Event', align: 'left', headerAlign: 'left' },
-                { key: 'target', label: 'Target', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'created_at', label: this.$t('column.time'), align: 'left', headerAlign: 'left' },
+                { key: 'actor', label: this.$t('column.actor'), align: 'left', headerAlign: 'left' },
+                { key: 'event', label: this.$t('column.event'), align: 'left', headerAlign: 'left' },
+                { key: 'target', label: this.$t('column.target'), align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
             loadForm: false

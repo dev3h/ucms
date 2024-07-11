@@ -1,0 +1,154 @@
+{
+    "auth-page": {
+        "login-title": "Đăng nhập",
+        "click-forgot-password": "Nhấn vào đây nếu bạn quên mật khẩu",
+        "or": "Hoặc",
+        "forgot-password-page": {
+            "title": "Nhập địa chỉ email của bạn để đặt lại mật khẩu"
+        },
+        "confirm-forgot-password-page": {
+            "title": "Chúng tôi đã gửi URL đặt lại mật khẩu đến {email}",
+            "content": "Vui lòng kiểm tra email bạn đã gửi",
+            "enter-email-again": "Nhập lại địa chỉ email"
+        },
+        "reset-password-page": {
+            "title": "Thay đổi mật khẩu mới"
+        },
+        "change-password-first-page": {
+            "title": "Thay đổi mật khẩu lần đầu đăng nhập"
+        },
+        "2fa-challenge-page": {
+            "title": "Nhập mã xác minh được cung cấp bởi ứng dụng xác thực.",
+            "title-recovery": "Nhập một trong các mã khôi phục khẩn cấp của bạn."
+        },
+        "return-to-login": "Quay lại màn hình đăng nhập"
+    },
+    "my-page": {
+        "change-password": "Thay đổi mật khẩu",
+        "link-account": "Liên kết tài khoản",
+        "2fa": {
+            "title": "Xác thực hai yếu tố",
+            "2faEnabled": "Bạn đã bật xác thực hai yếu tố.",
+            "complete2faSetup": "Hoàn tất việc bật xác thực hai yếu tố.",
+            "2faNotEnabled": "Bạn chưa bật xác thực hai yếu tố.",
+            "2faPrompt": "Khi xác thực hai yếu tố được bật, bạn sẽ được yêu cầu nhập mã bảo mật ngẫu nhiên và an toàn trong quá trình xác thực. Bạn có thể lấy mã này từ ứng dụng Google Authenticator trên điện thoại của mình.",
+            "finalize2fa": "Để hoàn tất việc bật xác thực hai yếu tố, quét mã QR sau bằng ứng dụng xác thực trên điện thoại hoặc nhập khóa cài đặt và cung cấp mã OTP được tạo.",
+            "2faActive": "Xác thực hai yếu tố hiện đã được bật. Quét mã QR sau bằng ứng dụng xác thực trên điện thoại hoặc nhập khóa cài đặt.",
+            "saveRecoveryCodes": "Lưu các mã khôi phục này trong một trình quản lý mật khẩu an toàn. Chúng có thể được sử dụng để khôi phục quyền truy cập vào tài khoản của bạn nếu thiết bị xác thực hai yếu tố của bạn bị mất.",
+            "setup-key": "Khóa cài đặt"
+        }
+    },
+    "button": {
+        "login": "Đăng nhập",
+        "logout": "Đăng xuất",
+        "send": "Gửi",
+        "cancel": "Hủy",
+        "confirm": "Xác nhận",
+        "delete": "Xóa",
+        "edit": "Sửa",
+        "save": "Lưu",
+        "add": "Thêm",
+        "update": "Cập nhật",
+        "resend-email": "Gửi lại email",
+        "ok": "Đồng ý",
+        "verify": "Xác minh",
+        "recovery-code": "Sử dụng mã khôi phục",
+        "auth-code": "Sử dụng mã xác thực",
+        "general": "Chung",
+        "user-log": "Nhật ký người dùng",
+        "ignore-permission-in-role": "Bỏ qua quyền trong vai trò",
+        "assign-permission": "Gán quyền",
+        "assign-user": "Gán người dùng",
+        "assign": "Gán",
+        "not-link": "Không liên kết",
+        "link": "Liên kết",
+        "unlink": "Bỏ liên kết",
+        "enable": "Kích hoạt",
+        "disable": "Vô hiệu hóa",
+        "re-recovery-code": "Tạo lại mã khôi phục",
+        "show-recovery-code": "Hiển thị mã khôi phục"
+    },
+    "input": {
+        "common": {
+            "email": "Email",
+            "password": "Mật khẩu",
+            "new-password": "Mật khẩu mới",
+            "confirm-new-password": "Mật khẩu mới (nhập lại)",
+            "initial-password": "Mật khẩu ban đầu",
+            "current-password": "Mật khẩu hiện tại",
+            "search": "Tìm kiếm",
+            "select": "Chọn"
+        },
+        "recovery-code": "Mã khôi phục",
+        "publish": {
+            "now": "Ngay bây giờ",
+            "schedule": "Lên lịch",
+            "start-date": "Ngày bắt đầu",
+            "end-date": "Ngày kết thúc"
+        },
+        "content": "Nội dung"
+    },
+    "validate": {
+        "required": "Trường này là bắt buộc",
+        "email": "Địa chỉ email không hợp lệ",
+        "password": "Mật khẩu phải có ít nhất 6 ký tự"
+    },
+    "column": {
+        "common": {
+            "name": "Tên",
+            "code": "Mã",
+            "created-at": "Ngày tạo",
+            "action": "Hành động"
+        },
+        "last-seen": "Đăng nhâp lần cuối",
+        "activity": "Trạng thái hoạt động",
+        "time": "Thời gian",
+        "actor": "Người thực hiện",
+        "event": "Sự kiện",
+        "target": "Mục tiêu",
+        "users": "Người dùng",
+        "permissions": "Quyền",
+        "type-send": "Loại gửi",
+        "publish-at": "Ngày gửi",
+        "all-users": "Tất cả người dùng",
+        "specific-users": "Người dùng cụ thể",
+        "title": "Tiêu đề"
+    },
+    "sidebar": {
+        "dashboard": "Bảng điều khiển",
+        "system": "Hệ thống",
+        "subsystem": "Phân hệ",
+        "module": "Mô-đun",
+        "action": "Hành động",
+        "user": "Người dùng",
+        "role": "Vai trò",
+        "permission": "Quyền",
+        "audit-log": "Nhật ký hoạt động",
+        "notification": "Thông báo"
+    },
+    "form": {
+        "add": "Thêm",
+        "edit": "Sửa",
+        "confirm-delete": "Bạn có chắc chắn muốn xóa nó không?",
+        "item-added": "đã thêm",
+        "ignore": "Bỏ qua",
+        "confirm-password": {
+            "title": "Xác nhận mật khẩu",
+            "content": "Vui lòng xác nhận mật khẩu của bạn để tiếp tục"
+        }
+    },
+    "paginate": {
+        "items": "Bản ghi",
+        "of": "trong tổng số",
+        "first": "Trang đầu",
+        "last": "Trang cuối"
+    },
+    "breadcrumb": {
+        "create-user": "Tạo người dùng"
+    },
+    "pop-menu": {
+        "profile": "Hồ sơ",
+        "application": "Ứng dụng",
+        "logout": "Đăng xuất"
+    }
+}

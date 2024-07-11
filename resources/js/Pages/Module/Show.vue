@@ -14,7 +14,7 @@
                         }"
                         @click="changeTab(1)"
                     >
-                        Actions
+                        {{$t('sidebar.action')}}
                     </div>
                     <div
                         class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
@@ -24,7 +24,7 @@
                         }"
                         @click="changeTab(2)"
                     >
-                        Subsystems
+                        {{$t('sidebar.subsystem')}}
                     </div>
                     <div
                         class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
@@ -34,7 +34,7 @@
                         }"
                         @click="changeTab(3)"
                     >
-                        General
+                        {{$t('button.general')}}
                     </div>
                 </div>
             </div>

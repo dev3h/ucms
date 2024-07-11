@@ -7,18 +7,18 @@
             <div class="mt-3 flex flex-col gap-[32px]">
                 <div class="w-full grid grid-cols-3 gap-6">
                     <div class="col-span-1">
-                        <h4 class="font-bold">Publish at:</h4>
+                        <h4 class="font-bold">{{$t('column.publish-at')}}:</h4>
                         <p>{{ data?.is_schedule == 1 ? data?.published_at : data?.created_at }}</p>
                     </div>
                     <div v-if="data?.published_end_at" class="col-span-1">
-                        <h4 class="font-bold">Publish end at:</h4>
+                        <h4 class="font-bold">{{$t('input.publish.end-date')}}:</h4>
                         <p>{{ data?.published_end_at }}</p>
                     </div>
                 </div>
                 <div v-if="!(data?.sender_type == 2 && data?.users?.length == 0)">
-                    <h4 class="font-bold">Send to:</h4>
+                    <h4 class="font-bold">{{$t('column.type-send')}}:</h4>
                     <div v-if="data?.sender_type == 1">
-                        All users
+                        {{$t('column.all-users')}}
                     </div>
                     <div v-else class="mt-1 flex flex-wrap gap-[8px]">
                         <div
@@ -30,11 +30,11 @@
                     </div>
                 </div>
                 <div>
-                    <h4 class="font-bold">Title:</h4>
+                    <h4 class="font-bold">{{$t('column.title')}}:</h4>
                     <p>{{ data?.title }}</p>
                 </div>
                 <div>
-                    <h4 class="font-bold">Content:</h4>
+                    <h4 class="font-bold">{{$t('input.content')}}:</h4>
                     <ContentCkeditor :content="data?.content" />
                 </div>
             </div>

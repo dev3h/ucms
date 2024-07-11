@@ -14,7 +14,7 @@
                         }"
                         @click="changeTab(1)"
                     >
-                        Modules
+                        {{ $t('sidebar.module')}}
                     </div>
                     <div
                         class="text-center px-[12px] py-[4px] rounded-t-[4px] cursor-pointer"
@@ -24,7 +24,7 @@
                         }"
                         @click="changeTab(2)"
                     >
-                        General
+                        {{ $t('button.general')}}
                     </div>
                 </div>
             </div>
@@ -58,13 +58,6 @@ export default {
     data() {
         return {
             tabActive: 1,
-            formData: {
-                id: this.props?.id,
-                name: null,
-                code: null,
-            },
-            actions: [],
-            loadingForm: false,
         };
     },
     computed: {
@@ -82,25 +75,7 @@ export default {
             ];
         },
     },
-    created() {
-        this.fetchData();
-    },
     methods: {
-        async fetchData() {
-            try {
-                const response = await axios.get(
-                    this.appRoute("admin.api.role.show", this.id)
-                );
-                if(response) {
-                    this.formData = response?.data?.data;
-                }
-            } catch (err) {
-                this.$message.error(err?.response?.data?.message);
-            }
-        },
-        goBack() {
-            this.$inertia.visit(this.appRoute("admin.role.index"));
-        },
         changeTab(tab) {
             this.tabActive = tab;
         },

@@ -4,17 +4,17 @@
             <!-- Profile -->
             <el-card>
                 <div class="px-4 w-full">
-                    <div>
+                    <div class="flex flex-col gap-3">
                         <div class="flex flex-col gap-2">
-                            <span>Name</span>
+                            <span>{{$t('column.common.name')}}:</span>
                             <span>{{user?.name}}</span>
                         </div>
                         <div class="flex flex-col gap-2">
-                            <span>Email</span>
+                            <span>{{$t('input.common.email')}}: </span>
                             <span>{{user?.email}}</span>
                         </div>
                         <div class="flex flex-col gap-2">
-                            <span>Role</span>
+                            <span>{{$t('sidebar.role')}}:</span>
                             <span>{{$page.props.auth.role}}</span>
                         </div>
                     </div>
@@ -24,11 +24,11 @@
             <el-card>
                 <div class="w-full flex justify-center">
                     <div class="px-4 w-full">
-                        <div class="text-[24px] font-bold mb-8">Change Password</div>
+                        <div class="text-[24px] font-bold mb-8">{{$t('my-page.change-password')}}</div>
                         <div>
                             <el-form ref="form" :model="formData" :rules="rules" label-position="top">
                                 <el-form-item
-                                    label="Current Password" prop="current_password"
+                                    :label="$t('input.common.current-password')" prop="current_password"
                                     :error="getError('current_password')"
                                     :inline-message="hasError('current_password')">
                                     <el-input
@@ -37,7 +37,7 @@
                                 </el-form-item>
                                 <el-form-item
                                     class="mt-8"
-                                    label="New Password" prop="password" :error="getError('password')"
+                                    :label="$t('input.common.new-password')" prop="password" :error="getError('password')"
                                     :inline-message="hasError('password')">
                                     <el-input
                                         v-model="formData.password" autocomplete="new-password" :size="'large'"
@@ -45,7 +45,7 @@
                                 </el-form-item>
                                 <el-form-item
                                     class="mt-8"
-                                    label="New password (confirmation)" prop="password_confirmation"
+                                    :label="$t('input.common.confirm-new-password')" prop="password_confirmation"
                                     :error="getError('password_confirmation')"
                                     :inline-message="hasError('password_confirmation')">
                                     <el-input
@@ -56,7 +56,7 @@
                             <div class="flex justify-center mt-8">
                                 <el-button
                                     type='primary' :loading="loadingForm" class="!w-40" size="large"
-                                    @click="doSubmit">Update</el-button>
+                                    @click="doSubmit">{{$t('button.update')}}</el-button>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
             </el-card>
             <!-- Integration account -->
             <el-card>
-                <h2 class="uppercase font-bold mb-4">Linked Accounts</h2>
+                <h2 class="uppercase font-bold mb-4">{{$t('my-page.link-account')}}</h2>
                 <div>
                     <div>
                         <h3 class="text-lg mb-2">Google</h3>
@@ -72,17 +72,17 @@
                             <img src="/images/logo_google.png" alt="" width="30" height="30" class="object-cover">
                            <div>
                                 <span v-if="isLinked('google')">
-                                    Linked Email: {{ emailLink('google') }}
+                                    {{$t('button.link')}} Email: {{ emailLink('google') }}
                                 </span>
                                <span v-else>
-                                Not Link
+                                {{$t('button.not-link')}}
                                 </span>
                            </div>
                             <div>
-                                <el-button type="danger" v-if="isLinked('google')" @click="handleUnlinkIntegrationSocialite('google')">Unlink</el-button>
+                                <el-button type="danger" v-if="isLinked('google')" @click="handleUnlinkIntegrationSocialite('google')">{{$t('button.unlink')}}</el-button>
                                 <a :href="route('admin.integration.socialite.redirect', 'google')" v-else>
                                     <el-button type="primary">
-                                        Link
+                                        {{$t('button.link')}}
                                     </el-button>
                                 </a>
                             </div>
@@ -92,7 +92,7 @@
             </el-card>
             <!-- 2FA -->
             <el-card>
-                <h2 class="uppercase font-bold mb-4">Two Factor Authentication</h2>
+                <h2 class="uppercase font-bold mb-4">{{$t('my-page.2fa.title')}}</h2>
                 <TwoFactorAuthenticationForm class="h-full" />
             </el-card>
         </div>

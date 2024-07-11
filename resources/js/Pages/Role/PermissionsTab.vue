@@ -3,14 +3,14 @@
         <div class="w-full px-4">
             <div class="w-full flex justify-between items-center my-2">
                 <div class="w-80">
-                    <el-input v-model="filters.search" class="w-full" size="large" placeholder="Search" clearable @input="filterData">
+                    <el-input v-model="filters.search" class="w-full" size="large" :placeholder="$t('input.common.search')" clearable @input="filterData">
                         <template #prefix>
                             <img src="/images/svg/search-icon.svg" alt="" />
                         </template>
                     </el-input>
                 </div>
                 <div class="flex justify-end w-full">
-                    <el-button type="primary" size="large" @click="openAssign(id)">Assign permissions</el-button>
+                    <el-button type="primary" size="large" @click="openAssign(id)">{{$t('button.assign-permission')}}</el-button>
                 </div>
                 <DeleteForm ref="deleteForm" @delete-action="deleteItem" />
             </div>
@@ -58,9 +58,9 @@ export default {
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
-                { key: 'name', width: 400, label: 'Name', align: 'left', headerAlign: 'left' },
-                { key: 'code', width: 400, label: 'Code', align: 'left', headerAlign: 'left' },
-                { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'name', width: 400, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
+                { key: 'code', width: 400, label: this.$t('column.common.code'), align: 'left', headerAlign: 'left' },
+                { key: 'action', label: this.$t('column.common.action'), align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
             loadForm: false

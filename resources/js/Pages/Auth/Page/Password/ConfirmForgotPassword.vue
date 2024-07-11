@@ -3,20 +3,17 @@
         class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-grayF5"
     >
         <div
-            class="text-center text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase mb-8"
+            class="text-center text-zinc-800 text-2xl font-bold mb-5"
         >
-            A confirmation email has been sent
+            {{$t('auth-page.confirm-forgot-password-page.title', {email: formData.email})}}
         </div>
         <div
-            class="text-center text-neutral-600 text-sm font-normal font-['Meiryo'] leading-[21px]"
-            style="margin-bottom: 56px !important"
+            class="text-center text-neutral-600 text-sm font-normal leading-[21px]"
         >
-            Sent to {{formData.email }}
-            <p>Click the link in the email to complete your password change.</p>
-            <p>If you do not receive the confirmation email or have lost it, please resend it using the link below.</p>
+            <p>{{$t('auth-page.confirm-forgot-password-page.content')}}</p>
         </div>
         <div
-            class="w-full sm:max-w-md mt-10 px-6 pb-4 overflow-hidden"
+            class="w-full sm:max-w-md mt-5 px-6 pb-4 overflow-hidden"
         >
             <el-button
                 type="primary"
@@ -25,15 +22,15 @@
                 size="large"
                 @click.prevent="submit"
             >
-                Resend confirmation email
+                {{$t('button.resend-email')}}
             </el-button>
         </div>
         <div class="h-[21px] justify-start items-center inline-flex mt-[21px]">
             <Link
-                class="text-center text-zinc-800 text-sm font-bold font-['Meiryo'] leading-[21px] cursor-pointer underline"
+                class="text-center text-zinc-800 text-sm font-bold leading-[21px] cursor-pointer underline"
                 :href="this.appRoute('admin.forgot-password.form')"
             >
-                Enter email address again
+                {{$t('auth-page.confirm-forgot-password-page.enter-email-again')}}
             </Link>
         </div>
     </div>
@@ -41,6 +38,7 @@
 <script>
 import form from "@/Mixins/form";
 import axios from "@/Plugins/axios";
+import baseRuleValidate from "@/Store/Const/baseRuleValidate.js";
 
 export default {
     name: "ConfirmForgotPassword",
@@ -51,13 +49,7 @@ export default {
                 email: this.appRoute().params.email,
             },
             rules: {
-                email: [
-                    {
-                        required: true,
-                        message: "This field is required",
-                        trigger: "blur",
-                    },
-                ],
+                email: baseRuleValidate(this.$t)
             },
             loadingForm: false,
         };

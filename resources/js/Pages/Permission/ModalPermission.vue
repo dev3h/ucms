@@ -1,21 +1,21 @@
 <template>
     <div>
-        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
+        <el-dialog class="dialog-base" v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
             <template #header>
-                <h2 class="text-2xl font-bold">{{ formType === 'add' ? 'Add' : 'Edit' }}</h2>
+                <h2 class="text-2xl font-bold">{{ formType === 'add' ? $t('form.add') : $t('form.edit') }}</h2>
             </template>
             <div class="w-full">
                 <el-form class="w-full flex flex-col gap-2" ref="form" :model="formData" :rules="rules"
                     label-position="top">
 
                     <div class="flex-1">
-                        <el-form-item label="Name" class="title--bold" prop="name" :error="getError('name')"
+                        <el-form-item :label="$t('column.common.name')" class="title--bold" prop="name" :error="getError('name')"
                             :inline-message="hasError('name')">
                             <el-input size="large" v-model="formData.name" clearable />
                         </el-form-item>
                     </div>
                     <div class="flex-1 w-full">
-                        <el-form-item label="Code" class="title--bold code" prop="code" :error="getError('code')"
+                        <el-form-item :label="$t('column.common.code')" class="title--bold code" prop="code" :error="getError('code')"
                                       :inline-message="hasError('code')">
                         <div class="flex-1">
                             <h3 class="font-bold">System</h3>
@@ -60,10 +60,12 @@
                 </el-form>
 
             </div>
-            <div class="w-full my-[15px] flex justify-center items-center">
-                <el-button type="info" size="large" @click="closeModal">Cancel</el-button>
-                <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">Save</el-button>
-            </div>
+            <template #footer>
+                <div class="w-full flex justify-center items-center">
+                    <el-button type="info" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
+                    <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">{{$t('button.save')}}</el-button>
+                </div>
+            </template>
         </el-dialog>
     </div>
 </template>

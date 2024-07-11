@@ -2,20 +2,20 @@
     <ActionSection>
         <template #content>
             <h3 v-if="twoFactorEnabled && ! confirming" class="text-lg font-medium">
-                You have enabled two factor authentication.
+                {{$t("my-page.2fa.2faEnabled")}}
             </h3>
 
             <h3 v-else-if="twoFactorEnabled && confirming" class="text-lg font-medium">
-                Finish enabling two factor authentication.
+                {{$t("my-page.2fa.complete2faSetup")}}
             </h3>
 
             <h3 v-else class="text-lg font-medium">
-                You have not enabled two factor authentication.
+                {{$t("my-page.2fa.2faNotEnabled")}}
             </h3>
 
             <div class="mt-3 max-w-xl text-sm">
                 <p>
-                    When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone's Google Authenticator application.
+                    {{$t("my-page.2fa.2faPrompt")}}
                 </p>
             </div>
 
@@ -23,11 +23,11 @@
                 <div v-if="qrCode">
                     <div class="mt-4 max-w-xl text-sm">
                         <p v-if="confirming" class="font-semibold">
-                            To finish enabling two factor authentication, scan the following QR code using your phone's authenticator application or enter the setup key and provide the generated OTP code.
+                            {{$t("my-page.2fa.finalize2fa")}}
                         </p>
 
                         <p v-else>
-                            Two factor authentication is now enabled. Scan the following QR code using your phone's authenticator application or enter the setup key.
+                            {{$t("my-page.2fa.2faActive")}}
                         </p>
                     </div>
 
@@ -35,7 +35,7 @@
 
                     <div v-if="setupKey" class="mt-4 max-w-xl text-sm">
                         <p class="font-semibold">
-                            Setup Key: <span v-html="setupKey"></span>
+                           {{$t('my-page.2fa.setup-key')}}: <span v-html="setupKey"></span>
                         </p>
                     </div>
 
@@ -61,7 +61,7 @@
                 <div v-if="recoveryCodes.length > 0 && ! confirming">
                     <div class="mt-4 max-w-xl text-sm">
                         <p class="font-semibold">
-                            Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.
+                            {{$t("my-page.2fa.saveRecoveryCodes")}}
                         </p>
                     </div>
 
@@ -77,32 +77,32 @@
                 <div v-if="! twoFactorEnabled">
                     <ConfirmsPassword @confirmed="enableTwoFactorAuthentication">
                         <el-button type="primary" :class="{ 'opacity-25': enabling }"
-                                   :disabled="enabling">Enable</el-button>
+                                   :disabled="enabling">{{$t("button.enable")}}</el-button>
                     </ConfirmsPassword>
                 </div>
 
                 <div v-else>
                     <ConfirmsPassword @confirmed="confirmTwoFactorAuthentication">
                         <el-button v-if="confirming" type="primary" :class="{ 'opacity-25': enabling }"
-                                   :disabled="enabling">Confirm</el-button>
+                                   :disabled="enabling">{{$t("button.confirm")}}</el-button>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="regenerateRecoveryCodes">
-                        <el-button v-if="recoveryCodes.length > 0 && ! confirming">Regenerate Recovery Codes</el-button>
+                        <el-button v-if="recoveryCodes.length > 0 && ! confirming">{{$t("button.re-recovery-code")}}</el-button>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="showRecoveryCodes">
-                        <el-button v-if="recoveryCodes.length === 0 && ! confirming" type="primary">Show Recovery Codes</el-button>
+                        <el-button v-if="recoveryCodes.length === 0 && ! confirming" type="primary">{{$t("button.show-recovery-code")}}</el-button>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="disableTwoFactorAuthentication">
                         <el-button v-if="confirming" class="ml-2" :class="{ 'opacity-25': disabling }"
-                                   :disabled="disabling">Disable</el-button>
+                                   :disabled="disabling">{{$t("button.disable")}}</el-button>
                     </ConfirmsPassword>
 
                     <ConfirmsPassword @confirmed="disableTwoFactorAuthentication">
                         <el-button v-if="!confirming" type="danger" class="ml-2" :class="{ 'opacity-25': disabling }"
-                                   :disabled="disabling">Disable</el-button>
+                                   :disabled="disabling">{{$t("button.disable")}}</el-button>
                     </ConfirmsPassword>
                 </div>
             </div>

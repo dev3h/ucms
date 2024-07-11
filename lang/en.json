@@ -1,0 +1,9 @@
+{
+    "email.reset-passwordl.subject": "Reset password",
+    "email.reset-passwordl.content.line1": "We have received a request to change your password.",
+    "email.reset-passwordl.content.line2": "Please access the URL below to reset your password.",
+    "email.reset-passwordl.content.line3": "▼Password reset URL:",
+    "email.reset-passwordl.content.line4": "Click here: ",
+    "email.reset-passwordl.content.line5": "This email is sent automatically.",
+    "email.reset-passwordl.content.line6": "Please do not reply to this email as we cannot change the password via this email"
+}

@@ -4,22 +4,22 @@
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item v-for="(item, key) in breadCrumb" :key="key">
                     <span
-                            v-if="key == 2 || item.name == '新規追加' || (key == 1 && breadCrumb.length == 2)"
+                        v-if="key == 2 || (key == 1 && breadCrumb.length == 2)"
                           :class="{
-                            'is-show': key == 2 || item.name == '新規追加' || (key == 1 && breadCrumb.length == 2)
+                            'is-show': key == 2 || (key == 1 && breadCrumb.length == 2)
                         }"
                     >
-<!--                        {{ truncateString(item.name, 15) }}-->
-                        {{ item.name }}
+                        <!--{{ truncateString(item.name, 15) }}-->
+<!--                        {{ $t(item?.name) }}-->
+                        {{item?.name}}
                     </span>
                     <a
                         v-else
-
                         class="!cursor-pointer"
                         @click="changePath(item.route)"
                     >
-<!--                        {{ truncateString(item.name, 15) }}-->
-                        {{ item.name }}
+                        <!--{{ truncateString(item.name, 15) }}-->
+                        {{ $t(item.name) }}
                     </a>
                 </el-breadcrumb-item>
             </el-breadcrumb>

@@ -11,7 +11,7 @@
                             :class="checkActive(menu.pathActive) ? 'is-active ' : ''" @click="onMenuClick(menu)">
                             <el-image class="icon w-6 h-6 object-cover" :src="`/images/aside/${menu.icon}`" alt />
                             <template #title>
-                                <span class="menu-item-text pl-2 font-bold">{{ menu.label }}</span>
+                                <span class="menu-item-text pl-2 font-bold">{{ $t(menu.label) }}</span>
                             </template>
                         </el-menu-item>
 

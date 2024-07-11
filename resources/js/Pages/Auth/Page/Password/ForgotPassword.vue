@@ -3,14 +3,9 @@
         class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-grayF5"
     >
         <div
-            class="text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase leading-[28.80px] text-center"
+            class="text-zinc-800 text-2xl font-bold uppercase leading-[28.80px] text-center"
         >
-            Please enter the email address of your registered account.
-        </div>
-        <div
-            class="text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase leading-[28.80px] text-center"
-        >
-            We will send you a URL to reset your password.
+            {{ $t("auth-page.forgot-password-page.title") }}
         </div>
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 overflow-hidden">
             <el-form
@@ -21,7 +16,7 @@
                 @keypress.enter="doSubmit"
             >
                 <el-form-item
-                    label="Email"
+                    :label="$t('input.common.email')"
                     prop="email"
                     :inline-message="hasError('email')"
                     :error="getError('email')"
@@ -42,16 +37,16 @@
                     size="large"
                     @click.prevent="doSubmit"
                 >
-                    Send
+                    {{ $t("button.send") }}
                 </el-button>
             </div>
         </div>
         <div class="h-[21px] justify-start items-center inline-flex mt-[21px]">
             <Link
-                class="text-center text-zinc-800 text-sm font-bold font-['Meiryo'] leading-[21px] cursor-pointer underline"
+                class="text-center text-zinc-800 text-sm font-bold leading-[21px] cursor-pointer underline"
                 :href="this.appRoute('admin.login.form')"
             >
-                Return to login screen
+                {{ $t("auth-page.return-to-login") }}
             </Link>
         </div>
     </div>
@@ -78,7 +73,7 @@ export default {
                 email: [
                     {
                         required: true,
-                        message: "This field is required",
+                        message: this.$t('validate.required'),
                         trigger: ["blur","change"],
                     },
                 ],

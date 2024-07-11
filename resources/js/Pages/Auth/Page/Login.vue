@@ -13,7 +13,7 @@
                     <div
                         class="text-zinc-800 text-2xl font-bold font-['Meiryo'] uppercase leading-[28.80px] text-center mb-[17px]"
                     >
-                        Login
+                        {{ $t('auth-page.login-title') }}
                     </div>
                     <el-form
                         ref="form"
@@ -23,7 +23,7 @@
                         @keypress.enter.prevent="doSubmit"
                     >
                         <el-form-item
-                            label="Email"
+                            :label="$t('input.common.email')"
                             prop="email"
                             :inline-message="hasError('email')"
                             :error="getError('email')"
@@ -35,7 +35,7 @@
                             />
                         </el-form-item>
                         <el-form-item
-                            label="Password"
+                            :label="$t('input.common.password')"
                             prop="password"
                             :inline-message="hasError('password')"
                             :error="getError('password')"
@@ -58,21 +58,21 @@
                             size="large"
                             @click.prevent="doSubmit"
                         >
-                            login
+                            {{ $t('button.login') }}
                         </el-button>
                         <div class="mt-4">
                             <div
                                 class="text-sm underline cursor-pointer"
                                 @click="openForgotPasswordForm"
                             >
-                                Click here if you have forgotten your password
+                                {{ $t('auth-page.click-forgot-password') }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="w-[500px] mx-auto mt-10">
-                <h2 class="uppercase text-center font-bold text-3xl">Or</h2>
+                <h2 class="uppercase text-center font-bold text-3xl">{{ $t('auth-page.or') }}</h2>
                 <div class="flex justify-center mt-4 h-10" >
                     <a :href="route('admin.socialite.redirect', 'google')" class="!w-fit flex h-full items-center gap-2 px-4 py-3 hover:bg-gray-50">
                         <img src="/images/logo_google.png" alt="" class="h-8 object-cover">
@@ -85,6 +85,7 @@
 <script>
 import form from "@/Mixins/form";
 import axios from "@/Plugins/axios.js";
+import baseRuleValidate from "@/Store/Const/baseRuleValidate.js";
 
 export default {
     name: "Login",
@@ -98,20 +99,8 @@ export default {
                 platform: 'web'
             },
             rules: {
-                email: [
-                    {
-                        required: true,
-                        message: "This field is required",
-                        trigger: ['blur', 'change'],
-                    },
-                ],
-                password: [
-                    {
-                        required: true,
-                        message: "This field is required",
-                        trigger: ['blur', 'change'],
-                    },
-                ],
+                email: baseRuleValidate(this.$t),
+                password: baseRuleValidate(this.$t)
             },
             loadingForm: false,
             errors: null

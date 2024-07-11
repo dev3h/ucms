@@ -2,13 +2,13 @@
     <div>
         <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
             <template #header>
-                <h2 class="text-2xl font-bold">{{type === 'action' ? 'Add action' : 'Add subsystem'}}</h2>
+                <h2 class="text-2xl font-bold">{{type === 'action' ? $t('form.add') : $t('form.add')}}</h2>
             </template>
             <div class="w-full">
                 <div class="flex border">
                     <div class="flex-1 border-r">
                         <div class="h-12 border-b px-4 flex items-center">
-                            <el-input v-model="search"  size="large" placeholder="Search"
+                            <el-input v-model="search"  size="large" :placeholder="$t('input.common.search')"
                                       @input="filterData"
                                       clearable>
                                 <template #prefix>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="flex-1">
                         <div class="h-12 border-b px-4 flex items-center">
-                            <span>{{dataExtra?.length}} {{type === 'action' ? 'actions' : 'subsystems'}} added</span>
+                            <span>{{dataExtra?.length}} {{type === 'action' ? $t('sidebar.action') : $t('sidebar.subsystem')}} {{$t('form.item-added')}}</span>
                         </div>
                         <div class="max-h-[300px] h-full overflow-y-scroll">
                             <div v-for="item in dataExtra" :key="item" class="hover:bg-gray-200">
@@ -40,8 +40,8 @@
                 </div>
             </div>
             <div class="w-full my-[15px] flex justify-center items-center">
-                <el-button type="info" size="large" @click="closeModal">Cancel</el-button>
-                <el-button type="primary" size="large" :disabled="dataExtra?.length === 0" @click="handleAddExtra" :loading="loadingForm">Add</el-button>
+                <el-button type="info" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
+                <el-button type="primary" size="large" :disabled="dataExtra?.length === 0" @click="handleAddExtra" :loading="loadingForm">{{$t('button.add')}}</el-button>
             </div>
         </el-dialog>
     </div>

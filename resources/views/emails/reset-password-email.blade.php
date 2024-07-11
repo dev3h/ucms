@@ -1,12 +1,16 @@
 @extends('emails.mail-template')
 @section('contentEmail')
     <div>
-        <div>Your password reset request has been accepted.</div>
+        <div>{{__('email.reset-password.content.line1')}}</div>
         <br>
-        <div>Below is a link to reset your password. Click the link to set a new password：<a href="{{ $url }}">{{ $url }}</a></div>
+        <div>{{__('email.reset-password.content.line2')}}</div>
         <br>
-        <div>If this request was not made by you, please let us know immediately.</div>
+        <div>{{__('email.reset-password.content.line3')}}</div>
         <br>
-        <div>If you have any questions or problems, please feel free to contact us.</div>
+        <div>{{__('email.reset-password.content.line4')}} <a href="{{ $url }}">{{ $url }}</a></div>
+        <br>
+        <div>{{__('email.reset-password.content.line5')}}</div>
+        <br>
+        <div>{{__('email.reset-password.content.line6')}}</div>
     </div>
 @endsection

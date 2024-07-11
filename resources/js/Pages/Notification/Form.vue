@@ -8,46 +8,48 @@
                 <el-form ref="form" :model="formData" :rules="rules" label-position="top">
                     <div class="w-full flex gap-[48px]">
                         <div class="min-w-[400px] w-[30%]">
-                            <el-form-item label="Publishing Settings" prop="is_schedule" :error="getError('is_schedule')" :inline-message="hasError('is_schedule')">
+                            <el-form-item :label="$t('column.publish-at')" prop="is_schedule" :error="getError('is_schedule')" :inline-message="hasError('is_schedule')">
                                 <div class="ml-[18px]">
                                     <el-radio-group v-model="formData.is_schedule" size="large">
-                                        <el-radio :value="0">Now</el-radio>
-                                        <el-radio :value="1">Schedule</el-radio>
+                                        <el-radio :value="0">{{$t('input.publish.now')}}</el-radio>
+                                        <el-radio :value="1">{{$t('input.publish.schedule')}}</el-radio>
                                     </el-radio-group>
                                 </div>
                             </el-form-item>
                             <div v-if="formData.is_schedule">
-                                <el-form-item label="Publication start date" prop="published_at" :error="getError('published_at')" :inline-message="hasError('published_at')">
+                                <el-form-item :label="$t('input.publish.start-date')" prop="published_at" :error="getError('published_at')" :inline-message="hasError('published_at')">
                                     <el-date-picker
                                         v-model="formData.published_at" type="datetime"
-                                        size="large" placeholder="Select"
+                                        size="large" :placeholder="$t('input.common.select')"
                                         format="YYYY/MM/DD HH:mm"
                                         value-format="YYYY/MM/DD HH:mm"
+                                        clearable
                                     />
                                 </el-form-item>
                             </div>
-                            <el-form-item label="Publication end date" prop="published_end_at" :error="getError('published_end_at')" :inline-message="hasError('published_end_at')">
+                            <el-form-item :label="$t('input.publish.end-date')" prop="published_end_at" :error="getError('published_end_at')" :inline-message="hasError('published_end_at')">
                                 <el-date-picker
                                     v-model="formData.published_end_at" type="datetime"
-                                    size="large" placeholder="Select"
+                                    size="large" :placeholder="$t('input.common.select')"
                                     format="YYYY/MM/DD HH:mm"
                                     value-format="YYYY/MM/DD HH:mm"
+                                    clearable
                                 />
                             </el-form-item>
                             <el-form-item
-                                label="Send to" prop="sender_type"
+                                :label="$t('column.type-send')" prop="sender_type"
                                 :error="getError('sender_type')"
                                 :inline-message="hasError('sender_type')"
                                 class="sender-type"
                             >
                                 <el-select
                                     v-model="formData.sender_type"
-                                    placeholder="Select" size="large"
+                                    :placeholder="$t('input.common.select')" size="large"
                                     clearable filterable
                                     :suffix-icon="getCaretBottom"
                                 >
-                                    <el-option label="All users" :value="1" />
-                                    <el-option label="Specific user" :value="2" />
+                                    <el-option :label="$t('column.all-users')" :value="1" />
+                                    <el-option :label="$t('column.specific-users')" :value="2" />
                                 </el-select>
                             </el-form-item>
                             <div v-if="formData.sender_type == 2" class="ml-[18px] list-user">
@@ -76,10 +78,10 @@
                             </div>
                         </div>
                         <div class="flex-1">
-                            <el-form-item label="Title" prop="title" :error="getError('title')" :inline-message="hasError('title')">
-                                <el-input size="large" v-model="formData.title"  placeholder=""/>
+                            <el-form-item :label="$t('column.title')" prop="title" :error="getError('title')" :inline-message="hasError('title')">
+                                <el-input size="large" v-model="formData.title" clearable  placeholder=""/>
                             </el-form-item>
-                            <el-form-item label="Content" prop="content" :error="getError('content')" :inline-message="hasError('content')">
+                            <el-form-item :label="$t('input.content')" prop="content" :error="getError('content')" :inline-message="hasError('content')">
                                 <CKEditorComponent :contentProp="formData.content" @updateContent="handleInputEditor"/>
                             </el-form-item>
                         </div>
@@ -91,7 +93,7 @@
                         class="button-min--width"
                         @click="goBack()"
                     >
-                        Cancel
+                        {{$t('button.cancel')}}
                     </el-button>
                     <el-button
                         :loading="loadingForm"
@@ -99,7 +101,7 @@
                         class="btn-basic button-min--width"
                         @click="doSubmit()"
                     >
-                        Save
+                        {{$t('button.save')}}
                     </el-button>
                 </div>
             </div>
@@ -120,6 +122,7 @@ import form from '@/Mixins/form.js'
 import AddMemberDialog from '@/Components/AdminNotification/AddMemberDialog.vue';
 import CKEditorComponent from '@/Components/Ckediter/Ckeditor.vue';
 import { CaretBottom } from '@element-plus/icons-vue'
+import baseRuleValidate from "@/Store/Const/baseRuleValidate.js";
 
 export default {
     name: "NotificationForm",
@@ -139,10 +142,10 @@ export default {
                 published_end_at: null,
             },
             rules: {
-                title: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
-                content: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
-                sender_type: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
-                posted_at: [{ required: true, message: 'This field is required', trigger: ['blur', 'change'] }],
+                title: baseRuleValidate(this.$t),
+                content: baseRuleValidate(this.$t),
+                sender_type: baseRuleValidate(this.$t),
+                posted_at: baseRuleValidate(this.$t),
             },
             listUsers: [],
         }
@@ -156,7 +159,7 @@ export default {
                     route: this.appRoute('admin.notification.index'),
                 },
                 {
-                    name: this.appRoute().params.id ? 'Edit Notification' : 'Create Notification',
+                    name: this.appRoute().params.id ? this.$t('form.edit') : this.$t('form.add'),
                     route: '',
                 },
             ]

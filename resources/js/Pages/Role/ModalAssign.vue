@@ -2,13 +2,13 @@
     <div>
         <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
             <template #header>
-                <h2 class="text-2xl font-bold">{{ formType === 'permission' ? 'Assign permissions' : 'Assign users' }}</h2>
+                <h2 class="text-2xl font-bold">{{ formType === 'permission' ? $t('button.assign-permission') : $t('button.assign-user') }}</h2>
             </template>
             <div class="w-full">
                 <div class="flex border">
                     <div class="flex-1 border-r">
                         <div class="h-12 border-b px-4 flex items-center">
-                            <el-input v-model="filterTree"  size="large" placeholder="Search"
+                            <el-input v-model="filterTree"  size="large" :placeholder="$t('input.common.search')"
                                       clearable>
                                 <template #prefix>
                                     <img src="/images/svg/search-icon.svg" alt=""/>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="flex-1">
                         <div class="h-12 border-b px-4 flex items-center">
-                            <span>{{permissionChecked?.length}} permissions added</span>
+                            <span>{{permissionChecked?.length}} {{ $t("sidebar.permission") }} {{ $t("form.item-added") }}</span>
                         </div>
                         <div class="max-h-[300px] h-full overflow-y-scroll">
                             <div v-for="permission in permissionChecked" :key="permission?.id" class="hover:bg-gray-200">
@@ -46,8 +46,8 @@
                 </div>
             </div>
             <div class="w-full my-[15px] flex justify-center items-center">
-                <el-button type="info" size="large" @click="closeModal">Cancel</el-button>
-                <el-button type="primary" size="large" :disabled="permissionChecked?.length === 0" @click="handleAssignPermission" :loading="loadingForm">{{ formType === 'permission' ? 'Assign permissions' : 'Assign users' }}</el-button>
+                <el-button type="info" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
+                <el-button type="primary" size="large" :disabled="permissionChecked?.length === 0" @click="handleAssignPermission" :loading="loadingForm">{{$t('button.assign')}}</el-button>
             </div>
         </el-dialog>
     </div>
