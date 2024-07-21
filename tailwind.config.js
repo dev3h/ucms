@@ -22,7 +22,7 @@ export default {
             colors: {
                 primary: "#002147",
                 black54: "#545454",
-            },
+            }
         },
     },
 

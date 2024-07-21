@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
+        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :fullscreen="fullscreen" :before-close="closeModal">
             <template #header>
-                <h2 class="text-2xl font-bold">{{ formType === 'add' ? $t('form.add') : $t('form.edit') }}</h2>
+                <DialogHeader :title="formType === 'add' ? $t('form.add') : $t('form.edit')" :isFullscreen="fullscreen" @toggleFullscreen="handleToggleFullScreen" />
             </template>
             <div class="w-full">
                 <el-form class="w-full grid grid-col lg:grid-cols-2 gap-5" ref="form" :model="formData" :rules="rules"
@@ -40,7 +40,7 @@
                 </el-form>
             </div>
             <div class="w-full my-[15px] flex justify-center items-center">
-                <el-button type="info" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
+                <el-button type="danger" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
                 <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">{{$t('button.save')}}</el-button>
             </div>
         </el-dialog>
@@ -51,7 +51,9 @@
 import axios from '@/Plugins/axios'
 import form from "@/Mixins/form.js";
 import baseRuleValidate from "@/Store/Const/baseRuleValidate.js";
+import DialogHeader from "@/Components/Dialog/DialogHeader.vue";
 export default {
+    components: {DialogHeader},
     mixins: [form],
     props: {
         redirectRoute: {
@@ -77,6 +79,7 @@ export default {
                 code: baseRuleValidate(this.$t),
                 system_id: baseRuleValidate(this.$t),
             },
+            fullscreen: false,
             loadingForm: false
         }
     },
@@ -147,6 +150,9 @@ export default {
                 method = 'put';
             }
             return {action, method};
+        },
+        handleToggleFullScreen() {
+            this.fullscreen = !this.fullscreen
         }
     },
 }

@@ -319,7 +319,7 @@ export default {
 
 .DataTable .el-table {
     height: auto !important;
-    --el-table-border: none;
+    //--el-table-border: none;
     max-height: calc(100vh - 250px);
     overflow: auto;
 }
@@ -337,7 +337,7 @@ export default {
 
 .DataTable .el-table__row td.el-table__cell {
     color: var(--tw-header-table);
-    padding: 18px 10px 18px 16px;
+    padding: 15px 8px 15px 16px;
 }
 
 .DataTable .el-table--scrollable-x .el-table__body-wrapper {
@@ -406,7 +406,7 @@ export default {
 }
 
 .DataTable.is-never-shadow {
-    border: none;
+    //border: none;
 }
 
 .el-table thead {

@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
+        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal" :fullscreen="fullscreen">
             <template #header>
-                <h2 class="text-2xl font-bold">{{$t('form.add')}}</h2>
+                <DialogHeader :title="$t('form.add')" :isFullscreen="fullscreen" @toggleFullscreen="handleToggleFullScreen" />
             </template>
             <div class="w-full">
                 <el-form class="w-full flex flex-col gap-2" ref="form" :model="formData" :rules="rules"
@@ -84,7 +84,9 @@ import axios from '@/Plugins/axios'
 import form from "@/Mixins/form.js";
 import baseRuleValidate from "@/Store/Const/baseRuleValidate.js";
 import debounce from "lodash.debounce";
+import DialogHeader from "@/Components/Dialog/DialogHeader.vue";
 export default {
+    components: {DialogHeader},
     mixins: [form],
     props: {
         redirectRoute: {
@@ -115,7 +117,8 @@ export default {
             },
             data: [],
             filterTree: '',
-            permissionChecked: []
+            permissionChecked: [],
+            fullscreen: false,
         }
     },
     watch: {
@@ -214,6 +217,9 @@ export default {
             this.permissionChecked = this.permissionChecked.filter(item => item.id !== id)
             this.$refs.treeRef.setChecked(id, false)
         },
+        handleToggleFullScreen() {
+            this.fullscreen = !this.fullscreen
+        }
     },
 }
 </script>

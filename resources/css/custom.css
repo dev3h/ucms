@@ -83,6 +83,7 @@ select:focus {
 
     .el-dialog__body {
         padding: 24px 32px;
+        height: 100%;
     }
 
     .el-dialog__footer {
@@ -274,6 +275,16 @@ button:disabled {
 button.el-button--primary {
     background-color: var(--tw-primary);
     border-color: var(--tw-primary);
+}
+button.el-button.is-disabled {
+    opacity: 0.4;
+    background-color: var(--tw-gray-500);
+    border-color: var(--tw-gray-500);
+    &:hover {
+        background-color: var(--tw-gray-500);
+        border-color: var(--tw-gray-500);
+        opacity: 0.4;
+    }
 }
 
 button.el-button--primary:focus,

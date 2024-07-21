@@ -1,7 +1,7 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white">
-            <div class="w-full pt-3 pb-2 border-b-[1px] px-4">
+        <div class="w-full px-4 bg-white">
+            <div class="w-full pt-3 pb-2 border-b-[1px]">
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
             <div class="w-full py-[12px] pr-4">

@@ -12,7 +12,6 @@ class PermissionController extends Controller
 {
     public function index()
     {
-        $this->authorize('view', User::class);
         return Inertia::render('Permission/Index');
     }
 }

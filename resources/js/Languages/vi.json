@@ -36,7 +36,8 @@
             "2faActive": "Xác thực hai yếu tố hiện đã được bật. Quét mã QR sau bằng ứng dụng xác thực trên điện thoại hoặc nhập khóa cài đặt.",
             "saveRecoveryCodes": "Lưu các mã khôi phục này trong một trình quản lý mật khẩu an toàn. Chúng có thể được sử dụng để khôi phục quyền truy cập vào tài khoản của bạn nếu thiết bị xác thực hai yếu tố của bạn bị mất.",
             "setup-key": "Khóa cài đặt"
-        }
+        },
+        "info": "Thông tin"
     },
     "button": {
         "login": "Đăng nhập",

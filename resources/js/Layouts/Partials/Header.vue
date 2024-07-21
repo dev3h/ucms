@@ -1,9 +1,12 @@
 <template>
-    <el-header class="bg-primary text-[white] fixed top-0 left-0 right-0 z-[10]">
-        <div class="h-full flex items-center">
-            <Link :href="getRouteRedirect" class="inline-block w-fit">
-                <img src="/images/logo-white.svg" alt="logo" class="!h-12 object-cover" />
-            </Link>
+    <el-header class="bg-white text-[white] fixed top-0 right-0 z-[10] !backdrop-blur-lg shadow-sm" :class="{
+                        'left-[285px]':  collapseAside,
+                        'left-[54px]': !collapseAside,
+                    }">
+        <div class="flex items-center gap-2 w-fit h-full">
+            <span @click.prevent="toggleCollapse" class="cursor-pointer flex items-center h-full">
+            <i :class="collapseAside ? 'ri-menu-fold-line' : 'ri-menu-unfold-line'" class="text-3xl text-primary"/>
+            </span>
         </div>
         <slot name="page-header" />
         <div class="header-custom w-1/2 flex justify-end gap-6">
@@ -17,9 +20,9 @@
             </div>
             <div class="mr-5">
                 <el-dropdown trigger="click" class="h-full" @command="handleCommand">
-                    <div class="el-dropdown-link flex items-center justify-center text-white">
-                        <span class="mr-2 text-lg">{{ user?.name }}</span>
-<!--                        <el-avatar :size="32" :src="user?.icon_url" />-->
+                    <div class="el-dropdown-link flex items-center justify-center text-white gap-1">
+                        <el-avatar :size="32">{{user?.name?.[0]}}</el-avatar>
+                        <span class="mr-2 text-lg text-primary">{{ user?.name }}</span>
                         <img :src="'/images/svg/down.svg'" class="ml-2" />
                     </div>
                     <template #dropdown>
@@ -54,16 +57,15 @@
 <script>
 import NotificationPopup from '@/Components/Notification/Index.vue'
 import { router } from '@inertiajs/vue3'
+import BreadCrumbComponent from "@/Components/Page/BreadCrumb.vue";
 
 export default {
     name: 'AdminHeader',
-    components: { NotificationPopup },
+    components: {BreadCrumbComponent, NotificationPopup },
     props: {
-        breadCrumb: {
-            type: Object || Array,
-            default: () => { },
-        },
+        collapseAside: Boolean
     },
+    emits: ['toggle-collapse-aside'],
     data() {
         return {
             pathSubmenu: window.location.pathname.split('/'),
@@ -79,10 +81,7 @@ export default {
     computed: {
         user() {
             return this.$page?.props?.auth?.user ?? {}
-        },
-        getRouteRedirect() {
-            return this.appRoute('admin.system.index')
-        },
+        }
     },
     methods: {
         toggleNotifications() {
@@ -127,6 +126,9 @@ export default {
             }
             return str
         },
+        toggleCollapse() {
+            this.$emit('toggle-collapse-aside', !this.collapseAside)
+        }
     },
 }
 </script>

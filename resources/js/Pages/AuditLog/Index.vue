@@ -1,13 +1,13 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white">
-            <div class="w-full pt-3 pb-2 border-b-[1px] px-4">
+        <div class="w-full px-4 bg-white">
+            <div class="w-full pt-3 pb-2">
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
 
-            <div class="w-full px-4">
-                <div class="w-full flex justify-between gap-2 my-2">
-                    <div class="flex gap-2">
+            <div class="w-full">
+                <div class="w-full flex flex-wrap justify-between gap-2 my-2">
+                    <div class="flex flex-wrap gap-2">
                         <div class="col-span-1">
                             <el-input v-model="filters.search" class="!w-80" size="large" :placeholder="$t('input.common.search')"
                                       clearable @input="filterData">
@@ -59,10 +59,10 @@ export default {
                 limit: Number(this.appRoute().query?.limit ?? 10),
             },
             fields: [
-                { key: 'created_at', label: this.$t('column.time'), align: 'left', headerAlign: 'left' },
-                { key: 'actor', label: this.$t('column.actor'), align: 'left', headerAlign: 'left' },
-                { key: 'event', label: this.$t('column.event'), align: 'left', headerAlign: 'left' },
-                { key: 'target', label: this.$t('column.target'), align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'created_at', 'min-width': 200, label: this.$t('column.time'), align: 'left', headerAlign: 'left' },
+                { key: 'actor', 'min-width': 400, label: this.$t('column.actor'), align: 'left', headerAlign: 'left' },
+                { key: 'event', 'min-width': 200, label: this.$t('column.event'), align: 'left', headerAlign: 'left' },
+                { key: 'target', 'min-width': 400, label: this.$t('column.target'), align: 'center', headerAlign: 'center', fixed: 'right' },
             ],
             paginate: {},
             loadForm: false

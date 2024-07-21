@@ -11,7 +11,7 @@ class SystemController extends Controller
 {
     public function index()
     {
-        $this->authorize('view', User::class);
+//        $this->authorize('view', User::class);
         return Inertia::render('System/Index');
     }
 }

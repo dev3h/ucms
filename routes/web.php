@@ -38,7 +38,7 @@ Route::prefix("admin/")->as("admin.")->group(function () {
     });
 
 //    Route::middleware([CustomJWTAuth::class])
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'type_admin_check'])->group(function () {
 
         Route::get('/change-password-first', [AuthenticatedSessionController::class, 'formChangePasswordFirst'])->name('password-first.form');
         Route::post('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');

@@ -19,7 +19,6 @@ class PermissionController extends Controller
 {
     public function index(Request $request)
     {
-        $this->authorize('view', User::class);
         try {
             $data = Permission::filters(new PermissionFilter($request))->orderBy('created_at', 'desc')->paginate(PerPage::DEFAULT);
             return PermissionResource::collection($data)
@@ -31,7 +30,6 @@ class PermissionController extends Controller
 
     public function store(PermissionRequest $request)
     {
-        $this->authorize('create', User::class);
         try {
             $data = $request->all();
             $permission = Permission::create($data);
@@ -43,7 +41,6 @@ class PermissionController extends Controller
 
     public function show($id)
     {
-        $this->authorize('view', User::class);
         try {
             $permission = Permission::find($id);
             return $this->sendSuccessResponse($permission, __('Get data successfully'));
@@ -54,7 +51,6 @@ class PermissionController extends Controller
 
     public function update(PermissionRequest $request, $id)
     {
-        $this->authorize('update', User::class);
         try {
             $data = $request->all();
             $permission = Permission::find($id);
@@ -67,7 +63,6 @@ class PermissionController extends Controller
 
     public function destroy($id)
     {
-        $this->authorize('delete', User::class);
         try {
             $permission = Permission::find($id);
             $permission->delete();
@@ -79,7 +74,6 @@ class PermissionController extends Controller
 
     public function getCodeForPermission()
     {
-        $this->authorize('view', User::class);
         try {
             $systems = System::all();
 
@@ -119,7 +113,6 @@ class PermissionController extends Controller
 
     public function templatePermission($id)
     {
-        $this->authorize('view', User::class);
         try {
             if(request()->routeIs('*api.role*')) {
                 $role = Role::find($id);
@@ -156,7 +149,6 @@ class PermissionController extends Controller
     }
     public function updateTemplatePermission($id, Request $request)
     {
-        $this->authorize('update', User::class);
         try {
            if(request()->routeIs('*api.role*')) {
                 $role = Role::find($id);
@@ -195,7 +187,6 @@ class PermissionController extends Controller
     }
     public function templatePermissionUser($id, Request $request)
     {
-        $this->authorize('view', User::class);
         try {
             $user = User::find($id);
             $role = $user->roles->first();

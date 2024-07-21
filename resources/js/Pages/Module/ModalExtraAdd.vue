@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
+        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal" :fullscreen="fullscreen">
             <template #header>
-                <h2 class="text-2xl font-bold">{{type === 'action' ? $t('form.add') : $t('form.add')}}</h2>
+                <DialogHeader :title="type === 'action' ? $t('form.add') : $t('form.edit')" :isFullscreen="fullscreen" @toggleFullscreen="handleToggleFullScreen" />
             </template>
             <div class="w-full">
                 <div class="flex border">
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="w-full my-[15px] flex justify-center items-center">
-                <el-button type="info" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
+                <el-button type="danger" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
                 <el-button type="primary" size="large" :disabled="dataExtra?.length === 0" @click="handleAddExtra" :loading="loadingForm">{{$t('button.add')}}</el-button>
             </div>
         </el-dialog>
@@ -50,7 +50,9 @@
 <script>
 import axios from '@/Plugins/axios'
 import debounce from "lodash.debounce";
+import DialogHeader from "@/Components/Dialog/DialogHeader.vue";
 export default {
+    components: {DialogHeader},
     props: {
         redirectRoute: {
             type: String,
@@ -68,7 +70,8 @@ export default {
             dataExtra: [],
             data: [],
             filterTree: '',
-            type: 'action'
+            type: 'action',
+            fullscreen: false,
         }
     },
     methods: {
@@ -132,6 +135,9 @@ export default {
             this.isShowModal = false
             this.dataExtra = [];
             this.$emit('add-success')
+        },
+        handleToggleFullScreen() {
+            this.fullscreen = !this.fullscreen
         }
     }
 }

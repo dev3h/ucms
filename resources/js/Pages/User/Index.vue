@@ -1,13 +1,13 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white">
-            <div class="w-full pt-3 pb-2 border-b-[1px] px-4">
+        <div class="w-full px-4 bg-white">
+            <div class="w-full pt-3 pb-2">
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
 
             <div class="w-full">
-                <div class="w-full flex justify-between items-center px-4 my-2">
-                    <div class="flex gap-2">
+                <div class="w-full flex flex-wrap justify-between items-center my-2">
+                    <div class="flex flex-wrap gap-2">
                         <el-input v-model="filters.search" class="!w-80" size="large" :placeholder="$t('input.common.search')" clearable @input="filterData">
                             <template #prefix>
                                 <img src="/images/svg/search-icon.svg" alt="" />
@@ -85,13 +85,13 @@ export default {
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
-                { key: 'name', width: 200, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
-                { key: 'email', width: 200, label: this.$t('input.common.email'), align: 'left', headerAlign: 'left' },
-                { key: 'role_name', width: 200, label: this.$t('sidebar.role'), align: 'left', headerAlign: 'left' },
-                {key: 'last_seen', width: 200, label: this.$t('column.last-seen'), align: 'left', headerAlign: 'left'},
-                {key: 'activity', width: 200, label: this.$t('column.activity'), align: 'center', headerAlign: 'left'},
-                { key: 'created_at', width: 200, label: this.$t('column.common.created-at'), align: 'left', headerAlign: 'left'},
-                { key: 'action', label: this.$t('column.common.action'), align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'name', 'min-width': 200, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
+                { key: 'email', 'min-width': 200, label: this.$t('input.common.email'), align: 'left', headerAlign: 'left' },
+                { key: 'role_name', 'min-width': 200, label: this.$t('sidebar.role'), align: 'left', headerAlign: 'left' },
+                {key: 'last_seen', 'min-width': 200, label: this.$t('column.last-seen'), align: 'left', headerAlign: 'left'},
+                {key: 'activity', 'min-width': 200, label: this.$t('column.activity'), align: 'center', headerAlign: 'left'},
+                { key: 'created_at', 'min-width': 200, label: this.$t('column.common.created-at'), align: 'left', headerAlign: 'left'},
+                { key: 'action', width: 200, label: '', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
             loadForm: false

@@ -31,7 +31,7 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
         Route::post('/update-password', [ResetPasswordController::class, 'passwordResetUpdate'])->name('reset-password.update');
     });
 
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'type_admin_check'])->group(function () {
         Route::get('me', [AuthenticatedSessionController::class, 'me'])->name('me');
         Route::post('/change-password-first', [AuthenticatedSessionController::class, 'changePasswordFirst'])->name('password-first.change');
 

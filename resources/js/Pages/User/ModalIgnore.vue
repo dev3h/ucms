@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
+        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal" :fullscreen="fullscreen">
             <template #header>
-                <h2 class="text-2xl font-bold">{{$t("form.ignore")}} {{$t("sidebar.permission")}}</h2>
+                <DialogHeader :title="$t('form.ignore')" :isFullscreen="fullscreen" @toggleFullscreen="handleToggleFullScreen" />
             </template>
             <div class="w-full">
                 <div class="flex border">
@@ -40,7 +40,7 @@
                 </div>
             </div>
                 <div class="w-full my-[15px] flex justify-center items-center">
-                <el-button type="info" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
+                <el-button type="danger" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
                 <el-button type="primary" size="large" @click="handleIgnorePermission" :loading="loadingForm">{{$t('button.update')}}</el-button>
             </div>
         </el-dialog>
@@ -50,7 +50,9 @@
 <script>
 import axios from '@/Plugins/axios'
 import debounce from "lodash.debounce";
+import DialogHeader from "@/Components/Dialog/DialogHeader.vue";
 export default {
+    components: {DialogHeader},
     props: {
         redirectRoute: {
             type: String,
@@ -70,7 +72,8 @@ export default {
             permissionChecked: [],
             dataHandle: [],
             role_id: null,
-            removeItemIgnore: []
+            removeItemIgnore: [],
+            fullscreen: false,
         }
     },
     watch: {
@@ -182,6 +185,9 @@ export default {
             this.loadingForm = false
             this.isShowModal = false
             this.$emit('assign-success')
+        },
+        handleToggleFullScreen() {
+            this.fullscreen = !this.fullscreen
         }
     }
 }

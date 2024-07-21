@@ -1,6 +1,12 @@
 <template>
-    <el-aside width="265" class="fixed top-[60px] bottom-0 left-0 z-[5]">
-        <div class="relative h-full bg-[#fff]">
+    <el-aside width="265" class="fixed top-0 bottom-0 left-0 z-[5] !h-full">
+        <div class="fixed top-0 left-0 z-[10]">
+            <Link :href="getRouteRedirect" class="w-fit flex items-center gap-2">
+                <img src="/images/logo-white.svg" alt="logo" class="!h-12 object-cover" />
+                <h1 v-if="collapseAside" class="text-2xl font-bold">EPU</h1>
+            </Link>
+        </div>
+        <div class="relative h-full bg-primary">
             <!-- Side bar -->
             <div class="admin-sidebar h-full relative pt-[60px]">
                 <el-menu id="sidebar" class="el-menu-vertical" :class="{ 'collapse-is-close': !collapseAside }"
@@ -44,16 +50,16 @@
                 </el-menu>
             </div>
 
-            <div class="absolute left-[0] pl-[16px] top-[0] right-[0] pt-[16px] bg-[white] cursor-pointer"
-                :class="!collapseAside ? 'right-4' : 'right-8'">
-                <span v-if="!collapseAside" title="メニューを拡大する" @click.prevent="toggleCollapse">
-                    <i class="ri-menu-unfold-line text-2xl text-primary" />
-                </span>
+<!--            <div class="absolute left-[0] pl-[16px] top-[0] right-[0] pt-[16px] bg-[white] cursor-pointer"-->
+<!--                :class="!collapseAside ? 'right-4' : 'right-8'">-->
+<!--                <span v-if="!collapseAside" title="メニューを拡大する" @click.prevent="toggleCollapse">-->
+<!--                    <i class="ri-menu-unfold-line text-2xl text-primary" />-->
+<!--                </span>-->
 
-                <span title="メニューを縮小する" @click.prevent="toggleCollapse">
-                    <i v-if="collapseAside" class="ri-menu-fold-line text-3xl text-gray8A" />
-                </span>
-            </div>
+<!--                <span title="メニューを縮小する" @click.prevent="toggleCollapse">-->
+<!--                    <i v-if="collapseAside" class="ri-menu-fold-line text-3xl text-gray8A" />-->
+<!--                </span>-->
+<!--            </div>-->
         </div>
     </el-aside>
 </template>
@@ -64,10 +70,12 @@ import { isArray, isEmpty } from 'lodash'
 
 export default {
     emits: ['zoom-out-sidebar'],
+    props: {
+        collapseAside: Boolean,
+    },
     data() {
         return {
             menus: MASTER_MENUS,
-            collapseAside: true,
             defaultActive: '',
             dialogVisible: false,
             pathSubmenu: [],
@@ -87,6 +95,11 @@ export default {
             // console.log(menuBusiness)
             this.menus = menuBusiness
         }
+    },
+    computed: {
+        getRouteRedirect() {
+            return this.appRoute('admin.system.index')
+        },
     },
     methods: {
         getCurrentUrl() {

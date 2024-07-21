@@ -1,7 +1,7 @@
 <template>
     <AdminLayout>
-        <div id="notification-list" class="w-full h-full bg-white px-4 pb-[24px]">
-            <div class="w-full pt-3 pb-2 border-b-[1px]">
+        <div id="notification-list" class="w-full bg-white px-4 pb-[24px]">
+            <div class="w-full pt-3 pb-2">
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
             <div class="w-full my-[18px]">
@@ -159,7 +159,7 @@ export default {
                     route: this.appRoute('admin.notification.index'),
                 },
                 {
-                    name: this.appRoute().params.id ? this.$t('form.edit') : this.$t('form.add'),
+                    name: this.appRoute().params.id ? 'form.edit' : 'form.add',
                     route: '',
                 },
             ]
@@ -242,7 +242,7 @@ export default {
 </script>
 <style>
 #notification-list .ck-editor__editable {
-    min-height: 550px;
+    //min-height: 550px;
 }
 #notification-list .single-line-text {
     white-space: nowrap;

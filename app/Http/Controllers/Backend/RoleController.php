@@ -24,7 +24,6 @@ class RoleController extends Controller
 {
     public function index(Request $request)
     {
-        $this->authorize('view', User::class);
         try {
             $data = Role::filters(new RoleFilter($request))
                 ->orderBy('created_at', 'desc')
@@ -38,7 +37,6 @@ class RoleController extends Controller
 
     public function show($id)
     {
-        $this->authorize('view', User::class);
         try {
             $role = Role::find($id);
             if(!$role) {
@@ -52,7 +50,6 @@ class RoleController extends Controller
 
     public function getAllUserOfRole($id, Request $request)
     {
-        $this->authorize('view', User::class);
         try {
             $role = Role::find($id);
             if(!$role) {
@@ -68,7 +65,6 @@ class RoleController extends Controller
 
     public function getAllPermissionOfRole($id, Request $request)
     {
-        $this->authorize('view', User::class);
         try {
             $role = Role::find($id);
             if(!$role) {
@@ -86,7 +82,6 @@ class RoleController extends Controller
 
     public function store(RoleRequest $request)
     {
-        $this->authorize('create', User::class);
         try {
             $data = $request->all();
             DB::beginTransaction();
@@ -116,7 +111,6 @@ class RoleController extends Controller
 
     public function update($id, RoleRequest $request)
     {
-        $this->authorize('update', User::class);
         try {
             $data = $request->all();
             DB::beginTransaction();
@@ -159,7 +153,6 @@ class RoleController extends Controller
 
     public function destroy($id)
     {
-        $this->authorize('delete', User::class);
         try {
             $role = Role::find($id);
             if(!$role) {
@@ -174,7 +167,6 @@ class RoleController extends Controller
 
     public function assignUser(Request $request, $id)
     {
-        $this->authorize('update', User::class);
         try {
             $role = Role::find($id);
             if(!$role) {
@@ -190,7 +182,6 @@ class RoleController extends Controller
 
     public function revokeUser(Request $request, $id)
     {
-        $this->authorize('delete', User::class);
         try {
             $role = Role::find($id);
             if(!$role) {
@@ -209,7 +200,6 @@ class RoleController extends Controller
 
     public function revokePermission(Request $request, $id)
     {
-        $this->authorize('delete', User::class);
         try {
             $role = Role::find($id);
             if(!$role) {
@@ -225,7 +215,6 @@ class RoleController extends Controller
 
     public function restPermission($id)
     {
-        $this->authorize('delete', User::class);
         try {
             $role = Role::find($id);
             if(!$role) {
@@ -243,7 +232,6 @@ class RoleController extends Controller
 
     public function getAllPermission()
     {
-        $this->authorize('view', User::class);
         try {
             $permissions = Permission::all();
             $data = new RestPermissionResource($permissions);
@@ -255,7 +243,6 @@ class RoleController extends Controller
 
     public function assignPermission(Request $request, $id)
     {
-        $this->authorize('update', User::class);
         try {
             $role = Role::find($id);
             if(!$role) {

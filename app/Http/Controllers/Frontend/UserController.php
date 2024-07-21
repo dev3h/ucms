@@ -15,7 +15,6 @@ class UserController extends Controller
 {
     public function index()
     {
-        $this->authorize('view', User::class);
         $roles = Role::all();
         return Inertia::render('User/Index', [
             'roles' => $roles,
@@ -23,7 +22,6 @@ class UserController extends Controller
     }
     public function show($id)
     {
-        $this->authorize('view', User::class);
         $roles = Role::all();
         return Inertia::render('User/Show', [
             'id' => +$id,

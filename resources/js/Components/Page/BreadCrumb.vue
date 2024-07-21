@@ -19,7 +19,7 @@
                         @click="changePath(item.route)"
                     >
                         <!--{{ truncateString(item.name, 15) }}-->
-                        {{ $t(item.name) }}
+                        {{ $t(item?.name) }}
                     </a>
                 </el-breadcrumb-item>
             </el-breadcrumb>

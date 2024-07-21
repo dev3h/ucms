@@ -1,8 +1,8 @@
 <template>
-    <div class="px-4">
+    <div>
         <div class="w-full my-[15px] flex justify-start items-center">
             <el-button type="primary" size="large" @click="doSubmit()" :loading="loadingForm">{{$t('button.update')}}</el-button>
-            <el-button type="info" size="large" @click="goBack()">{{$t('button.cancel')}}</el-button>
+            <el-button type="danger" size="large" @click="goBack()">{{$t('button.cancel')}}</el-button>
         </div>
         <el-form class="w-full grid grid-cols-3 gap-5" ref="form" :model="formData" :rules="rules"
                  label-position="top">

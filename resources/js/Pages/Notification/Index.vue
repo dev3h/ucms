@@ -1,11 +1,11 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white">
+        <div class="w-full px-4 bg-white">
             <div class="">
-                <div class="w-full pt-3 pb-2 border-b-[1px] px-4">
+                <div class="w-full pt-3 pb-2">
                     <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
                 </div>
-                <div class="w-full my-[15px] flex items-center justify-between px-4">
+                <div class="w-full my-[15px] flex items-center justify-between">
                     <div class="w-full flex items-center flex-wrap gap-2 ">
                         <el-input
                             v-model="filters.search" size="large"
@@ -39,7 +39,7 @@
                             @change="fetchData()"
                         />
                     </div>
-                    <div>
+                    <div class="w-fit">
                         <el-button
                             type="primary" size="large"
                             class="button-min--width"
@@ -119,11 +119,11 @@ export default {
                 limit: 10
             },
             fields: [
-                { key: 'title', minWidth: 200, label: this.$t('column.title'), align: 'left', headerAlign: 'left' },
-                { key: 'user_nicknames', minWidth: 200, label: this.$t('column.type-send'), align: 'left', headerAlign: 'left' },
-                { key: 'published_at', minWidth: 200, label: this.$t('column.publish-at'), align: 'left', headerAlign: 'left' },
-                { key: 'created_at', minWidth: 200, label: this.$t('column.common.created-at'), align: 'left', headerAlign: 'left' },
-                { key: 'action', label: '', width: 180, align: 'center', headerAlign: 'center', fixed: 'right' },
+                { key: 'title', 'min-width': 400, label: this.$t('column.title'), align: 'left', headerAlign: 'left' },
+                { key: 'user_nicknames', 'min-width': 200, label: this.$t('column.type-send'), align: 'left', headerAlign: 'left' },
+                { key: 'published_at', 'min-width': 200, label: this.$t('column.publish-at'), align: 'left', headerAlign: 'left' },
+                { key: 'created_at', 'min-width': 200, label: this.$t('column.common.created-at'), align: 'left', headerAlign: 'left' },
+                { key: 'action', label: '', width: 200, align: 'center', headerAlign: 'center', fixed: 'right' },
             ],
             paginate: {},
         }

@@ -1,19 +1,19 @@
 <template>
     <div class="admin-layout">
-        <AdminHeader />
 
         <el-container>
-            <Sidemenu v-if="isShowSideBar" @zoom-out-sidebar="hiddenMenu" />
+            <Sidemenu v-if="isShowSideBar" @zoom-out-sidebar="hiddenMenu" :collapse-aside="collapseAside" />
 
             <el-container>
                 <el-main
                     id="el-main"
                     style="background-color: #e9e9e9"
                     :class="{
-                        'ml-[285px]': isZoomOutMenu && isShowSideBar,
-                        'ml-[54px]': !isZoomOutMenu && isShowSideBar,
+                        'ml-[285px]':  collapseAside,
+                        'ml-[54px]': !collapseAside,
                     }"
                 >
+                    <AdminHeader :collapse-aside="collapseAside"  @toggle-collapse-aside="handleToggleCollapse" />
                     <slot />
                 </el-main>
             </el-container>
@@ -41,11 +41,16 @@ export default {
     data() {
         return {
             isZoomOutMenu: true,
+            collapseAside: true,
+            breadcrumbData: {},
         }
     },
     methods: {
         hiddenMenu(value) {
             this.isZoomOutMenu = value
+        },
+        handleToggleCollapse(value) {
+            this.collapseAside = value
         },
     },
 }
@@ -76,7 +81,7 @@ export default {
 }
 
 .admin-layout .el-menu {
-    background-color: var(--tw-white) !important;
+    background-color: var(--tw-primary) !important;
 }
 
 .admin-layout .el-sub-menu {
@@ -255,6 +260,6 @@ export default {
 }
 
 .admin-layout #el-main {
-    padding: 0 0 0 16px !important;
+    padding: 16px !important;
 }
 </style>

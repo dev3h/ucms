@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Auth;
 
 use App\Enums\PassFirstChangeEnum;
+use App\Enums\UserTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangePasswordFirstRequest;
 use App\Http\Requests\LoginRequest;
@@ -25,6 +26,10 @@ class AuthenticatedSessionController extends Controller
 
         if (!Hash::check($password, $user->password)) {
             throw ValidationException::withMessages(['password' => __('auth.password')]);
+        }
+
+        if ($user?->type !== UserTypeEnum::ADMIN->value) {
+            return $this->sendErrorResponse(__('You are not authorized to access this page'), 403);
         }
 
         if($user->two_factor_confirmed_at) {

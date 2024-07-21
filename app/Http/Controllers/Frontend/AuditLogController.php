@@ -11,7 +11,6 @@ class AuditLogController extends Controller
 {
     public function index()
     {
-        $this->authorize('view', User::class);
         return Inertia::render('AuditLog/Index');
     }
 }

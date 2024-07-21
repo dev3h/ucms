@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal">
+        <el-dialog v-model="isShowModal" :close-on-click-modal="false" :before-close="closeModal" :fullscreen="fullscreen">
             <template #header>
-                <h2 class="text-2xl font-bold">{{ formType === 'permission' ? $t('button.assign-permission') : $t('button.assign-user') }}</h2>
+                <DialogHeader :title="formType === 'permission' ? $t('button.assign-permission') : $t('button.assign-user')" :isFullscreen="fullscreen" @toggleFullscreen="handleToggleFullScreen" />
             </template>
             <div class="w-full">
                 <div class="flex border">
@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="w-full my-[15px] flex justify-center items-center">
-                <el-button type="info" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
+                <el-button type="danger" size="large" @click="closeModal">{{$t('button.cancel')}}</el-button>
                 <el-button type="primary" size="large" :disabled="permissionChecked?.length === 0" @click="handleAssignPermission" :loading="loadingForm">{{$t('button.assign')}}</el-button>
             </div>
         </el-dialog>
@@ -56,7 +56,9 @@
 <script>
 import axios from '@/Plugins/axios'
 import debounce from "lodash.debounce";
+import DialogHeader from "@/Components/Dialog/DialogHeader.vue";
 export default {
+    components: {DialogHeader},
     props: {
         redirectRoute: {
             type: String,
@@ -79,7 +81,8 @@ export default {
             },
             data: [],
             filterTree: '',
-            permissionChecked: []
+            permissionChecked: [],
+            fullscreen: false,
         }
     },
     watch: {
@@ -213,6 +216,9 @@ export default {
             this.loadingForm = false
             this.isShowModal = false
             this.$emit('assign-success')
+        },
+        handleToggleFullScreen() {
+            this.fullscreen = !this.fullscreen
         }
     }
 }

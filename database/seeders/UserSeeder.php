@@ -17,12 +17,14 @@ class UserSeeder extends Seeder
             [
                 "name" => "nam nd",
                 "email" => "namnd@yopmail.com",
+                "type" => 1,
                 'password' => bcrypt('a12345678X'),
                 'is_change_password' => 1
             ],
             [
                 "name" => "cuongdd",
                 "email" => "cuongdd@yopmail.com",
+                "type" => 1,
                 'password' => bcrypt('a12345678X'),
                 'is_change_password' => 1
             ]

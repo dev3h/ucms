@@ -1,9 +1,10 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white grid lg:grid-cols-2 grid-col gap-5 px-16 py-8">
+        <div class="w-full h-full bg-white grid lg:grid-cols-2 grid-col gap-5 p-8">
             <!-- Profile -->
             <el-card>
                 <div class="px-4 w-full">
+                    <div class="text-[24px] font-bold mb-8">{{$t('my-page.info')}}</div>
                     <div class="flex flex-col gap-3">
                         <div class="flex flex-col gap-2">
                             <span>{{$t('column.common.name')}}:</span>

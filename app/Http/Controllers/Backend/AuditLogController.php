@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Consts\PerPage;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserLogResource;
 use App\Models\Filters\UserLogFilter;

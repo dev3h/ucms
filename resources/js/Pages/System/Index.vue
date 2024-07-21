@@ -1,13 +1,13 @@
 <template>
     <AdminLayout>
-        <div class="w-full h-full bg-white">
-            <div class="w-full pt-3 pb-2 border-b-[1px] px-4">
+        <div class="w-full bg-white px-4">
+            <div class="w-full pt-3 pb-2">
                 <BreadCrumbComponent :bread-crumb="setbreadCrumbHeader" />
             </div>
 
-            <div class="w-full px-4">
-                <div class="w-full flex justify-between gap-2 my-2">
-                    <div class="flex gap-2">
+            <div class="w-full">
+                <div class="w-full flex flex-wrap justify-between gap-2 my-2">
+                    <div class="flex flex-wrap gap-2">
                         <div class="col-span-1">
                             <el-input v-model="filters.search" class="!w-80" size="large" :placeholder="$t('input.common.search')"
                                       clearable @input="filterData">
@@ -83,10 +83,10 @@ export default {
                 limit: Number(this.appRoute().query?.limit ?? 10),
             },
             fields: [
-                { key: 'name', width: 400, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
-                { key: 'code', width: 300, label: this.$t('column.common.code'), align: 'left', headerAlign: 'left' },
-                { key: 'created_at', width: 200, label: this.$t('column.common.created-at'), align: 'left', headerAlign: 'left' },
-                { key: 'action', label: this.$t('column.common.action'), align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'name', 'min-width': 400, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
+                { key: 'code', 'min-width': 300, label: this.$t('column.common.code'), align: 'left', headerAlign: 'left' },
+                { key: 'created_at', 'min-width': 200, label: this.$t('column.common.created-at'), align: 'left', headerAlign: 'left' },
+                { key: 'action',width: 200, label: '', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
             loadForm: false
@@ -104,7 +104,7 @@ export default {
         }
     },
     async created() {
-        await this.fetchData()
+        await this.fetchData();
     },
     methods: {
         async fetchData(page = 1) {

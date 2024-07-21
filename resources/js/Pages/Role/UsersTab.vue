@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="w-full px-4">
+        <div class="w-full">
             <div class="w-full flex justify-between items-center my-2">
                 <div class="w-80">
                     <el-input v-model="filters.search" class="w-full" size="large" :placeholder="$t('input.common.search')" clearable @input="filterData">
@@ -59,7 +59,7 @@ export default {
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
-                { key: 'email', label: this.$t('sidebar.user'), align: 'left', headerAlign: 'left' },
+                { key: 'email','min-width': 400, label: this.$t('sidebar.user'), align: 'left', headerAlign: 'left' },
                 // { key: 'action', label: 'Action', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},

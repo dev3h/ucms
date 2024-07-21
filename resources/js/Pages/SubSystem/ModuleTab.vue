@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="w-full py-2  px-4">
+        <div class="w-full py-2 ">
             <div class="w-full flex justify-between items-center my-2">
                 <div class="w-80">
                     <el-input v-model="filters.search" class="w-full" size="large" :placeholder="$t('input.common.search')" clearable @input="filterData">
@@ -59,9 +59,9 @@ export default {
                 page: Number(this.appRoute().params?.page ?? 1),
             },
             fields: [
-                { key: 'name', width: 400, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
-                { key: 'code', width: 400, label: this.$t('column.common.code'), align: 'left', headerAlign: 'left' },
-                { key: 'action', label: this.$t('column.common.action'), align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
+                { key: 'name', 'min-width': 400, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
+                { key: 'code', 'min-width': 400, label: this.$t('column.common.code'), align: 'left', headerAlign: 'left' },
+                { key: 'action', width: 200, label: '', align: 'center', headerAlign: 'center', fixed: 'right'},
             ],
             paginate: {},
             loadForm: false

@@ -30,7 +30,6 @@ class SubSystemController extends Controller
     }
     public function store(SubSystemRequest $request)
     {
-        $this->authorize('create', User::class);
         try {
             $data = $request->validated();
             SubSystem::create($data);
@@ -42,7 +41,6 @@ class SubSystemController extends Controller
 
     public function update($id, SubSystemRequest $request)
     {
-        $this->authorize('update', User::class);
         $data = $request->validated();
         try {
             $subSystem = SubSystem::find($id);
@@ -58,7 +56,6 @@ class SubSystemController extends Controller
 
     public function show($id)
     {
-        $this->authorize('view', User::class);
         try {
             $subSystem = SubSystem::find($id);
             if(!$subSystem) {
@@ -72,7 +69,6 @@ class SubSystemController extends Controller
 
     public function destroy($id)
     {
-        $this->authorize('delete', User::class);
         try {
             $subSystem = SubSystem::find($id);
             if(!$subSystem) {
@@ -87,7 +83,6 @@ class SubSystemController extends Controller
 
     public function getAllModuleOfSubSystem($id, Request $request)
     {
-        $this->authorize('view', User::class);
         try {
             $subSystem = SubSystem::find($id);
             if(!$subSystem) {
@@ -105,7 +100,6 @@ class SubSystemController extends Controller
 
     public function restModule($id)
     {
-        $this->authorize('view', User::class);
         try {
             $subSystem = SubSystem::find($id);
             if(!$subSystem) {
@@ -123,7 +117,6 @@ class SubSystemController extends Controller
 
     public function addExtraModule($id, Request $request)
     {
-        $this->authorize('update', User::class);
         try {
             $subSystem = SubSystem::find($id);
             if(!$subSystem) {
@@ -139,7 +132,6 @@ class SubSystemController extends Controller
 
     public function removeModule($id, $module_id)
     {
-        $this->authorize('update', User::class);
         try {
             $subSystem = SubSystem::find($id);
             if(!$subSystem) {

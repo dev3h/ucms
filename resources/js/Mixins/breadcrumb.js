@@ -14,8 +14,8 @@ export function searchMenu() {
                 return findSubMenu
             }
         } else {
-            let findMenu = pathActive.includes(item.pathActive)
-            if (findMenu) {
+            let findMenu = pathSubmenu?.findIndex(i => i === item.pathActive)
+            if (findMenu > -1) {
                 return item
             }
         }
