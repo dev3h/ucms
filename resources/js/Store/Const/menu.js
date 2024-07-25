@@ -59,6 +59,19 @@ export const MASTER_MENUS = [
         route: 'admin.notification.index',
         pathActive: 'notification',
     },
+    {
+        label: 'マスターデータ管理',
+        icon: 'master-data.svg',
+        route: '',
+        pathActive: 'master-data',
+        subMenus: [
+            {
+                label: '商品カテゴリ管理',
+                route: 'admin.master-data.category.index',
+                pathActive: '/admin/master-data/category',
+            },
+        ]
+    }
 ];
 
 export const APP_MENUS = [

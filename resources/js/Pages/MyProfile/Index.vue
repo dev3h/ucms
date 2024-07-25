@@ -3,9 +3,11 @@
         <div class="w-full h-full bg-white grid lg:grid-cols-2 grid-col gap-5 p-8">
             <!-- Profile -->
             <el-card>
+                <template #header>
+                    <div class="text-[24px] font-bold">{{$t('my-page.info')}}</div>
+                </template>
                 <div class="px-4 w-full">
-                    <div class="text-[24px] font-bold mb-8">{{$t('my-page.info')}}</div>
-                    <div class="flex flex-col gap-3">
+                    <div class="grid grid-cols-3 gap-3">
                         <div class="flex flex-col gap-2">
                             <span>{{$t('column.common.name')}}:</span>
                             <span>{{user?.name}}</span>
@@ -23,9 +25,11 @@
             </el-card>
             <!-- Update password -->
             <el-card>
+                <template #header>
+                    <div class="text-[24px] font-bold">{{$t('my-page.change-password')}}</div>
+                </template>
                 <div class="w-full flex justify-center">
                     <div class="px-4 w-full">
-                        <div class="text-[24px] font-bold mb-8">{{$t('my-page.change-password')}}</div>
                         <div>
                             <el-form ref="form" :model="formData" :rules="rules" label-position="top">
                                 <el-form-item
@@ -65,7 +69,9 @@
             </el-card>
             <!-- Integration account -->
             <el-card>
-                <h2 class="uppercase font-bold mb-4">{{$t('my-page.link-account')}}</h2>
+                <template #header>
+                    <h2 class="uppercase font-bold">{{$t('my-page.link-account')}}</h2>
+                </template>
                 <div>
                     <div>
                         <h3 class="text-lg mb-2">Google</h3>
@@ -93,7 +99,9 @@
             </el-card>
             <!-- 2FA -->
             <el-card>
-                <h2 class="uppercase font-bold mb-4">{{$t('my-page.2fa.title')}}</h2>
+                <template #header>
+                    <h2 class="uppercase font-bold">{{$t('my-page.2fa.title')}}</h2>
+                </template>
                 <TwoFactorAuthenticationForm class="h-full" />
             </el-card>
         </div>

@@ -1,9 +1,8 @@
 <template>
     <el-aside width="265" class="fixed top-0 bottom-0 left-0 z-[5] !h-full">
-        <div class="fixed top-0 left-0 z-[10]">
-            <Link :href="getRouteRedirect" class="w-fit flex items-center gap-2">
-                <img src="/images/logo-white.svg" alt="logo" class="!h-12 object-cover" />
-                <h1 v-if="collapseAside" class="text-2xl font-bold">EPU</h1>
+        <div class="h-[60px] shadow-md fixed top-0 left-0 z-[10] bg-primary !backdrop-blur-2xl" :class="collapseAside ? 'w-[283px]' : 'w-[55px]'">
+            <Link :href="getRouteRedirect" class="flex items-center h-full w-full gap-2">
+                <img :src="collapseAside ? '/images/EPU.png' : '/images/logo-small.png'" alt="logo" class="object-cover" />
             </Link>
         </div>
         <div class="relative h-full bg-primary">

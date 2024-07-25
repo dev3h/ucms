@@ -45,12 +45,22 @@ export default {
             breadcrumbData: {},
         }
     },
+    mounted() {
+        this.checkWindowSize();
+        window.addEventListener('resize', this.checkWindowSize);
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.checkWindowSize);
+    },
     methods: {
         hiddenMenu(value) {
             this.isZoomOutMenu = value
         },
         handleToggleCollapse(value) {
             this.collapseAside = value
+        },
+        checkWindowSize() {
+            this.collapseAside = window.innerWidth >= 800;
         },
     },
 }
@@ -185,6 +195,22 @@ export default {
 .admin-layout .el-sub-menu.is-active.is-opened .el-menu-item.is-active {
     color: var(--tw-primary);
     cursor: pointer;
+}
+.admin-layout .el-menu-item:not(.is-active):hover {
+    background-color: unset !important;
+    cursor: pointer;
+}
+.admin-layout .el-menu-item:not(.is-active):hover .menu-item-text {
+    color: #fff;
+}
+.admin-layout .el-menu-item:not(.is-active) .menu-item-text,
+.admin-layout .el-menu-item:not(.is-active) .icon {
+    transition: all ease-in-out 0.2s;
+
+}
+
+.admin-layout .el-menu-item:not(.is-active):hover .icon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(287deg) brightness(104%) contrast(104%);
 }
 
 .admin-layout .el-sub-menu.is-opened,
