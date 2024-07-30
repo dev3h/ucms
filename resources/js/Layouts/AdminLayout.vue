@@ -97,7 +97,6 @@ export default {
 .admin-layout .el-sub-menu {
     margin-bottom: 10px;
 }
-
 .admin-layout .el-menu-item,
 .admin-layout .el-sub-menu__title {
     color: var(--tw-black-400);
@@ -105,9 +104,16 @@ export default {
     font-weight: 500;
     font-size: 16px;
 }
+.admin-layout .el-sub-menu__title > .icon {
+    transition: all 0.1s ease-in-out;
+}
+.admin-layout .el-sub-menu__title {
+    color: var(--tw-gray8A);
+}
 
 .admin-layout .el-sub-menu__title:hover {
     color: var(--tw-gray-300);
+    background-color: unset !important;
 }
 
 .admin-layout .el-menu-item.is-active {
@@ -115,6 +121,9 @@ export default {
     background-color: var(--tw-gray-300);
 }
 
+.admin-layout .el-sub-menu.is-opened .el-sub-menu__title > .icon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7477%) hue-rotate(359deg) brightness(111%) contrast(105%);
+}
 .admin-layout .el-sub-menu.is-active .el-sub-menu__title {
     color: var(--tw-gray-300) !important;
 }
@@ -165,12 +174,13 @@ export default {
 }
 
 .admin-layout .el-menu-item.is-active .icon,
-.admin-layout .el-sub-menu.is-opened .icon,
-.admin-layout .el-sub-menu:hover .icon,
-.admin-layout .el-sub-menu:focus .icon,
 .admin-layout .el-menu-item:hover .icon,
 .admin-layout .el-menu-item:focus .icon {
     filter:invert(19%) sepia(39%) saturate(2651%) hue-rotate(165deg) brightness(45%) contrast(102%)
+}
+.admin-layout .el-sub-menu:hover > .el-sub-menu__title > .icon,
+.admin-layout .el-sub-menu:focus > .el-sub-menu__title > .icon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7477%) hue-rotate(359deg) brightness(111%) contrast(105%);
 }
 
 .admin-layout .el-sub-menu .el-menu-item {
@@ -183,8 +193,7 @@ export default {
 }
 
 .admin-layout .el-menu--popup-container .el-menu-item.is-active {
-    --tw-pink-dark-color: #ff4d4f;
-    color: var(--tw-pink-dark-color);
+    color: var(--tw-primary);
 }
 
 .admin-layout .el-submenu .el-menu-item {
@@ -217,7 +226,6 @@ export default {
 .admin-layout .el-sub-menu.is-opened .submenu-wrapper,
 .admin-layout .el-sub-menu.is-opened ul {
     color: var(--tw-primary);
-    background: #ffffff;
 }
 
 .admin-layout .el-sub-menu.is-opened .submenu-wrapper {
@@ -232,7 +240,7 @@ export default {
 }
 
 .admin-layout .el-sub-menu.is-opened .el-sub-menu__title {
-    color: var(--tw-primary);
+    color: var(--tw-gray-300);
 }
 
 .admin-layout .el-menu-item:focus {
@@ -258,7 +266,7 @@ export default {
 
 .admin-layout .collapse-is-close .el-sub-menu__title:hover {
     background: none;
-    color: var(--tw-pink-dark-color);
+    color: var(--tw-primary);
 }
 
 .admin-layout .el-image__wrapper {

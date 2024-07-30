@@ -1,20 +1,18 @@
 <?php
 
-use App\Http\Controllers\Backend\ActionController;
-use App\Http\Controllers\Backend\Admin\NotificationController as AdminNotificationController;
-use App\Http\Controllers\Backend\AuditLogController;
+use App\Http\Controllers\Backend\Admin\ActionController;
+use App\Http\Controllers\Backend\Admin\AuditLogController;
+use App\Http\Controllers\Backend\Admin\ChangePasswordController;
+use App\Http\Controllers\Backend\Admin\IntegrationSocialiteController;
+use App\Http\Controllers\Backend\Admin\ModuleController;
+use App\Http\Controllers\Backend\Admin\NotificationController;
+use App\Http\Controllers\Backend\Admin\PermissionController;
+use App\Http\Controllers\Backend\Admin\RoleController;
+use App\Http\Controllers\Backend\Admin\SubSystemController;
+use App\Http\Controllers\Backend\Admin\SystemController;
+use App\Http\Controllers\Backend\Admin\UserController;
 use App\Http\Controllers\Backend\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Backend\Auth\ResetPasswordController;
-use App\Http\Controllers\Backend\ChangePasswordController;
-use App\Http\Controllers\Backend\IntegrationSocialiteController;
-use App\Http\Controllers\Backend\ModuleController;
-use App\Http\Controllers\Backend\NotificationController;
-use App\Http\Controllers\Backend\PermissionController;
-use App\Http\Controllers\Backend\RoleController;
-use App\Http\Controllers\Backend\SubSystemController;
-use App\Http\Controllers\Backend\SystemController;
-use App\Http\Controllers\Backend\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //Route::get('/user', function (Request $request) {
@@ -23,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix("admin")->as("admin.api.")->group(function () {
-    Route::middleware(['guest'])->group(function () {
+    Route::middleware(['guest:admin'])->group(function () {
         Route::post('/login', [AuthenticatedSessionController::class, 'handleLogin'])->name('login.handle');
 
         Route::post('/send-mail-reset-password', [ResetPasswordController::class, 'sendMailResetPassword'])
@@ -31,7 +29,7 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
         Route::post('/update-password', [ResetPasswordController::class, 'passwordResetUpdate'])->name('reset-password.update');
     });
 
-    Route::middleware(['auth', 'type_admin_check'])->group(function () {
+    Route::middleware(['auth:admin'])->group(function () {
         Route::get('me', [AuthenticatedSessionController::class, 'me'])->name('me');
         Route::post('/change-password-first', [AuthenticatedSessionController::class, 'changePasswordFirst'])->name('password-first.change');
 
@@ -55,11 +53,14 @@ Route::prefix("admin")->as("admin.api.")->group(function () {
         Route::apiResource('/action', ActionController::class);
         Route::apiResource('/role', RoleController::class);
         Route::apiResource('/permission', PermissionController::class);
+        Route::get('/user/download-csv-template', [UserController::class, 'downloadCsvTemplate'])->name('user.download-csv-template');
         Route::apiResource('/user', UserController::class);
+        Route::post('/user/import-csv', [UserController::class, 'importCsv'])->name('user.import-csv');
         Route::get('/user/{id}/all-permission', [UserController::class, 'getAllPermissionOfUser'])->name('user.all-permission');
         Route::get('/user/{id}/user-logs', [UserController::class, 'getUserLogs'])->name('user.user-logs');
         Route::get('/user/{user_id}/role/{role_id}/all-permission', [UserController::class, 'getAllPermissionOfUserByRole'])->name('user.role.all-permission');
         Route::put('/user/{id}/ignore-permission-for-user-role', [UserController::class, 'ignorePermissionForUserRole'])->name('user.ignore-permission-for-user-role');
+
 
         Route::get('/role/get/all-permission', [RoleController::class, 'getAllPermission'])->name('role.get-all-permission');
         Route::get('/role/{id}/template-permission', [PermissionController::class, 'templatePermission'])->name('role.template-permission');

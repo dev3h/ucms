@@ -9,36 +9,33 @@
             <!-- Side bar -->
             <div class="admin-sidebar h-full relative pt-[60px]">
                 <el-menu id="sidebar" class="el-menu-vertical" :class="{ 'collapse-is-close': !collapseAside }"
-                    :default-active="defaultActive" :default-openeds="pathSubmenu" :unique-opened="true" :router="true"
-                    :collapse="!collapseAside">
+                         :default-active="defaultActive" :default-openeds="openMenus" :router="true"
+                         :collapse="!collapseAside">
                     <template v-for="(menu, index) in menus" :key="index">
                         <el-menu-item v-if="!menu.subMenus" :index="menu.pathActive" class="menu-item-custom"
-                            :class="checkActive(menu.pathActive) ? 'is-active ' : ''" @click="onMenuClick(menu)">
-                            <el-image class="icon w-6 h-6 object-cover" :src="`/images/aside/${menu.icon}`" alt />
+                                      :class="checkActive(menu.pathActive) ? 'is-active ' : ''" @click="onMenuClick(menu)">
+                            <el-image class="icon w-6 h-6 object-cover" :src="`/images/aside/${menu.icon}`" alt="" />
                             <template #title>
                                 <span class="menu-item-text pl-2 font-bold">{{ $t(menu.label) }}</span>
                             </template>
                         </el-menu-item>
 
                         <el-sub-menu v-else :index="menu.pathActive" class="menu-item-custom"
-                            :class="checkActive(menu.pathActive) ? 'is-active ' : ''"
-                            popper-class="ml-[25px] border border-[#d0d5dd]">
+                                     :class="checkActive(menu.pathActive) ? 'is-active ' : ''"
+                                     popper-class="border border-[#d0d5dd]">
                             <template #title>
-                                <el-image v-if="menu.icon" class="icon w-6 h-6 object-cover"
-                                    :src="`/images/aside/${menu.icon}`" alt />
-                                <el-image v-else class="icon w-6 h-6 object-cover" />
-                                <span class="menu-item-text pl-2">{{ menu.label }}</span>
+                                <el-image class="icon w-6 h-6 object-cover" :src="`/images/aside/${menu.icon}`" alt="" />
+                                <span class="menu-item-text pl-2">{{ $t(menu.label) }}</span>
                             </template>
                             <div class="submenu-wrapper">
                                 <div class="submenu-inner">
                                     <template v-for="(subMenu, i) in menu.subMenus" :key="i">
-                                        <el-menu-item :index="subMenu.pathActive" class="flex items-center" :class="subMenu.pathActive == pathSubmenuItem ||
-                        subMenu.pathActive2 == pathSubmenuItem
-                        ? 'is-active'
-                        : ''
-                        " @click="onMenuClick(subMenu)">
+                                        <el-menu-item :index="subMenu.pathActive" class="flex items-center"
+                                                      :class="subMenu.pathActive == pathSubmenuItem || subMenu.pathActive2 == pathSubmenuItem ? 'is-active' : ''"
+                                                      @click="onMenuClick(subMenu)">
+                                            <el-image class="icon w-6 h-6 object-cover" :src="`/images/aside/${subMenu.icon}`" alt="" />
                                             <template #title>
-                                                <span class="menu-item-text pl-5">{{ subMenu.label }}</span>
+                                                <span class="menu-item-text pl-5">{{$t(subMenu.label) }}</span>
                                             </template>
                                         </el-menu-item>
                                     </template>
@@ -48,17 +45,6 @@
                     </template>
                 </el-menu>
             </div>
-
-<!--            <div class="absolute left-[0] pl-[16px] top-[0] right-[0] pt-[16px] bg-[white] cursor-pointer"-->
-<!--                :class="!collapseAside ? 'right-4' : 'right-8'">-->
-<!--                <span v-if="!collapseAside" title="メニューを拡大する" @click.prevent="toggleCollapse">-->
-<!--                    <i class="ri-menu-unfold-line text-2xl text-primary" />-->
-<!--                </span>-->
-
-<!--                <span title="メニューを縮小する" @click.prevent="toggleCollapse">-->
-<!--                    <i v-if="collapseAside" class="ri-menu-fold-line text-3xl text-gray8A" />-->
-<!--                </span>-->
-<!--            </div>-->
         </div>
     </el-aside>
 </template>
@@ -79,6 +65,7 @@ export default {
             dialogVisible: false,
             pathSubmenu: [],
             pathSubmenuItem: '',
+            openMenus: [], // New data property to store open menus
         }
     },
     created() {
@@ -91,9 +78,9 @@ export default {
             if (this.$page?.props?.auth?.role !== 'admin_enterprise') {
                 menuBusiness = menuBusiness.filter((item) => !excludeList.includes(item.pathActive))
             }
-            // console.log(menuBusiness)
             this.menus = menuBusiness
         }
+        this.openMenus = this.menus.map(menu => menu.pathActive) // Initialize openMenus with all menu paths
     },
     computed: {
         getRouteRedirect() {
@@ -118,7 +105,7 @@ export default {
             this.$emit('zoom-out-sidebar', this.collapseAside)
         },
         onMenuClick(menu) {
-            this.$inertia.visit(this.appRoute(menu.route), { replace: true })
+            this.$inertia.visit(this.appRoute(menu.route), {replace: true})
         },
         checkActive(pathActive) {
             if (isArray(pathActive) && !isEmpty(pathActive)) {

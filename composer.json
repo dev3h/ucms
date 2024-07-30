@@ -17,6 +17,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.12",
         "laravel/tinker": "^2.9",
+        "maatwebsite/excel": "^3.1",
         "opcodesio/log-viewer": "^3.8",
         "owen-it/laravel-auditing": "^13.6",
         "spatie/laravel-permission": "^6.4",

@@ -39,6 +39,7 @@
         "ckeditor5-build-classic": "^1.0.0",
         "element-plus": "^2.6.3",
         "lodash.debounce": "^4.0.8",
+        "papaparse": "^5.4.1",
         "pinia": "^2.1.7",
         "vue-i18n": "^9.13.1"
     }

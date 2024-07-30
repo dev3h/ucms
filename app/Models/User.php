@@ -73,11 +73,6 @@ class User extends Authenticatable implements JWTSubject, Auditable
         ];
     }
 
-    public function socials()
-    {
-        return $this->hasMany(Social::class);
-    }
-
     public function sendPasswordResetNotification($token): void
     {
         $name = $this->name;

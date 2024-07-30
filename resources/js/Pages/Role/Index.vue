@@ -71,7 +71,7 @@ export default {
             fields: [
                 { key: 'name', 'min-width': 400, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
                 { key: 'code', 'min-width': 300, label: this.$t('column.common.code'), align: 'left', headerAlign: 'left' },
-                { key: 'assigned', 'min-width': 300, label: this.$t('button.assign'), align: 'left', headerAlign: 'left'},
+                { key: 'assigned', 'width': 300, label: this.$t('button.assign'), align: 'left', headerAlign: 'left'},
                 { key: 'action', width: 200, label: '', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},

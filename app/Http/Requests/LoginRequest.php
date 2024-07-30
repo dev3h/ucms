@@ -22,13 +22,17 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
+        $table = 'users';
+        if(request()->routeIs('admin.api.*')) {
+            $table = 'admins';
+        }
         return [
             'email' => [
                 'required',
                 'string',
                 'email',
                 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}+$/',
-                Rule::exists('users', 'email')
+                Rule::exists($table, 'email')
                     ->whereNull('deleted_at')
             ],
             'password' => [

@@ -1,6 +1,8 @@
 {
     "auth-page": {
         "login-title": "Login",
+        "admin-login-title": "Administrator Login",
+        "sign-in-with-google": "Sign in with Google",
         "click-forgot-password": "Click here if you have forgotten your password",
         "or": "Or",
         "forgot-password-page": {
@@ -70,7 +72,11 @@
         "enable": "Enable",
         "disable": "Disable",
         "re-recovery-code": "Regenerate recovery code",
-        "show-recovery-code": "Show recovery code"
+        "show-recovery-code": "Show recovery code",
+        "import-csv": "Import from csv",
+        "download-csv-template": "Download csv template",
+        "upload-csv": "Upload csv",
+        "import": "Import"
     },
     "input": {
         "common": {
@@ -127,7 +133,9 @@
         "role": "Role",
         "permission": "Permission",
         "audit-log": "Audit Log",
-        "notification": "Notification"
+        "notification": "Notification",
+        "system-components": "System Components",
+        "user-management": "User Management"
     },
     "form": {
         "add": "Add",
@@ -153,5 +161,9 @@
         "profile": "Profile",
         "application": "Application",
         "logout": "Logout"
+    },
+    "message": {
+        "invalid-csv-file": "Please upload a valid CSV or Excel file",
+        "invalid-csv-data": "Invalid data in CSV file"
     }
 }
