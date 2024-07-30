@@ -6,46 +6,62 @@ export const MASTER_MENUS = [
         pathActive: "dashboard",
     },
     {
-        label: 'sidebar.system',
+        label: 'sidebar.system-components',
         icon: "system-icon.svg",
-        route: "admin.system.index",
-        pathActive: "system",
+        route: '',
+        pathActive: 'system-components',
+        subMenus: [
+            {
+                label: 'sidebar.system',
+                icon: "system-icon.svg",
+                route: "admin.system.index",
+                pathActive: "/admin/system-components/system",
+            },
+            {
+                label: 'sidebar.subsystem',
+                icon: "subsystem-icon.svg",
+                route: "admin.subsystem.index",
+                pathActive: "/admin/system-components/subsystem",
+            },
+            {
+                label: 'sidebar.module',
+                icon: "module-icon.svg",
+                route: "admin.module.index",
+                pathActive: "/admin/system-components/module",
+            },
+            {
+                label: 'sidebar.action',
+                icon: "action-icon.svg",
+                route: "admin.action.index",
+                pathActive: "/admin/system-components/action",
+            },
+        ]
     },
     {
-        label: 'sidebar.subsystem',
-        icon: "subsystem-icon.svg",
-        route: "admin.subsystem.index",
-        pathActive: "subsystem",
-    },
-    {
-        label: 'sidebar.module',
-        icon: "module-icon.svg",
-        route: "admin.module.index",
-        pathActive: "module",
-    },
-    {
-        label: 'sidebar.action',
-        icon: "action-icon.svg",
-        route: "admin.action.index",
-        pathActive: "action",
-    },
-    {
-        label: 'sidebar.user',
+        label: 'sidebar.user-management',
         icon: "user-icon.svg",
-        route: "admin.user.index",
-        pathActive: "user",
-    },
-    {
-        label: 'sidebar.role',
-        icon: "role-icon.svg",
-        route: "admin.role.index",
-        pathActive: "role",
-    },
-    {
-        label: 'sidebar.permission',
-        icon: "permission-icon.svg",
-        route: "admin.permission.index",
-        pathActive: "permission",
+        route: '',
+        pathActive: 'user-management',
+        subMenus: [
+            {
+                label: 'sidebar.user',
+                icon: "user-icon.svg",
+                route: "admin.user.index",
+                pathActive: "/admin/user-management/user",
+            },
+            {
+                label: 'sidebar.role',
+                icon: "role-icon.svg",
+                route: "admin.role.index",
+                pathActive: "/admin/user-management/role",
+            },
+            {
+                label: 'sidebar.permission',
+                icon: "permission-icon.svg",
+                route: "admin.permission.index",
+                pathActive: "/admin/user-management/permission",
+            }
+        ]
     },
     {
         label: 'sidebar.audit-log',
@@ -58,19 +74,6 @@ export const MASTER_MENUS = [
         icon: 'bell-icon.svg',
         route: 'admin.notification.index',
         pathActive: 'notification',
-    },
-    {
-        label: 'マスターデータ管理',
-        icon: 'master-data.svg',
-        route: '',
-        pathActive: 'master-data',
-        subMenus: [
-            {
-                label: '商品カテゴリ管理',
-                route: 'admin.master-data.category.index',
-                pathActive: '/admin/master-data/category',
-            },
-        ]
     }
 ];
 

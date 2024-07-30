@@ -10,38 +10,38 @@
         </div>
         <slot name="page-header" />
         <div class="header-custom w-1/2 flex justify-end gap-6">
-            <div v-if="pathSubmenu[1] === 'master'" id="notification-button"
+            <div v-if="pathSubmenu[1] === 'admin'" id="notification-button"
                 class="ml-auto flex items-center px-2 cursor-pointer relative" @click="toggleNotifications()">
                 <span v-if="notifications_unread > 0"
                     class="text-[11px] leading-[10px] rounded-full absolute right-0 top-0 p-1 bg-red-500 text-white mx-auto">
                     {{ notifications_unread > 99 ? '99+' : notifications_unread }}
                 </span>
-                <img :src="'/images/svg/notification-icon.svg'" class="ml-2" />
+                <img :src="'/images/svg/notification-icon.svg'" class="ml-2" alt="" />
             </div>
             <div class="mr-5">
                 <el-dropdown trigger="click" class="h-full" @command="handleCommand">
                     <div class="el-dropdown-link flex items-center justify-center text-white gap-1">
                         <el-avatar :size="32">{{user?.name?.[0]}}</el-avatar>
                         <span class="mr-2 text-lg text-primary">{{ user?.name }}</span>
-                        <img :src="'/images/svg/down.svg'" class="ml-2" />
+                        <img :src="'/images/svg/down.svg'" class="ml-2" alt="" />
                     </div>
                     <template #dropdown>
                         <el-dropdown-menu class="w-48 !p-4">
                             <el-dropdown-item command="changeProfile">
                                 <div class="flex items-center">
-                                    <img src="/images/svg/profile-icon.svg" class="mr-2" />
+                                    <img src="/images/svg/profile-icon.svg" class="mr-2" alt="" />
                                     <span class="whitespace-nowrap">{{$t('pop-menu.profile')}}</span>
                                 </div>
                             </el-dropdown-item>
                             <el-dropdown-item command="changeApplication">
                                 <div class="flex items-center">
-                                    <img src="/images/svg/application-icon.svg" class="mr-2" />
+                                    <img src="/images/svg/application-icon.svg" class="mr-2" alt="" />
                                     <span class="whitespace-nowrap">{{$t('pop-menu.application')}}</span>
                                 </div>
                             </el-dropdown-item>
                             <el-dropdown-item command="logout">
                                 <div class="flex items-center" @click="dialogVisible = true">
-                                    <img src="/images/svg/log-out-icon.svg" class="mr-2" />
+                                    <img src="/images/svg/log-out-icon.svg" class="mr-2" alt="" />
                                     <span class="whitespace-nowrap mt-1">{{$t('pop-menu.logout')}}</span>
                                 </div>
                             </el-dropdown-item>

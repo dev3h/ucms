@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 
@@ -15,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__.'/../routes/api.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
+        then: function () {
+            Route::middleware('web')->prefix('admin')->name('admin.')->group(base_path('routes/admin.php'));
+        }
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->use([
@@ -37,13 +41,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
-            'type_admin_check' => \App\Http\Middleware\CheckAdminType::class,
+//            'type_admin_check' => \App\Http\Middleware\CheckAdminType::class,
+            'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+            'auth' => \App\Http\Middleware\Authenticate::class,
         ]);
-
-        $middleware->redirectTo(
-            guests: '/admin/login',
-            users: '/admin/profile',
-        );
     })
 
     ->withExceptions(function (Exceptions $exceptions) {

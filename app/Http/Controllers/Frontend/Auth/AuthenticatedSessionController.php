@@ -58,11 +58,23 @@ class AuthenticatedSessionController extends Controller
 //    }
     public function logout()
     {
-        $routeRedirect = route('admin.login.form');
+        $routeRedirect = route('user.login.form');
+        if(request()->routeIs('admin.*')) {
+            auth()->guard('admin')->logout();
+            $routeRedirect = route('admin.login.form');
+            $this->invalidateGuardSession('admin');
+            return redirect($routeRedirect);
+        }
         Auth::logout();
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
+        $this->invalidateGuardSession('web');
         return redirect($routeRedirect);
+    }
+
+    private function invalidateGuardSession($guard)
+    {
+        $sessionKey = $guard . '_session';
+        request()->session()->forget($sessionKey);
+        request()->session()->regenerateToken();
     }
 
     public function formTwoFactorChallenge()

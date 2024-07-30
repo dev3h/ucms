@@ -11,6 +11,7 @@ use App\Observers\ModuleObserver;
 use App\Observers\PermissionObserver;
 use App\Observers\SubSystemObserver;
 use App\Observers\SystemObserver;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Permission;
 use App\Services\ActivityLoggerService;
@@ -39,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
 
         foreach ($filesPath as $filePath) {
             require_once $filePath;
+        }
+
+        if (config('app.env') !== 'local') {
+            URL::forceScheme('https');
         }
 
         // observer

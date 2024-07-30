@@ -1,6 +1,8 @@
 {
     "auth-page": {
         "login-title": "Đăng nhập",
+        "admin-login-title": "Đăng nhập quản trị",
+        "sign-in-with-google": "Đăng nhập bằng Google",
         "click-forgot-password": "Nhấn vào đây nếu bạn quên mật khẩu",
         "or": "Hoặc",
         "forgot-password-page": {
@@ -67,7 +69,11 @@
         "enable": "Kích hoạt",
         "disable": "Vô hiệu hóa",
         "re-recovery-code": "Tạo lại mã khôi phục",
-        "show-recovery-code": "Hiển thị mã khôi phục"
+        "show-recovery-code": "Hiển thị mã khôi phục",
+        "import-csv": "Nhập từ csv",
+        "download-csv-template": "Tải xuống mẫu csv",
+        "upload-csv": "Tải lên csv",
+        "import": "Nhập"
     },
     "input": {
         "common": {
@@ -125,7 +131,9 @@
         "role": "Vai trò",
         "permission": "Quyền",
         "audit-log": "Nhật ký hoạt động",
-        "notification": "Thông báo"
+        "notification": "Thông báo",
+        "system-components": "Các thành phần hệ thống",
+        "user-management": "Quản lý người dùng"
     },
     "form": {
         "add": "Thêm",
@@ -151,5 +159,9 @@
         "profile": "Hồ sơ",
         "application": "Ứng dụng",
         "logout": "Đăng xuất"
+    },
+    "message": {
+        "invalid-csv-file": "Vui lòng tải lên một tệp CSV hoặc Excel hợp lệ",
+        "invalid-csv-data": "Dữ liệu trong tệp CSV không hợp lệ"
     }
 }

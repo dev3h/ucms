@@ -36,11 +36,12 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $user = null;
-        if (Auth::check()) {
-            $user =  Auth::user();
-            $user->two_factor_enabled = $user?->two_factor_secret ? true : false;
+        if(!Auth::check()) {
+            return parent::share($request);
         }
+        $user = auth()->user();
+
+        $user->two_factor_enabled = $user?->two_factor_secret ? true : false;
         if ($user) {
             $role = $user->getRoleNames()->first();
             $permissions = $user->getAllPermissions()?->pluck('name');

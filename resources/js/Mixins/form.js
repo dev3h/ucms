@@ -94,7 +94,6 @@ export default {
                     "An error has occurred. please try again.";
 
                 if (error.response?.status === 422) {
-
                     this.setErrors(error.response?.data?.errors ?? {});
                     message = "Please check your input values again.";
                 } else {

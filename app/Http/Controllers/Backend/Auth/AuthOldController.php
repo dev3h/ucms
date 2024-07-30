@@ -125,7 +125,7 @@ class AuthOldController extends Controller
         }
         $dataResponse = $this->respondWithToken($token, $refreshToken);
 
-        if ($user->is_change_password == PassFirstChangeEnum::NOT_CHANGE->value) {
+        if ($user->is_change_password_first == PassFirstChangeEnum::NOT_CHANGE->value) {
             $str = Str::random(32);
             $user->token_first_change = $str;
             $user->save();

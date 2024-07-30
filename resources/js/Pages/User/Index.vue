@@ -32,8 +32,10 @@
                             @change="filterData"
                         />
                     </div>
-                    <el-button type="primary" size="large" @click="openCreate()">{{$t('button.add')}}</el-button>
-
+                    <div>
+                        <el-button size="large" @click="openImport()">{{$t('button.import-csv')}}</el-button>
+                        <el-button type="primary" size="large" @click="openCreate()">{{$t('button.add')}}</el-button>
+                    </div>
                 </div>
             </div>
 
@@ -60,8 +62,10 @@
             </div>
         </div>
         <DeleteForm ref="deleteForm" @delete-action="deleteAccount" />
+        <ModalImport ref="modalImport" @import-success="fetchData" />
     </AdminLayout>
 </template>
+
 <script>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import BreadCrumbComponent from '@/Components/Page/BreadCrumb.vue';
@@ -70,8 +74,10 @@ import DataTable from '@/Components/Page/DataTable.vue'
 import axios from '@/Plugins/axios'
 import DeleteForm from '@/Components/Page/DeleteForm.vue';
 import debounce from 'lodash.debounce'
+import ModalImport from './ModalImport.vue'
+
 export default {
-    components: { AdminLayout, BreadCrumbComponent, DataTable, DeleteForm },
+    components: { AdminLayout, BreadCrumbComponent, DataTable, DeleteForm, ModalImport },
     props: {
         roles: {
             type: Array,
@@ -87,10 +93,10 @@ export default {
             fields: [
                 { key: 'name', 'min-width': 200, label: this.$t('column.common.name'), align: 'left', headerAlign: 'left' },
                 { key: 'email', 'min-width': 200, label: this.$t('input.common.email'), align: 'left', headerAlign: 'left' },
-                { key: 'role_name', 'min-width': 200, label: this.$t('sidebar.role'), align: 'left', headerAlign: 'left' },
-                {key: 'last_seen', 'min-width': 200, label: this.$t('column.last-seen'), align: 'left', headerAlign: 'left'},
-                {key: 'activity', 'min-width': 200, label: this.$t('column.activity'), align: 'center', headerAlign: 'left'},
-                { key: 'created_at', 'min-width': 200, label: this.$t('column.common.created-at'), align: 'left', headerAlign: 'left'},
+                { key: 'role_name', 'width': 200, label: this.$t('sidebar.role'), align: 'left', headerAlign: 'left' },
+                {key: 'last_seen', 'width': 200, label: this.$t('column.last-seen'), align: 'left', headerAlign: 'left'},
+                {key: 'activity', 'width': 200, label: this.$t('column.activity'), align: 'center', headerAlign: 'left'},
+                { key: 'created_at', 'width': 200, label: this.$t('column.common.created-at'), align: 'left', headerAlign: 'left'},
                 { key: 'action', width: 200, label: '', align: 'center', headerAlign: 'center', fixed: 'right', minWidth: 200 },
             ],
             paginate: {},
@@ -134,6 +140,9 @@ export default {
         }, 500),
         openCreate() {
             this.$inertia.visit(this.appRoute('admin.user.create'))
+        },
+        openImport() {
+            this.$refs.modalImport.open()
         },
         openDeleteForm(id) {
             this.$refs.deleteForm.open(id)
